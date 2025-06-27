@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Materials.meta
 guid: fb4142726e0c11d45837e55e40a3a0cf
+========
+guid: b869a055427e4974b957b525f4c5e047
+>>>>>>>> origin/Brody-dev:Assets/Input Actions.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

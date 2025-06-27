@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraStateManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class CameraStateManager : MonoBehaviour
     private CameraThirdPersonState thirdPersonState;
     private CameraFreeState freeCamState;
     private CameraDetachedState detachedState;
+
+    private float mouseX;
+    private float mouseY;
 
 
     private void Start()
@@ -31,6 +35,27 @@ public class CameraStateManager : MonoBehaviour
     {
         currentState = state;
         state.EnterState(this);
+    }
+
+    public void SetMouseValues(InputAction.CallbackContext mouseInput) {
+        Debug.Log("SetMouseValues Called");
+        currentState.MouseMovementCallback(this, mouseInput.ReadValue<Vector2>());
+    }
+
+    public float getMouseX() {
+        return mouseX;
+    }
+
+    public void setMouseX(float value) {
+        mouseX = value;
+    }
+
+    public float getMouseY() {
+        return mouseY;
+    }
+
+    public void setMouseY(float value) {
+        mouseY = value;
     }
 
     public CameraState GetCurrentCameraState() { return currentState; }

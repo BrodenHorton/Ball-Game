@@ -1,9 +1,17 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<<< HEAD:Assets/Materials.meta
 guid: ad39cd77f4679694a8498ec2ec266782
 ========
 guid: a43c62d7bbb9b554ab8a84d6812ce8eb
 >>>>>>>> f471747f75d9881fb01fe49e5ffa36635c7880d8:Assets/Prefabs.meta
+=======
+<<<<<<<< HEAD:Assets/Prefabs.meta
+guid: a43c62d7bbb9b554ab8a84d6812ce8eb
+========
+guid: 708c807f7a14caf40a2abe987fd6320d
+>>>>>>>> origin/Brody-dev:Assets/Materials.meta
+>>>>>>> 02afae98d5c076672c33f32a47970102fec2f96a
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

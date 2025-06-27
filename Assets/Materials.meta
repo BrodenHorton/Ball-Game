@@ -1,9 +1,25 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:Assets/Materials.meta
+guid: 708c807f7a14caf40a2abe987fd6320d
+========
+guid: a43c62d7bbb9b554ab8a84d6812ce8eb
+>>>>>>>> f471747f75d9881fb01fe49e5ffa36635c7880d8:Assets/Prefabs.meta
+=======
+<<<<<<<< HEAD:Assets/Input Actions.meta
+guid: b869a055427e4974b957b525f4c5e047
+========
+guid: fb4142726e0c11d45837e55e40a3a0cf
+>>>>>>>> f471747f75d9881fb01fe49e5ffa36635c7880d8:Assets/Materials.meta
+>>>>>>> f471747f75d9881fb01fe49e5ffa36635c7880d8
+=======
 <<<<<<<< HEAD:Assets/Materials.meta
 guid: fb4142726e0c11d45837e55e40a3a0cf
 ========
 guid: b869a055427e4974b957b525f4c5e047
 >>>>>>>> origin/Brody-dev:Assets/Input Actions.meta
+>>>>>>> 02afae98d5c076672c33f32a47970102fec2f96a
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

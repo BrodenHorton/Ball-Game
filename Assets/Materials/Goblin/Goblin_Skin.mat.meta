@@ -1,9 +1,17 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:Assets/Materials/Plane Mat.mat.meta
+guid: 1ae870863bc84a9418b94a0d9f58a6a9
+========
+guid: 89c76c2ac2c028146be879cd97b90209
+>>>>>>>> f471747f75d9881fb01fe49e5ffa36635c7880d8:Assets/Materials/Goblin/Goblin_Skin.mat.meta
+=======
 <<<<<<<< HEAD:Assets/Materials/Goblin/Goblin_Skin.mat.meta
 guid: 89c76c2ac2c028146be879cd97b90209
 ========
 guid: 4be13a4e5d746a54c847ff4b3e7d5212
 >>>>>>>> origin/Brody-dev:Assets/Materials/Plane Mat.mat.meta
+>>>>>>> 02afae98d5c076672c33f32a47970102fec2f96a
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

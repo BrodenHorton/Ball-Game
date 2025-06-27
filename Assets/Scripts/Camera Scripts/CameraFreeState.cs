@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraFreeState : CameraState
 {
@@ -68,5 +69,9 @@ public class CameraFreeState : CameraState
         Vector3 horizontalVector = new Vector3(xAxisRaw, 0, zAxisRaw).normalized * moveSpeed;
         Vector3 moveVector = new Vector3(horizontalVector.x, verticalVector, horizontalVector.z);
         camManager.transform.position = camManager.transform.position + (Quaternion.Euler(0, camManager.transform.eulerAngles.y, 0) * moveVector * Time.deltaTime);
+    }
+
+    public override void MouseMovementCallback(CameraStateManager camManager, Vector2 mouseInput) {
+
     }
 }

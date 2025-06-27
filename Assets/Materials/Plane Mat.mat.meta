@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:Assets/Materials/Plane Mat.mat.meta
+guid: 4be13a4e5d746a54c847ff4b3e7d5212
+========
+guid: 89c76c2ac2c028146be879cd97b90209
+>>>>>>>> f471747f75d9881fb01fe49e5ffa36635c7880d8:Assets/Materials/Goblin/Goblin_Skin.mat.meta
+=======
 guid: 4de2e3830b325cc47ba6962cbc17078e
+>>>>>>> 02afae98d5c076672c33f32a47970102fec2f96a
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

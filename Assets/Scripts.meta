@@ -1,9 +1,17 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:Assets/Scripts.meta
+guid: 0e3feebfaef9c84439ac7586c5661f0e
+========
+guid: 8f18ff8128bd15b4a928df2fabb7fb80
+>>>>>>>> f471747f75d9881fb01fe49e5ffa36635c7880d8:Assets/Materials/Goblin.meta
+=======
 <<<<<<<< HEAD:Assets/Materials/Goblin.meta
 guid: a73624f75815b444ca652f8109c2398e
 ========
 guid: 0e3feebfaef9c84439ac7586c5661f0e
 >>>>>>>> origin/Brody-dev:Assets/Scripts.meta
+>>>>>>> 02afae98d5c076672c33f32a47970102fec2f96a
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

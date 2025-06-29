@@ -44,7 +44,7 @@ public class CameraThirdPersonState : CameraState {
         camManager.transform.position = camPosition;
         camManager.transform.LookAt(camPivot);
 
-        //CameraCollision(camManager);
+        CameraCollision(camManager);
     }
 
     private void CameraCollision(CameraStateManager camManager) {

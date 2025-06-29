@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float jumpCooldown = 3;
     [SerializeField] float dashCooldown = 3;
     [SerializeField] float jumpForce;
-    [SerializeField] float additionalDashForce;
+    [SerializeField] float dashVelocity;
+    [SerializeField] float dashLength;
     [SerializeField] float maxLinearVelocity;
 
     private bool jumpPressed;
@@ -16,23 +17,23 @@ public class PlayerMovement : MonoBehaviour {
     private Vector2 input;
     private Timer jumpTimer;
     private Timer dashTimer;
+    private Timer dashLengthTimer; 
 
     private void Awake()
     {
         jumpTimer = new Timer(jumpCooldown);
         dashTimer = new Timer(dashCooldown);
+        dashLengthTimer = new Timer(dashLength);
         dashTimer.SetFinished();
+        dashLengthTimer.SetFinished();
         jumpTimer.SetFinished();
         rb.maxLinearVelocity = maxLinearVelocity;
     }
-    private void Update() {
+    private void FixedUpdate() {
         Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-        float tempForce = dashPressed && dashTimer.IsFinished() ? force + additionalDashForce : force;
-        if (input.magnitude > 0)
-        {
-            rb.AddForce(Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * tempForce);
-        }
+        float tempForce = force;
+
 
 
         if (jumpPressed && jumpTimer.IsFinished())
@@ -52,7 +53,25 @@ public class PlayerMovement : MonoBehaviour {
         else if (dashTimer.IsFinished() && dashPressed)
         {
             Debug.Log("Player Dashing");
+            rb.maxLinearVelocity = maxLinearVelocity + dashVelocity;
+            rb.linearVelocity = cameraTransform.forward * dashVelocity;
             dashTimer.Reset();
+            dashLengthTimer.Reset();
+        }
+        if (dashLengthTimer.IsFinished())
+        {
+            rb.maxLinearVelocity = maxLinearVelocity;
+        }
+        else
+        {
+            dashLengthTimer.Update();
+        }
+        //This should be last to do
+        if (dashLengthTimer.IsFinished() && input.magnitude > 0)
+        {
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            moveDir.y = 0f;
+            rb.AddForce(moveDir.normalized * tempForce);
         }
     }
 

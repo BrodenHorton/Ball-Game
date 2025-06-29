@@ -294,9 +294,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
   rb: {fileID: 831502299734047229}
-  force: 50
-  jumpCooldown: 12
+  force: 500
+  jumpCooldown: 3
   dashCooldown: 3
-  jumpForce: 80
-  additionalDashForce: 5
+  jumpForce: 800
+  dashVelocity: 50
+  dashLength: 1
   maxLinearVelocity: 20

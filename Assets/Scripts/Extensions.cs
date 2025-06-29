@@ -6,4 +6,8 @@ public static class Extensions
     {
         return self.parent ? self.parent : self;
     }
+    public static void ApplyForceInRandomUpDirection(this Rigidbody rb, float force)
+    {
+        rb.AddForce(Random.insideUnitSphere * force + Vector3.up);
+    }
 }

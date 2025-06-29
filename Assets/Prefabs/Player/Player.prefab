@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6234461963505785117}
   - component: {fileID: 831502299734047229}
   - component: {fileID: 6446976441645814377}
+  - component: {fileID: 6465368499253533044}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -301,8 +302,20 @@ MonoBehaviour:
   dashVelocity: 50
   dashLength: 0.5
   maxLinearVelocity: 20
-  groundCheck: {fileID: 0}
   groundDistance: 0.2
   groundMask:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &6465368499253533044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228351072499507690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ac461d26b4bac4cb24d8e960e30c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashDamage: 50

@@ -11,11 +11,10 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float dashVelocity;
     [SerializeField] float dashLength;
     [SerializeField] float maxLinearVelocity;
-    [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private LayerMask groundMask;
     private bool isGrounded;
-
+    public bool IsDashing => !dashTimer.IsFinished();
     private bool jumpPressed;
     private bool dashPressed;
     private Vector2 input;
@@ -105,5 +104,10 @@ public class PlayerMovement : MonoBehaviour {
         {
             dashPressed = false;
         }
+    }
+    public void CancelDash()
+    {
+        dashTimer.SetFinished();
+        dashLengthTimer.SetFinished();
     }
 }

@@ -38,6 +38,10 @@ public class PlayerMovement : MonoBehaviour {
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
         isGrounded = Physics.CheckSphere(transform.position + Vector3.down, groundDistance, groundMask);
         Debug.Log("Is Grounded:" + isGrounded);
+        if (isGrounded)
+        {
+            jumpTimer.SetFinished();
+        }
         if (jumpPressed && jumpTimer.IsFinished())
         {
             Debug.Log("Player Jumping");

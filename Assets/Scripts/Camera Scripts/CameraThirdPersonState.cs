@@ -34,7 +34,7 @@ public class CameraThirdPersonState : CameraState {
         Cursor.lockState = CursorLockMode.Locked;
 
         //Setting initial camera position
-        camManager.setMouseX(camPivot.parent.transform.eulerAngles.y);
+        camManager.setMouseX(camPivot.transform.eulerAngles.y);
         camManager.setMouseY(0);
     }
 
@@ -61,6 +61,6 @@ public class CameraThirdPersonState : CameraState {
     public override void MouseMovementCallback(CameraStateManager camManager, Vector2 mouseInput) {
         mouseX += mouseInput.x * rotationSpeed;
         mouseY -= mouseInput.y * rotationSpeed;
-        Debug.Log("MouseX: " + mouseX + " MouseY: " + mouseY);
+       // Debug.Log("MouseX: " + mouseX + " MouseY: " + mouseY);
     }
 }

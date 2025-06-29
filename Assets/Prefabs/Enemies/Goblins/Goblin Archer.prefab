@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5738031899528896190}
   m_Layer: 0
   m_Name: Goblin Archer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 1296030838418641977}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.44467, y: 1.5, z: 8.34871}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdde7647d5802fc42aac2739bd744e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1310437533374271948}
+  movementTarget: {fileID: 1310437533374271948}
   stoppingDistance: 10
 --- !u!1 &2798029995318124206
 GameObject:
@@ -218,7 +218,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 89c76c2ac2c028146be879cd97b90209, type: 2}
+  - {fileID: 2100000, guid: 1ae870863bc84a9418b94a0d9f58a6a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -595,7 +595,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 89c76c2ac2c028146be879cd97b90209, type: 2}
+  - {fileID: 2100000, guid: 1ae870863bc84a9418b94a0d9f58a6a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

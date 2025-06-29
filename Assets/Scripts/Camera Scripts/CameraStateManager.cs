@@ -38,7 +38,7 @@ public class CameraStateManager : MonoBehaviour
     }
 
     public void SetMouseValues(InputAction.CallbackContext mouseInput) {
-        Debug.Log("SetMouseValues Called");
+        //Debug.Log("SetMouseValues Called");
         currentState.MouseMovementCallback(this, mouseInput.ReadValue<Vector2>());
     }
 

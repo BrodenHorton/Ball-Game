@@ -5,7 +5,7 @@ public class BasicRangedMovement : AIMovement
     [SerializeField] float stoppingDistance;
     public override Vector3 getTargetLocation()
     {
-        Vector3 toSelf = (transform.position - target.position).normalized;
-        return target.position + toSelf * stoppingDistance;
+        Vector3 toSelf = (transform.position - movementTarget.position).normalized;
+        return movementTarget.position + toSelf * stoppingDistance;
     }
 }

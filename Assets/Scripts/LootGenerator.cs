@@ -20,7 +20,7 @@ public class LootGenerator : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.EnemyDeath += GenerateLootForCreature;
+        EventBus.EnemyDeath += GenerateLootForCreature;
     }
 
     public void GenerateLootForCreature(GameObject creature)

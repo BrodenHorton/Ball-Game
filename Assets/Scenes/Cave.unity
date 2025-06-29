@@ -499,6 +499,10 @@ PrefabInstance:
       propertyPath: camPivot
       value: 
       objectReference: {fileID: 1630050175}
+    - target: {fileID: 8727879642360811382, guid: fee2d30c76e28c24387307d7af6f7e37, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

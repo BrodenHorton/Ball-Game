@@ -1,11 +1,9 @@
 using System;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public static Action<GameObject> EnemyDeath;
     private GameObject playerInstance;
     private int money;
     private void Awake()

@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 671790293}
   - component: {fileID: 671790292}
   - component: {fileID: 671790291}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +650,7 @@ GameObject:
   - component: {fileID: 1400968397}
   - component: {fileID: 1400968396}
   - component: {fileID: 1400968395}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -876,7 +876,7 @@ GameObject:
   - component: {fileID: 2099156870}
   - component: {fileID: 2099156869}
   - component: {fileID: 2099156868}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1086,9 +1086,17 @@ PrefabInstance:
       value: Player Temp
       objectReference: {fileID: 0}
     - target: {fileID: 6446976441645814377, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
+      propertyPath: force
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446976441645814377, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 723792838}
+    - target: {fileID: 6446976441645814377, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
+      propertyPath: maxLinearVelocity
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

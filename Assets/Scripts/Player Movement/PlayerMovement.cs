@@ -11,7 +11,10 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float dashVelocity;
     [SerializeField] float dashLength;
     [SerializeField] float maxLinearVelocity;
-
+    [SerializeField] private float groundDistance = 0.2f;
+    [SerializeField] private LayerMask groundMask;
+    private bool isGrounded;
+    public bool IsDashing => !dashTimer.IsFinished();
     private bool jumpPressed;
     private bool dashPressed;
     private Vector2 input;
@@ -32,10 +35,12 @@ public class PlayerMovement : MonoBehaviour {
     private void FixedUpdate() {
         Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-        float tempForce = force;
-
-
-
+        isGrounded = Physics.CheckSphere(transform.position + Vector3.down, groundDistance, groundMask);
+        Debug.Log("Is Grounded:" + isGrounded);
+        if (isGrounded)
+        {
+            jumpTimer.SetFinished();
+        }
         if (jumpPressed && jumpTimer.IsFinished())
         {
             Debug.Log("Player Jumping");
@@ -71,7 +76,8 @@ public class PlayerMovement : MonoBehaviour {
         {
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             moveDir.y = 0f;
-            rb.AddForce(moveDir.normalized * tempForce);
+            float airControlFactor = isGrounded ? 1f : 0.2f; // 0.2 is orginal value = weak air control and used to refuce floatyness. One way to solve this is to have a "move timer" in the air and disable this method when it expires
+            rb.AddForce(airControlFactor * (force * moveDir.normalized) + Physics.gravity, ForceMode.Force);
         }
     }
 
@@ -98,5 +104,10 @@ public class PlayerMovement : MonoBehaviour {
         {
             dashPressed = false;
         }
+    }
+    public void CancelDash()
+    {
+        dashTimer.SetFinished();
+        dashLengthTimer.SetFinished();
     }
 }

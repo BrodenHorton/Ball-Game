@@ -31,6 +31,7 @@ public class AiController : MonoBehaviour, IDamageable
         currentHealth -= amt;
         if (IsDead)
         {
+            EventBus.EnemyDeath.Invoke(gameObject);
             Destroy(gameObject);
         }
     }

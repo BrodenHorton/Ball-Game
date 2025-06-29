@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
     PlayerMovement movement;
+    [SerializeField] List<Ability> abilities;
     [SerializeField] float dashDamage;
     private void Awake()
     {
@@ -19,6 +21,27 @@ public class PlayerAbilities : MonoBehaviour
                 damageable.TakeDamage(dashDamage);
                 movement.CancelDash();
             }
+        }
+    }
+    private void Update()
+    {
+        abilities.ForEach(ability => {
+            if(!ability.needsPhysicsUpdate)
+                ability.Update();
+            });
+    }
+    private void FixedUpdate()
+    {
+        abilities.ForEach(ability => {
+            if (ability.needsPhysicsUpdate)
+                ability.Update();
+        });
+    }
+    public void OnActionUsed(int action)
+    {
+        if (abilities.Count-1 <= action)
+        {
+            abilities[action].Activate();
         }
     }
 }

@@ -2213,12 +2213,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6465368499253533044, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: abilities.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6465368499253533044, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: 'abilities.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 6c9d8e291a20ab84e9648febaa83c45c, type: 2}
+    - target: {fileID: 6465368499253533044, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
+      propertyPath: 'abilities.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e6bd519906926d548927c43a03bd2b06, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -19,14 +19,11 @@ public class PlayerAbilities : MonoBehaviour
             if (collider.TryGetComponent(out IDamageable damageable))
             {
                 Debug.Log("Dealing damage to " + damageable);
-                damageable.TakeDamage(baseDashDamage + abilityDamageModifier);
+                damageable.TakeDamage(baseDashDamage);
+                EventBus.EnemyHit.Invoke(collider.gameObject);
                 movement.CancelDash();
             }
         }
-    }
-    public void ChangeDamageModifier(float value)
-    {
-        abilityDamageModifier += value;
     }
     public float GetDashDamage() => baseDashDamage;
     private void Update()
@@ -50,5 +47,10 @@ public class PlayerAbilities : MonoBehaviour
         {
             abilities[action].Activate();
         }
+    }
+    public void RemoveAbility(Ability ability)
+    {
+        ability.Deactivate();
+        abilities.Remove(ability);
     }
 }

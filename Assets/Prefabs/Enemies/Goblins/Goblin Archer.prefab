@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 6080246994020921860}
   - component: {fileID: 103446267582807530}
   - component: {fileID: 5738031899528896190}
+  - component: {fileID: 3488179514550525661}
   m_Layer: 0
   m_Name: Goblin Archer
   m_TagString: Enemy
@@ -120,6 +121,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementTarget: {fileID: 1310437533374271948}
   stoppingDistance: 10
+--- !u!114 &3488179514550525661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296030838418641977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f595fb7c11617fc409f57c9407590a5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2798029995318124206
 GameObject:
   m_ObjectHideFlags: 0

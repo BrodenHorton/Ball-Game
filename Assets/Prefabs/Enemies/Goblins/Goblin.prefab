@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 5434316751838945560}
   - component: {fileID: 7591085869015161961}
   - component: {fileID: 8486456994356450413}
+  - component: {fileID: 4993362666576483002}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Enemy
@@ -302,6 +303,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementTarget: {fileID: 8763364414980202118}
+--- !u!114 &4993362666576483002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414800506413512019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f595fb7c11617fc409f57c9407590a5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5829161992299071176
 GameObject:
   m_ObjectHideFlags: 0

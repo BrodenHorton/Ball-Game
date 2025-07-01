@@ -9,9 +9,18 @@ public abstract class Ability : ScriptableObject
     public bool needsPhysicsUpdate;
     public float activatedLength;
     [NonSerialized] protected Timer activationTimer;
-
     public abstract void Activate();
     public abstract void Upgrade();
     public abstract void Update();
     public abstract void Deactivate();
+    public abstract void DashedIntoEventHandler(GameObject enemy);
+    protected virtual void ConnectToEvents()
+    {
+        EventBus.EnemyHit += DashedIntoEventHandler;
+    }
+    protected virtual void DisconnectEvents()
+    {
+        EventBus.EnemyHit -= DashedIntoEventHandler;
+    }
+
 }

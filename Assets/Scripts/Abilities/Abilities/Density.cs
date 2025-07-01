@@ -6,6 +6,7 @@ public class Density : Ability
     Rigidbody rb;
     float originalMass;
     [SerializeField][Range(0, 1)] float damageMultiplier;
+    float damageToApply;
     
     /*
      * 4. Density
@@ -16,6 +17,7 @@ public class Density : Ability
     public override void Activate()
     {
         if (isActivated) return;
+        ConnectToEvents();
         activationTimer = new Timer(activatedLength);
         this.player = GameManager.Instance.getPlayer();
         isActivated = true;
@@ -24,7 +26,7 @@ public class Density : Ability
         rb.mass *= 3;
         var abilitiesComponent = player.GetComponent<PlayerAbilities>();
         var damage = abilitiesComponent.GetDashDamage();
-        abilitiesComponent.ChangeDamageModifier(damage * damageMultiplier);
+        damageToApply = damageMultiplier * damage;
     }
 
     public override void Upgrade()
@@ -42,9 +44,16 @@ public class Density : Ability
     public override void Deactivate()
     {
         isActivated = false;
+        DisconnectEvents();
         rb.mass = originalMass;
-        var abilitiesComponent = player.GetComponent<PlayerAbilities>();
-        var damage = abilitiesComponent.GetDashDamage();
-        abilitiesComponent.ChangeDamageModifier(-damage * damageMultiplier);
+    }
+
+    public override void DashedIntoEventHandler(GameObject enemy)
+    {
+        if(enemy.TryGetComponent(out IDamageable damageable))
+        {
+            Debug.Log("Dealing " + damageToApply + " to " + enemy);
+            damageable.TakeDamage(damageToApply);
+        }
     }
 }

@@ -26,7 +26,7 @@ public class AiController : MonoBehaviour, IDamageable
         currentHealth = Mathf.Clamp(currentHealth + amt, 0, maxHealth);
     }
 
-    public void TakeDamage(float amt)
+    public void TakeDamage(float amt, EffectType effectType = EffectType.NORMAL)
     {
         currentHealth -= amt;
         if (IsDead)

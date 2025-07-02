@@ -19,8 +19,8 @@ public class PlayerAbilities : MonoBehaviour
             if (collider.TryGetComponent(out IDamageable damageable))
             {
                 Debug.Log("Dealing damage to " + damageable);
-                damageable.TakeDamage(baseDashDamage);
-                EventBus.EnemyHit.Invoke(collider.gameObject);
+                damageable.TakeDamage(baseDashDamage, EffectType.NORMAL);
+                EventBus.DashedInto?.Invoke(collider.gameObject);
                 movement.CancelDash();
             }
         }
@@ -42,8 +42,7 @@ public class PlayerAbilities : MonoBehaviour
     }
     public void OnActionUsed(int action)
     {
-        Debug.Log("Activating " + action);
-        if (abilities.Count-1 <= action)
+        if (action <= abilities.Count - 1)
         {
             abilities[action].Activate();
         }

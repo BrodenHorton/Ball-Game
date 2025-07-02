@@ -16,11 +16,11 @@ public abstract class Ability : ScriptableObject
     public abstract void DashedIntoEventHandler(GameObject enemy);
     protected virtual void ConnectToEvents()
     {
-        EventBus.EnemyHit += DashedIntoEventHandler;
+        EventBus.DashedInto += DashedIntoEventHandler;
     }
     protected virtual void DisconnectEvents()
     {
-        EventBus.EnemyHit -= DashedIntoEventHandler;
+        EventBus.DashedInto -= DashedIntoEventHandler;
     }
 
 }

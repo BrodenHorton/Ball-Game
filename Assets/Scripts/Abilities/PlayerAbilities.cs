@@ -16,8 +16,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         foreach(var ability in startingAbilities)
         {
-            Ability ab = Instantiate(ability, transform);
-            abilities.Add(ab);
+            AddAbility(ability);
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -43,10 +42,17 @@ public class PlayerAbilities : MonoBehaviour
             abilities[action].Activate();
         }
     }
+    public void AddAbility(Ability ability)
+	{
+		Ability ab = Instantiate(ability, transform);
+		abilities.Add(ab);
+		EventBus.AbilityAdded?.Invoke(ab, abilities.IndexOf(ab));
+    }
     public void RemoveAbility(Ability ability)
     {
         ability.Deactivate();
-        abilities.Remove(ability);
+		EventBus.AbilityRemoved?.Invoke(ability, abilities.IndexOf(ability));
+		abilities.Remove(ability);
         Destroy(ability.gameObject);
     }
 }

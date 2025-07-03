@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Density 1
   m_EditorClassIdentifier: 
   activatedLength: 30
+  icon: {fileID: 21300000, guid: c19e14e484c9cb045aa3285230789d16, type: 3}
   damageMultiplier: 0.25

@@ -20,4 +20,5 @@ public abstract class Ability : MonoBehaviour
     {
         EventBus.DashedInto -= DashedIntoEventHandler;
     }
+    public AbilityData GetAbilityData() => abilityData;
 }

@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
         isGrounded = Physics.CheckSphere(transform.position + Vector3.down, groundDistance, groundMask);
-        Debug.Log("Is Grounded:" + isGrounded);
+        //Debug.Log("Is Grounded:" + isGrounded);
         if (isGrounded)
         {
             jumpTimer.SetFinished();

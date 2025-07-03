@@ -4,6 +4,7 @@ public class Ignite : Ability
 {
     [SerializeField] float fireEffectStatusDuration;
     [SerializeField] float fireEffectDamageTickRate;
+    [SerializeField] float fireDamage = 5;
     /*
      * 1. Ignite
     1. Upon activation, the Ball erupts with fire. Any Dashed into enemy catches on fire for 10 seconds and takes damage for the duration
@@ -22,6 +23,8 @@ public class Ignite : Ability
     public override void Deactivate()
     {
         DisconnectEvents();
+        isActivated = false;
+        Debug.Log("Deactivating Ignite");
     }
 
     public override void Update()
@@ -40,7 +43,7 @@ public class Ignite : Ability
     {
         if(enemy.TryGetComponent(out StatusEffectRunner runner) && enemy.TryGetComponent(out IDamageable damageable))
         {
-            runner.ApplyEffect(new FireDamageEffect(fireEffectStatusDuration, fireEffectDamageTickRate, damageable));
+            runner.ApplyEffect(new DamageEffect(fireDamage, fireEffectStatusDuration, fireEffectDamageTickRate, damageable, EffectType.FIRE));
             Debug.Log("Applying Fire Effect");
         }
     }

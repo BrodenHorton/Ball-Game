@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 [CreateAssetMenu(menuName = "My Assets/Abilities/Density")]
 public class Density : Ability
 {
-    GameObject player;
-    Rigidbody rb;
-    float originalMass;
+    [NonSerialized] GameObject player;
+    [NonSerialized] Rigidbody rb;
+    [NonSerialized] float originalMass;
     [SerializeField][Range(0, 1)] float damageMultiplier;
-    float damageToApply;
+    [NonSerialized] float damageToApply;
     
     /*
      * 4. Density
@@ -44,6 +45,7 @@ public class Density : Ability
     public override void Deactivate()
     {
         isActivated = false;
+        Debug.Log("Deactivating Density");
         DisconnectEvents();
         rb.mass = originalMass;
     }
@@ -53,7 +55,7 @@ public class Density : Ability
         if(enemy.TryGetComponent(out IDamageable damageable))
         {
             Debug.Log("Dealing " + damageToApply + " to " + enemy);
-            damageable.TakeDamage(damageToApply);
+            damageable.TakeDamage(damageToApply, EffectType.NORMAL);
         }
     }
 }

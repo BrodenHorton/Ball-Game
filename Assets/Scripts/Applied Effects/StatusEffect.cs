@@ -3,14 +3,16 @@ public abstract class StatusEffect
     protected Timer effectTimer;
     protected Timer damageTickTimer;
     protected IDamageable target;
+    protected EffectType effectType;
 
     public bool IsFinished => effectTimer.IsFinished();
 
-    public StatusEffect(float duration, float damageTick, IDamageable target)
+    public StatusEffect(float duration, float damageTick, IDamageable target, EffectType effectType)
     {
         effectTimer = new Timer(duration);
         damageTickTimer = new Timer(damageTick);
         this.target = target;
+        this.effectType = effectType;
     }
 
     public void Tick(float deltaTime)
@@ -33,5 +35,6 @@ public enum EffectType
     FIRE,
     ICE,
     ELECTRIC,
-    WATER
+    WATER,
+    NORMAL
 }

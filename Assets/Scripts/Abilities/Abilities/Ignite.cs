@@ -1,10 +1,8 @@
 using UnityEngine;
-[CreateAssetMenu(menuName = "My Assets/Abilities/Ignite")]
 public class Ignite : Ability
 {
-    [SerializeField] float fireEffectStatusDuration;
-    [SerializeField] float fireEffectDamageTickRate;
-    [SerializeField] float fireDamage = 5;
+
+    
     /*
      * 1. Ignite
     1. Upon activation, the Ball erupts with fire. Any Dashed into enemy catches on fire for 10 seconds and takes damage for the duration
@@ -15,20 +13,20 @@ public class Ignite : Ability
     {
         if (isActivated) return;
         isActivated = true;
-        activationTimer = new Timer(activatedLength);
-        ConnectToEvents();
+        activationTimer = new Timer(abilityData.activatedLength);
         Debug.Log("Activating Ignite");
     }
 
     public override void Deactivate()
     {
-        DisconnectEvents();
         isActivated = false;
         Debug.Log("Deactivating Ignite");
     }
 
-    public override void Update()
+    private void Update()
     {
+        if (!isActivated) return;
+
         Debug.Log("Ignite Active");
         activationTimer.Update();
         if (activationTimer.IsFinished())
@@ -41,9 +39,10 @@ public class Ignite : Ability
     }
     public override void DashedIntoEventHandler(GameObject enemy)
     {
-        if(enemy.TryGetComponent(out StatusEffectRunner runner) && enemy.TryGetComponent(out IDamageable damageable))
+        if(isActivated && enemy.TryGetComponent(out StatusEffectRunner runner) && enemy.TryGetComponent(out IDamageable damageable))
         {
-            runner.ApplyEffect(new DamageEffect(fireDamage, fireEffectStatusDuration, fireEffectDamageTickRate, damageable, EffectType.FIRE));
+            var data = abilityData as IgniteData;
+            runner.ApplyEffect(new DamageEffect(data.fireDamage, data.fireEffectStatusDuration, data.fireEffectDamageTickRate, damageable, EffectType.FIRE));
             Debug.Log("Applying Fire Effect");
         }
     }

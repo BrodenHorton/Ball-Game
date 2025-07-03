@@ -1,13 +1,10 @@
-using System;
 using UnityEngine;
-[CreateAssetMenu(menuName = "My Assets/Abilities/Density")]
 public class Density : Ability
 {
-    [NonSerialized] GameObject player;
-    [NonSerialized] Rigidbody rb;
-    [NonSerialized] float originalMass;
-    [SerializeField][Range(0, 1)] float damageMultiplier;
-    [NonSerialized] float damageToApply;
+    GameObject player;
+    Rigidbody rb;
+    float originalMass;
+    float damageToApply;
     
     /*
      * 4. Density
@@ -18,8 +15,7 @@ public class Density : Ability
     public override void Activate()
     {
         if (isActivated) return;
-        ConnectToEvents();
-        activationTimer = new Timer(activatedLength);
+        activationTimer = new Timer(abilityData.activatedLength);
         this.player = GameManager.Instance.getPlayer();
         isActivated = true;
         rb = player.GetComponent<Rigidbody>();
@@ -27,15 +23,17 @@ public class Density : Ability
         rb.mass *= 3;
         var abilitiesComponent = player.GetComponent<PlayerAbilities>();
         var damage = abilitiesComponent.GetDashDamage();
-        damageToApply = damageMultiplier * damage;
+        damageToApply = (abilityData as DensityData).damageMultiplier * damage;
     }
 
     public override void Upgrade()
     {
 
     }
-    public override void Update()
+    private void FixedUpdate()
     {
+        if (!isActivated) return;
+
         Debug.Log("Density Active");
         rb.AddForce(Physics.gravity * 2);
         activationTimer.Update();
@@ -46,13 +44,12 @@ public class Density : Ability
     {
         isActivated = false;
         Debug.Log("Deactivating Density");
-        DisconnectEvents();
         rb.mass = originalMass;
     }
 
     public override void DashedIntoEventHandler(GameObject enemy)
     {
-        if(enemy.TryGetComponent(out IDamageable damageable))
+        if(isActivated && enemy.TryGetComponent(out IDamageable damageable))
         {
             Debug.Log("Dealing " + damageToApply + " to " + enemy);
             damageable.TakeDamage(damageToApply, EffectType.NORMAL);

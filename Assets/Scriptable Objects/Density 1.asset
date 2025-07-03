@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 229f07f9635b0d84998ae17fe58dde96, type: 3}
-  m_Name: Ignite
+  m_Script: {fileID: 11500000, guid: fa582352d8874d44dbe5b1d8af8a9b7a, type: 3}
+  m_Name: Density 1
   m_EditorClassIdentifier: 
-  isPassive: 0
-  needsPhysicsUpdate: 0
   activatedLength: 30
-  fireEffectStatusDuration: 10
-  fireEffectDamageTickRate: 1
+  damageMultiplier: 0.25

@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365149477cc6b59499b26af61b0cb595, type: 3}
-  m_Name: Density
+  m_Script: {fileID: 11500000, guid: 8e5370d032d3ef348bb24489c396f5dd, type: 3}
+  m_Name: Shock 1
   m_EditorClassIdentifier: 
-  isPassive: 0
-  isActivated: 0
-  needsPhysicsUpdate: 1
   activatedLength: 30
-  damageMultiplier: 0.5
+  shockDamage: 15
+  shockAreaRadius: 10
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 512

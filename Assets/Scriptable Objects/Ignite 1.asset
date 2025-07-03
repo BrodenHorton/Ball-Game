@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5c5d98241b25b4fb02aec4d4b2c0ea, type: 3}
-  m_Name: Shock
+  m_Script: {fileID: 11500000, guid: 8d1cbe9b503d07a49878b0cf1e5a5240, type: 3}
+  m_Name: Ignite 1
   m_EditorClassIdentifier: 
-  isPassive: 0
-  needsPhysicsUpdate: 0
   activatedLength: 30
-  shockDamage: 15
-  shockAreaRadius: 10
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 512
+  fireEffectStatusDuration: 30
+  fireEffectDamageTickRate: 5
+  fireDamage: 5

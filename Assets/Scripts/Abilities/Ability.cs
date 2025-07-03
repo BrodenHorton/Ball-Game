@@ -1,26 +1,23 @@
-using System;
 using UnityEngine;
 
 
-public abstract class Ability : ScriptableObject
+public abstract class Ability : MonoBehaviour
 {
     public bool isPassive;
-    [NonSerialized] public bool isActivated;
-    public bool needsPhysicsUpdate;
-    public float activatedLength;
-    [NonSerialized] protected Timer activationTimer;
+    public bool isActivated;
+    protected Timer activationTimer;
+    [SerializeField] protected AbilityData abilityData;
     public abstract void Activate();
     public abstract void Upgrade();
-    public abstract void Update();
     public abstract void Deactivate();
     public abstract void DashedIntoEventHandler(GameObject enemy);
-    protected virtual void ConnectToEvents()
+
+    private void OnEnable()
     {
         EventBus.DashedInto += DashedIntoEventHandler;
     }
-    protected virtual void DisconnectEvents()
+    private void OnDisable()
     {
         EventBus.DashedInto -= DashedIntoEventHandler;
     }
-
 }

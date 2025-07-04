@@ -1,14 +1,11 @@
 using System;
 using UnityEngine;
-[CreateAssetMenu(menuName = "My Assets/Abilities/Shock")]
 
 public class Shock : Ability
 {
-    [SerializeField] float shockDamage;
-    [SerializeField] float shockAreaRadius = 10;
-    [NonSerialized] PlayerMovement playerMovement;
-    [SerializeField] LayerMask enemyMask;
-    [NonSerialized] bool hitWhileDashing;
+
+    PlayerMovement playerMovement;
+    bool hitWhileDashing;
     /*2. Shock
     1. When the player dashes, the ball shoots out a lightning towards the nearest monster dealing lightning damage.
     2. On upgrade, the ball shoots out lightning automatically every 2 seconds towards the nearest enemy.
@@ -18,10 +15,9 @@ public class Shock : Ability
     {
         if (isActivated) return;
         isActivated = true;
-        activationTimer = new Timer(activatedLength);
+        activationTimer = new Timer(abilityData.activatedLength);
         playerMovement = GameManager.Instance.getPlayer().GetComponent<PlayerMovement>();
         hitWhileDashing = false;
-        ConnectToEvents();
         Debug.Log("Activating Shock");
     }
 
@@ -32,26 +28,27 @@ public class Shock : Ability
 
     public override void Deactivate()
     {
-        DisconnectEvents();
         isActivated = false;
         Debug.Log("Deactivating Shock");
     }
 
-    public override void Update()
+    private void Update()
     {
+        if (!isActivated) return;
+
         Debug.Log("Shock Active");
         activationTimer.Update();
         if (activationTimer.IsFinished())
             Deactivate();
         if (!hitWhileDashing && playerMovement.IsDashing)
         {
-            var hits = Physics.OverlapSphere(playerMovement.transform.position, shockAreaRadius, enemyMask);
+            var hits = Physics.OverlapSphere(playerMovement.transform.position, (abilityData as ShockData).shockAreaRadius, (abilityData as ShockData).enemyMask);
             for (int i = 0; i < hits.Length; i++)
             {
                 var trans = hits[i].transform.GetParentOrSelf();
                 if (trans.CompareTag("Enemy") && trans.TryGetComponent(out IDamageable damageable))
                 {
-                    damageable.TakeDamage(shockDamage, EffectType.ELECTRIC);
+                    damageable.TakeDamage((abilityData as ShockData).shockDamage, EffectType.ELECTRIC);
                     hitWhileDashing = true;
                     break;
                 }

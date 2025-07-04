@@ -4,12 +4,20 @@ using UnityEngine;
 public class PlayerAbilities : MonoBehaviour
 {
     PlayerMovement movement;
-    [SerializeField] List<Ability> abilities;
+    [SerializeField] List<Ability> startingAbilities;
+    List<Ability> abilities = new List<Ability>();
     [SerializeField] float baseDashDamage;
-    [SerializeField] float abilityDamageModifier = 0;
+
     private void Awake()
     {
         movement = GetComponent<PlayerMovement>();
+    }
+    private void Start()
+    {
+        foreach(var ability in startingAbilities)
+        {
+            AddAbility(ability);
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -26,20 +34,7 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
     public float GetDashDamage() => baseDashDamage;
-    private void Update()
-    {
-        abilities.ForEach(ability => {
-            if((ability.isPassive || ability.isActivated) && !ability.needsPhysicsUpdate)
-                ability.Update();
-            });
-    }
-    private void FixedUpdate()
-    {
-        abilities.ForEach(ability => {
-            if ((ability.isPassive || ability.isActivated) && ability.needsPhysicsUpdate)
-                ability.Update();
-        });
-    }
+
     public void OnActionUsed(int action)
     {
         if (action <= abilities.Count - 1)
@@ -47,9 +42,17 @@ public class PlayerAbilities : MonoBehaviour
             abilities[action].Activate();
         }
     }
+    public void AddAbility(Ability ability)
+	{
+		Ability ab = Instantiate(ability, transform);
+		abilities.Add(ab);
+		EventBus.AbilityAdded?.Invoke(ab, abilities.IndexOf(ab));
+    }
     public void RemoveAbility(Ability ability)
     {
         ability.Deactivate();
-        abilities.Remove(ability);
+		EventBus.AbilityRemoved?.Invoke(ability, abilities.IndexOf(ability));
+		abilities.Remove(ability);
+        Destroy(ability.gameObject);
     }
 }

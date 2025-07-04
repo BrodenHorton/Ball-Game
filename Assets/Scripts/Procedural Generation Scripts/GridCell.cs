@@ -24,9 +24,8 @@ public class GridCell {
         int standingWallCount = GetNumberOfStandingWalls();
         if (standingWallCount >= 3)
             orientation = CellOrientation.DeadEnd;
-        else if (standingWallCount == 2) {
+        else if (standingWallCount == 2)
             orientation = walls[0] && walls[2] || walls[1] && walls[3] ? CellOrientation.Corridor : CellOrientation.Bend;
-        }
         else if (standingWallCount == 1)
             orientation = CellOrientation.T_Intersection;
 

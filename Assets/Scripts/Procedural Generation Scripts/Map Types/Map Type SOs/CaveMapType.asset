@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e626102b5c976fb458efcb2fcf5c10e4, type: 3}
-  m_Name: CaveGeneration
+  m_Script: {fileID: 11500000, guid: 8b398955468e3264b8dcf0924a6f12e5, type: 3}
+  m_Name: CaveMapType
   m_EditorClassIdentifier: 
-  randomWalkIterations: 12
-  minRandomWalkLength: 3
-  maxRandomWalkLength: 40
-  drunkWalkIterations: 5
-  minDrunkWalkLength: 15
-  maxDrunkWalkLength: 15
-  mapType: 0
+  randomWalkIterations: 5
+  minRandomWalkLength: 0
+  maxRandomWalkLength: 50
+  drunkWalkIterations: 0
+  minDrunkWalkLength: 0
+  maxDrunkWalkLength: 0

@@ -2,9 +2,11 @@ using System;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
+    private static readonly System.Random RNG = new System.Random();
+
     [SerializeField] private Vector2Int gridDimensions;
     [SerializeField] private int gridCellSize;
-    [SerializeField] private MapGenerationType generationType;
+    [SerializeField] private MapType mapType;
 
     private GridCell[,] gridCells;
 
@@ -13,18 +15,23 @@ public class MapGenerator : MonoBehaviour {
 
         GenerateGridCells();
         BuildMapCells();
+        PrintGridCells();
     }
 
     private void GenerateGridCells() {
-        Vector2Int startingCell = new Vector2Int(gridDimensions.y / 2, gridDimensions.x / 2);
+        Vector2Int startingCell = new Vector2Int(gridDimensions.x / 2, gridDimensions.y / 2);
+        RandomWalkGeneration(startingCell);
+        DrunkWalkBranchGeneration();
+    }
+
+    private void RandomWalkGeneration(Vector2Int startingCell) {
         gridCells[startingCell.y, startingCell.x] = new GridCell();
 
-        System.Random rng = new System.Random();
         Vector2Int currentCell;
-        for(int i = 0; i < generationType.RandomWalkIterations; i++) {
+        for (int i = 0; i < mapType.RandomWalkIterations; i++) {
             currentCell = startingCell;
-            for (int j = 0; j < generationType.MaxRandomWalkLength; j++) {
-                int direction = rng.Next(0, 4);
+            for (int j = 0; j < mapType.MaxRandomWalkLength; j++) {
+                int direction = RNG.Next(0, 4);
                 if (direction == 0 && currentCell.y - 1 >= 0) {
                     gridCells[currentCell.y, currentCell.x].walls[0] = false;
                     if (gridCells[currentCell.y - 1, currentCell.x] == null)
@@ -32,7 +39,7 @@ public class MapGenerator : MonoBehaviour {
                     gridCells[currentCell.y - 1, currentCell.x].walls[2] = false;
                     currentCell.y--;
                 }
-                else if(direction == 1 && currentCell.x + 1 < gridCells.GetLength(1)) {
+                else if (direction == 1 && currentCell.x + 1 < gridCells.GetLength(1)) {
                     gridCells[currentCell.y, currentCell.x].walls[1] = false;
                     if (gridCells[currentCell.y, currentCell.x + 1] == null)
                         gridCells[currentCell.y, currentCell.x + 1] = new GridCell();
@@ -57,40 +64,24 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
+    private void DrunkWalkBranchGeneration() {
+
+    }
+
     private void BuildMapCells() {
-        string row = "";
         for (int i = 0; i < gridCells.GetLength(0); i++) {
             for(int j = 0; j < gridCells.GetLength(1); j++) {
-                if (gridCells[i, j] == null) {
-                    row = row + "x";
+                if (gridCells[i, j] == null)
                     continue;
-                }
 
                 CellOrientation orientation = gridCells[i, j].GetOrientation();
                 float rotation = getGridCellRotation(gridCells[i, j]);
-                GameObject cell = Instantiate(MapCellRegistry.Instance.GetCellsBy(generationType.MapType, orientation)[0]);
+                GameObject cell = Instantiate(mapType.GetCellsByOrientation(orientation)[0]);
                 cell.transform.position = new Vector3(j * gridCellSize, 0f, i * -gridCellSize);
                 cell.transform.Rotate(cell.transform.up, rotation);
-                if(orientation == CellOrientation.DeadEnd) {
-                    row += "D";
-                }
-                else if (orientation == CellOrientation.Corridor) {
-                    row += "C";
-                }
-                else if (orientation == CellOrientation.Bend) {
-                    row += "B";
-                }
-                else if (orientation == CellOrientation.T_Intersection) {
-                    row += "T";
-                }
-                else if (orientation == CellOrientation.Intersection) {
-                    row += "I";
-                }
             }
-            row += "\n";
         }
 
-        Debug.Log(row);
         Debug.Log("Map construction finsihed");
     }
 
@@ -131,6 +122,33 @@ public class MapGenerator : MonoBehaviour {
         }
 
         return rotation;
+    }
+
+    private void PrintGridCells() {
+        string mapStr = "";
+        for (int i = 0; i < gridCells.GetLength(0); i++) {
+            for (int j = 0; j < gridCells.GetLength(1); j++) {
+                if (gridCells[i, j] == null) {
+                    mapStr = mapStr + "-";
+                    continue;
+                }
+
+                CellOrientation orientation = gridCells[i, j].GetOrientation();
+                if (orientation == CellOrientation.DeadEnd)
+                    mapStr += "D";
+                else if (orientation == CellOrientation.Corridor)
+                    mapStr += "C";
+                else if (orientation == CellOrientation.Bend)
+                    mapStr += "B";
+                else if (orientation == CellOrientation.T_Intersection)
+                    mapStr += "T";
+                else if (orientation == CellOrientation.Intersection)
+                    mapStr += "I";
+            }
+            mapStr += "\n";
+        }
+
+        Debug.Log(mapStr);
     }
 
 }

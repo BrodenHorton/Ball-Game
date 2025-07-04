@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CameraThirdPersonState : CameraState {
     private const float DEFAULT_NATURAL_CAM_DISTANCE = 6.0f;
@@ -61,6 +59,5 @@ public class CameraThirdPersonState : CameraState {
     public override void MouseMovementCallback(CameraStateManager camManager, Vector2 mouseInput) {
         mouseX += mouseInput.x * rotationSpeed;
         mouseY -= mouseInput.y * rotationSpeed;
-       // Debug.Log("MouseX: " + mouseX + " MouseY: " + mouseY);
     }
 }

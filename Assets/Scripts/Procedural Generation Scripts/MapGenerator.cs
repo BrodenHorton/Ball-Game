@@ -8,6 +8,7 @@ public class MapGenerator : MonoBehaviour {
     [SerializeField] private MapType mapType;
     [SerializeField] private bool hasBranchPaths;
     [SerializeField] private int mapSeed;
+    [SerializeField] private Vector3 mapCenter;
 
     private GridCell[,] gridCells;
     private System.Random rng;
@@ -58,20 +59,20 @@ public class MapGenerator : MonoBehaviour {
             vectorDir = new Vector2((float)rng.NextDouble() * 2 - 1, (float)rng.NextDouble() * 2 - 1);
             List<WeightedEntry<Direction2D>> weightedDirections = new List<WeightedEntry<Direction2D>>();
             if(vectorDir.y > 0) {
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.North, Math.Abs(vectorDir.y) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.6f));
+                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.North, Math.Abs(vectorDir.y) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.7f));
                 weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.South, 0.15f));
             }
             else {
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.South, Math.Abs(vectorDir.y) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.6f));
+                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.South, Math.Abs(vectorDir.y) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.7f));
                 weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.North, 0.15f));
             }
 
             if(vectorDir.x > 0) {
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.East, Math.Abs(vectorDir.x) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.6f));
+                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.East, Math.Abs(vectorDir.x) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.7f));
                 weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.West, 0.15f));
             }
             else {
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.West, Math.Abs(vectorDir.x) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.6f));
+                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.West, Math.Abs(vectorDir.x) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.7f));
                 weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.East, 0.15f));
             }
 
@@ -116,6 +117,7 @@ public class MapGenerator : MonoBehaviour {
     }
 
     private void BuildMapCells() {
+        Vector3 mapOffset = new Vector3(-gridDimensions.x * gridCellSize / 2 + mapCenter.x, mapCenter.y, gridDimensions.y * gridCellSize / 2 + mapCenter.z);
         for (int i = 0; i < gridCells.GetLength(0); i++) {
             for(int j = 0; j < gridCells.GetLength(1); j++) {
                 if (gridCells[i, j] == null)
@@ -124,7 +126,7 @@ public class MapGenerator : MonoBehaviour {
                 CellOrientation orientation = gridCells[i, j].GetOrientation();
                 float rotation = getGridCellRotation(gridCells[i, j]);
                 GameObject cell = Instantiate(mapType.GetCellsByOrientation(orientation)[0]);
-                cell.transform.position = new Vector3(j * gridCellSize, 0f, i * -gridCellSize);
+                cell.transform.position = new Vector3(j * gridCellSize + mapOffset.x, mapCenter.y, i * -gridCellSize + mapOffset.z);
                 cell.transform.Rotate(cell.transform.up, rotation);
             }
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class WeightedValues {
 
@@ -12,11 +11,9 @@ public class WeightedValues {
         float totalWeight = 0f;
         for (int i = 0; i < weightedList.Count; i++)
             totalWeight += weightedList[i].Weight;
-        Debug.Log("totalWeight: " + totalWeight);
 
         T value = default;
         float weightIndex = (float)rng.NextDouble() * totalWeight;
-        Debug.Log("Weight Index: " + weightIndex);
         for (int i = 0; i < weightedList.Count; i++) {
             weightIndex -= weightedList[i].Weight;
             if (weightIndex <= 0) {

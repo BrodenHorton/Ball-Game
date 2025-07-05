@@ -685,7 +685,8 @@ MonoBehaviour:
   gridCellSize: 100
   mapType: {fileID: 11400000, guid: b520cf26e424d534a834c2e32e3d45a7, type: 2}
   hasBranchPaths: 1
-  mapSeed: 4
+  mapSeed: 200
+  mapCenter: {x: 0, y: 0, z: 0}
 --- !u!1 &1741993419
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,15 +764,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 959148135499979585, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 800
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 959148135499979585, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.49
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 959148135499979585, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 959148135499979585, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: m_LocalRotation.w

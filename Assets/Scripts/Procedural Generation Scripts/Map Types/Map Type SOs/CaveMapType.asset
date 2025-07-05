@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomWalkIterations: 10
   minRandomWalkLength: 0
-  maxRandomWalkLength: 12
+  maxRandomWalkLength: 15
   drunkWalkIterations: 3
   minDrunkWalkLength: 0
-  maxDrunkWalkLength: 15
+  maxDrunkWalkLength: 18

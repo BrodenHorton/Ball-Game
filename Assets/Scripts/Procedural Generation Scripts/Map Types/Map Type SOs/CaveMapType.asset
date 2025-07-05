@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b398955468e3264b8dcf0924a6f12e5, type: 3}
   m_Name: CaveMapType
   m_EditorClassIdentifier: 
-  randomWalkIterations: 5
+  randomWalkIterations: 10
   minRandomWalkLength: 0
-  maxRandomWalkLength: 50
-  drunkWalkIterations: 0
+  maxRandomWalkLength: 12
+  drunkWalkIterations: 3
   minDrunkWalkLength: 0
-  maxDrunkWalkLength: 0
+  maxDrunkWalkLength: 15

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraThirdPersonState : CameraState {
-    private const float DEFAULT_NATURAL_CAM_DISTANCE = 6.0f;
-    private const float DEFAULT_CAM_ROTATION_SPEED = 0.2f;
-    private const int CAM_UPPER_PITCH_CLAMP = 60;
-    private const int CAM_LOWER_PITCH_CLAMP = -40;
-    private const float OBSTACLE_PADDING = 0.5f;
+    private static readonly float DEFAULT_NATURAL_CAM_DISTANCE = 8.0f;
+    private static readonly float DEFAULT_CAM_ROTATION_SPEED = 0.2f;
+    private static readonly int CAM_UPPER_PITCH_CLAMP = 60;
+    private static readonly int CAM_LOWER_PITCH_CLAMP = -40;
+    private static readonly float OBSTACLE_PADDING = 0.5f;
 
     private Transform camPivot;
     private Vector3 camStartingVector;
@@ -21,7 +21,7 @@ public class CameraThirdPersonState : CameraState {
 
     public CameraThirdPersonState(Transform camPivot) {
         this.camPivot = camPivot;
-        camStartingVector = new Vector3(0, 1, -3);
+        camStartingVector = new Vector3(0, 1, -4);
         naturalCamDistance = DEFAULT_NATURAL_CAM_DISTANCE;
         rotationSpeed = DEFAULT_CAM_ROTATION_SPEED;
         layerMask = LayerMask.GetMask("Ground");

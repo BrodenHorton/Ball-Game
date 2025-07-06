@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour {
+public class RandomWalkMapGenerator : MonoBehaviour, MapGenerator {
     [SerializeField] private MapGenerationData generationData;
 
     private System.Random rng;
@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour {
         rng = new System.Random(mapSeed);
         Vector2Int startingCell = new Vector2Int(generationData.GridDimensions.x / 2, generationData.GridDimensions.y / 2);
         RandomWalkGeneration(gridCells, startingCell);
-        if(generationData.HasBranchPaths)
+        if (generationData.HasBranchPaths)
             DrunkWalkBranchGeneration(gridCells);
 
         BuildMapCells(gridCells, mapCenter);

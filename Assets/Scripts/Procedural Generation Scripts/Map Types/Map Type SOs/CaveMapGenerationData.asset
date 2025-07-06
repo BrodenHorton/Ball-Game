@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b398955468e3264b8dcf0924a6f12e5, type: 3}
-  m_Name: CaveMapType
+  m_Name: CaveMapGenerationData
   m_EditorClassIdentifier: 
+  gridDimensions: {x: 100, y: 100}
+  gridCellSize: 100
+  hasBranchPaths: 1
   randomWalkIterations: 10
-  minRandomWalkLength: 0
-  maxRandomWalkLength: 15
+  randomWalkLength: 15
   drunkWalkIterations: 3
-  minDrunkWalkLength: 0
-  maxDrunkWalkLength: 18
+  drunkWalkLength: 18
+  doorPrefab: {fileID: 6695056754986560365, guid: e00d6a5b2a419244f9fca794712b0688, type: 3}

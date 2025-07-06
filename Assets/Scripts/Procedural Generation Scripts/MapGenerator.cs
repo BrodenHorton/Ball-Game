@@ -3,47 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
-    [SerializeField] private Vector2Int gridDimensions;
-    [SerializeField] private int gridCellSize;
-    [SerializeField] private MapType mapType;
-    [SerializeField] private bool hasBranchPaths;
-    [SerializeField] private int mapSeed;
-    [SerializeField] private Vector3 mapCenter;
+    [SerializeField] private MapGenerationData generationData;
 
-    private GridCell[,] gridCells;
     private System.Random rng;
 
-    private void Start() {
-        gridCells = new GridCell[gridDimensions.y, gridDimensions.x];
+    public GridCell[,] GenerateMap(Vector3 mapCenter, int mapSeed) {
+        GridCell[,] gridCells = new GridCell[generationData.GridDimensions.y, generationData.GridDimensions.x];
         rng = new System.Random(mapSeed);
+        Vector2Int startingCell = new Vector2Int(generationData.GridDimensions.x / 2, generationData.GridDimensions.y / 2);
+        RandomWalkGeneration(gridCells, startingCell);
+        if(generationData.HasBranchPaths)
+            DrunkWalkBranchGeneration(gridCells);
 
-        GenerateGridCells();
-        BuildMapCells();
-        PrintGridCells();
+        BuildMapCells(gridCells, mapCenter);
+        PrintGridCells(gridCells);
+
+        return gridCells;
     }
 
-    private void GenerateGridCells() {
-        Vector2Int startingCell = new Vector2Int(gridDimensions.x / 2, gridDimensions.y / 2);
-        RandomWalkGeneration(startingCell);
-        if(hasBranchPaths)
-            DrunkWalkBranchGeneration();
-    }
-
-    private void RandomWalkGeneration(Vector2Int startingCell) {
+    private void RandomWalkGeneration(GridCell[,] gridCells, Vector2Int startingCell) {
         gridCells[startingCell.y, startingCell.x] = new GridCell();
 
         Vector2Int currentCell;
-        for (int i = 0; i < mapType.RandomWalkIterations; i++) {
+        for (int i = 0; i < generationData.RandomWalkIterations; i++) {
             currentCell = startingCell;
-            for (int j = 0; j < mapType.MaxRandomWalkLength; j++) {
+            for (int j = 0; j < generationData.MaxRandomWalkLength; j++) {
                 Array cardinalDirections = Enum.GetValues(typeof(Direction2D));
                 Direction2D direction = (Direction2D)cardinalDirections.GetValue(rng.Next(cardinalDirections.Length));
-                UpdateCellInDirectionOf(ref currentCell, direction);
+                UpdateCellInDirectionOf(gridCells, ref currentCell, direction);
             }
         }
     }
 
-    private void DrunkWalkBranchGeneration() {
+    private void DrunkWalkBranchGeneration(GridCell[,] gridCells) {
         List<Vector2Int> activeGridCells = new List<Vector2Int>();
         for(int i = 0; i < gridCells.GetLength(0); i++) {
             for(int j = 0; j < gridCells.GetLength(1); j++) {
@@ -54,7 +46,7 @@ public class MapGenerator : MonoBehaviour {
 
         Vector2Int startingCell;
         Vector2 vectorDir;
-        for(int i = 0; i < mapType.DrunkWalkIterations; i++) {
+        for(int i = 0; i < generationData.DrunkWalkIterations; i++) {
             startingCell = activeGridCells[rng.Next(0, activeGridCells.Count)];
             vectorDir = new Vector2((float)rng.NextDouble() * 2 - 1, (float)rng.NextDouble() * 2 - 1);
             List<WeightedEntry<Direction2D>> weightedDirections = new List<WeightedEntry<Direction2D>>();
@@ -77,15 +69,15 @@ public class MapGenerator : MonoBehaviour {
             }
 
             Vector2Int currentCell = startingCell;
-            for(int j = 0; j < mapType.MaxDrunkWalkLength; j++) {
+            for(int j = 0; j < generationData.MaxDrunkWalkLength; j++) {
                 Direction2D direction = WeightedValues.GetWeightedValue(weightedDirections, rng);
-                UpdateCellInDirectionOf(ref currentCell, direction);
+                UpdateCellInDirectionOf(gridCells, ref currentCell, direction);
             }
         }
 
     }
 
-    private void UpdateCellInDirectionOf(ref Vector2Int currentCell, Direction2D direction) {
+    private void UpdateCellInDirectionOf(GridCell[,] gridCells, ref Vector2Int currentCell, Direction2D direction) {
         if (direction == Direction2D.North && currentCell.y - 1 >= 0) {
             gridCells[currentCell.y, currentCell.x].walls[0] = false;
             if (gridCells[currentCell.y - 1, currentCell.x] == null)
@@ -116,8 +108,8 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    private void BuildMapCells() {
-        Vector3 mapOffset = new Vector3(-gridDimensions.x * gridCellSize / 2 + mapCenter.x, mapCenter.y, gridDimensions.y * gridCellSize / 2 + mapCenter.z);
+    private void BuildMapCells(GridCell[,] gridCells, Vector3 mapCenter) {
+        Vector3 mapOffset = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2 + mapCenter.x, mapCenter.y, generationData.GridDimensions.y * generationData.GridCellSize / 2 + mapCenter.z);
         for (int i = 0; i < gridCells.GetLength(0); i++) {
             for(int j = 0; j < gridCells.GetLength(1); j++) {
                 if (gridCells[i, j] == null)
@@ -125,9 +117,20 @@ public class MapGenerator : MonoBehaviour {
 
                 CellOrientation orientation = gridCells[i, j].GetOrientation();
                 float rotation = getGridCellRotation(gridCells[i, j]);
-                GameObject cell = Instantiate(mapType.GetCellsByOrientation(orientation)[0]);
-                cell.transform.position = new Vector3(j * gridCellSize + mapOffset.x, mapCenter.y, i * -gridCellSize + mapOffset.z);
+                GameObject cell = Instantiate(generationData.GetCellsByOrientation(orientation)[0]);
+                Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + mapOffset.x, mapCenter.y, i * -generationData.GridCellSize + mapOffset.z);
+                cell.transform.position = cellCenter;
                 cell.transform.Rotate(cell.transform.up, rotation);
+
+                if(!gridCells[i, j].walls[1]) {
+                    GameObject cellDoor = Instantiate(generationData.DoorPrefab);
+                    cellDoor.transform.position = new Vector3(cellCenter.x + generationData.GridDimensions.x / 2, cellCenter.y, cellCenter.z);
+                    cellDoor.transform.Rotate(0f, 90f, 0f);
+                }
+                if (!gridCells[i, j].walls[2]) {
+                    GameObject cellDoor = Instantiate(generationData.DoorPrefab);
+                    cellDoor.transform.position = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - generationData.GridDimensions.y / 2);
+                }
             }
         }
 
@@ -173,7 +176,7 @@ public class MapGenerator : MonoBehaviour {
         return rotation;
     }
 
-    private void PrintGridCells() {
+    private void PrintGridCells(GridCell[,] gridCells) {
         string mapStr = "";
         for (int i = 0; i < gridCells.GetLength(0); i++) {
             for (int j = 0; j < gridCells.GetLength(1); j++) {

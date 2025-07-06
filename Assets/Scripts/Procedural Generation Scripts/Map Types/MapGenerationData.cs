@@ -2,17 +2,19 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MapType : ScriptableObject {
+public abstract class MapGenerationData : ScriptableObject {
+    [SerializeField] protected Vector2Int gridDimensions;
+    [SerializeField] protected int gridCellSize;
+    [SerializeField] protected bool hasBranchPaths;
     [SerializeField] protected int randomWalkIterations;
-    [SerializeField] protected int minRandomWalkLength;
-    [SerializeField] protected int maxRandomWalkLength;
+    [SerializeField] protected int randomWalkLength;
     [SerializeField] protected int drunkWalkIterations;
-    [SerializeField] protected int minDrunkWalkLength;
-    [SerializeField] protected int maxDrunkWalkLength;
+    [SerializeField] protected int drunkWalkLength;
+    [SerializeField] protected GameObject doorPrefab;
 
     protected Dictionary<CellOrientation, List<GameObject>> cellsByOrientation;
 
-    public MapType() {
+    public MapGenerationData() {
         cellsByOrientation = new Dictionary<CellOrientation, List<GameObject>>();
         foreach (CellOrientation cellOrientation in Enum.GetValues(typeof(CellOrientation)))
             cellsByOrientation[cellOrientation] = new List<GameObject>();
@@ -22,17 +24,21 @@ public abstract class MapType : ScriptableObject {
         return cellsByOrientation[orientation];
     }
 
+    public Vector2Int GridDimensions => gridDimensions;
+
+    public int GridCellSize => gridCellSize;
+    
+    public bool HasBranchPaths => hasBranchPaths;
+
     public int RandomWalkIterations => randomWalkIterations;
 
-    public int MinRandomWalkLength => minRandomWalkLength;
-
-    public int MaxRandomWalkLength => maxRandomWalkLength;
+    public int MaxRandomWalkLength => randomWalkLength;
 
     public int DrunkWalkIterations => drunkWalkIterations;
 
-    public int MinDrunkWalkLength => minDrunkWalkLength;
+    public int MaxDrunkWalkLength => drunkWalkLength;
 
-    public int MaxDrunkWalkLength => maxDrunkWalkLength;
+    public GameObject DoorPrefab => doorPrefab;
 
     public Dictionary<CellOrientation, List<GameObject>> CellsByOrientation => cellsByOrientation;
 }

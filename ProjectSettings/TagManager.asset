@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - MobSpawnPosition
   - LootSpawnPosition
+  - TrapSpawnPosition
   layers:
   - Default
   - TransparentFX

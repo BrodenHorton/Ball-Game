@@ -19,4 +19,5 @@ MonoBehaviour:
   randomWalkLength: 15
   drunkWalkIterations: 3
   drunkWalkLength: 18
-  doorPrefab: {fileID: 6695056754986560365, guid: e00d6a5b2a419244f9fca794712b0688, type: 3}
+  startingCell: {fileID: 3531862861068251308, guid: 27c9abb541f06f848a9283ac350611c8, type: 3}
+  door: {fileID: 6695056754986560365, guid: e00d6a5b2a419244f9fca794712b0688, type: 3}

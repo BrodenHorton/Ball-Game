@@ -10,7 +10,8 @@ public abstract class MapGenerationData : ScriptableObject {
     [SerializeField] protected int randomWalkLength;
     [SerializeField] protected int drunkWalkIterations;
     [SerializeField] protected int drunkWalkLength;
-    [SerializeField] protected GameObject doorPrefab;
+    [SerializeField] protected GameObject startingCell;
+    [SerializeField] protected GameObject door;
 
     protected Dictionary<CellOrientation, List<GameObject>> cellsByOrientation;
 
@@ -38,7 +39,9 @@ public abstract class MapGenerationData : ScriptableObject {
 
     public int MaxDrunkWalkLength => drunkWalkLength;
 
-    public GameObject DoorPrefab => doorPrefab;
+    public GameObject StartingCell => startingCell;
+
+    public GameObject Door => door;
 
     public Dictionary<CellOrientation, List<GameObject>> CellsByOrientation => cellsByOrientation;
 }

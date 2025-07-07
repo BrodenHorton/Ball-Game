@@ -642,6 +642,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generationData: {fileID: 11400000, guid: b520cf26e424d534a834c2e32e3d45a7, type: 2}
+  hasDepthValueSprites: 1
+  depthValueSprite: {fileID: 5828725063873656485, guid: 54130f5c816553b49ba166ee4dc15123, type: 3}
 --- !u!114 &1733126085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,11 +653,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1733126082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4056ceb0b959be4e8051036fe1a03de, type: 3}
+  m_Script: {fileID: 11500000, guid: ee23c5383e7e1ee4cbd06c6b94055a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mapSeed: 23
-  mapCenter: {x: 0, y: 0, z: 0}
 --- !u!1 &1741993419
 GameObject:
   m_ObjectHideFlags: 0

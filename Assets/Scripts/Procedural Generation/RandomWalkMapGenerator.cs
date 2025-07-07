@@ -2,31 +2,36 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomWalkMapGenerator : MonoBehaviour, MapGenerator {
+public class RandomWalkMapGenerator : MapGenerator {
     [SerializeField] private MapGenerationData generationData;
+    [SerializeField] private bool hasDepthValueSprites;
+    [SerializeField] private GameObject depthValueSprite;
 
     private System.Random rng;
 
-    public GridCell[,] GenerateMap(Vector3 mapCenter, int mapSeed) {
-        GridCell[,] gridCells = new GridCell[generationData.GridDimensions.y, generationData.GridDimensions.x];
-        rng = new System.Random(mapSeed);
-        Vector2Int startingCell = new Vector2Int(generationData.GridDimensions.x / 2, generationData.GridDimensions.y / 2);
-        RandomWalkGeneration(gridCells, startingCell);
+    public override Map GenerateMap(int seed, Transform parent) {
+        rng = new System.Random(seed);
+        Map map = new Map(generationData.GridDimensions);
+        map.GridCells = new GridCell[generationData.GridDimensions.y, generationData.GridDimensions.x];
+        Vector2Int originCell = new Vector2Int(generationData.GridDimensions.x / 2, generationData.GridDimensions.y / 2);
+        
+        RandomWalkGeneration(map.GridCells, originCell);
         if (generationData.HasBranchPaths)
-            DrunkWalkBranchGeneration(gridCells);
+            DrunkWalkBranchGeneration(map.GridCells);
+        PlaceStartingCell(map);
+        CreateDepthMap(map);
 
-        BuildMapCells(gridCells, mapCenter);
-        PrintGridCells(gridCells);
+        BuildMapCells(map, parent);
 
-        return gridCells;
+        return map;
     }
 
-    private void RandomWalkGeneration(GridCell[,] gridCells, Vector2Int startingCell) {
-        gridCells[startingCell.y, startingCell.x] = new GridCell();
+    private void RandomWalkGeneration(GridCell[,] gridCells, Vector2Int originCell) {
+        gridCells[originCell.y, originCell.x] = new GridCell();
 
         Vector2Int currentCell;
         for (int i = 0; i < generationData.RandomWalkIterations; i++) {
-            currentCell = startingCell;
+            currentCell = originCell;
             for (int j = 0; j < generationData.MaxRandomWalkLength; j++) {
                 Array cardinalDirections = Enum.GetValues(typeof(Direction2D));
                 Direction2D direction = (Direction2D)cardinalDirections.GetValue(rng.Next(cardinalDirections.Length));
@@ -74,7 +79,19 @@ public class RandomWalkMapGenerator : MonoBehaviour, MapGenerator {
                 UpdateCellInDirectionOf(gridCells, ref currentCell, direction);
             }
         }
+    }
 
+    private void PlaceStartingCell(Map map) {
+        for (int i = map.GridCells.GetLength(0) - 1; i >= 0; i--) {
+            for (int j = 0; j < map.GridCells.GetLength(1); j++) {
+                if (map.GridCells[i, j] != null) {
+                    Vector2Int currentCell = new Vector2Int(j, i);
+                    UpdateCellInDirectionOf(map.GridCells, ref currentCell, Direction2D.South);
+                     map.StartingCell = currentCell;
+                    return;
+                }
+            }
+        }
     }
 
     private void UpdateCellInDirectionOf(GridCell[,] gridCells, ref Vector2Int currentCell, Direction2D direction) {
@@ -108,28 +125,40 @@ public class RandomWalkMapGenerator : MonoBehaviour, MapGenerator {
         }
     }
 
-    private void BuildMapCells(GridCell[,] gridCells, Vector3 mapCenter) {
-        Vector3 mapOffset = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2 + mapCenter.x, mapCenter.y, generationData.GridDimensions.y * generationData.GridCellSize / 2 + mapCenter.z);
-        for (int i = 0; i < gridCells.GetLength(0); i++) {
-            for(int j = 0; j < gridCells.GetLength(1); j++) {
-                if (gridCells[i, j] == null)
+    private void BuildMapCells(Map map, Transform parent) {
+        Vector3 mapOffset = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2, 0f, generationData.GridDimensions.y * generationData.GridCellSize / 2);
+        for (int i = 0; i < map.GridCells.GetLength(0); i++) {
+            for(int j = 0; j < map.GridCells.GetLength(1); j++) {
+                if (map.GridCells[i, j] == null)
                     continue;
 
-                CellOrientation orientation = gridCells[i, j].GetOrientation();
-                float rotation = getGridCellRotation(gridCells[i, j]);
-                GameObject cell = Instantiate(generationData.GetCellsByOrientation(orientation)[0]);
-                Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + mapOffset.x, mapCenter.y, i * -generationData.GridCellSize + mapOffset.z);
-                cell.transform.position = cellCenter;
+                CellOrientation orientation = map.GridCells[i, j].GetOrientation();
+                float rotation = getGridCellRotation(map.GridCells[i, j]);
+                GameObject cell;
+                if (i == map.StartingCell.y && j == map.StartingCell.x)
+                    cell = Instantiate(generationData.StartingCell, parent);
+                else
+                    cell = Instantiate(generationData.GetCellsByOrientation(orientation)[0], parent);
+                Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + mapOffset.x, mapOffset.y, i * -generationData.GridCellSize + mapOffset.z);
+                cell.transform.localPosition = cellCenter;
                 cell.transform.Rotate(cell.transform.up, rotation);
 
-                if(!gridCells[i, j].walls[1]) {
-                    GameObject cellDoor = Instantiate(generationData.DoorPrefab);
-                    cellDoor.transform.position = new Vector3(cellCenter.x + generationData.GridDimensions.x / 2, cellCenter.y, cellCenter.z);
+                if (!map.GridCells[i, j].walls[1]) {
+                    GameObject cellDoor = Instantiate(generationData.Door, parent);
+                    cellDoor.transform.localPosition = new Vector3(cellCenter.x + generationData.GridDimensions.x / 2, cellCenter.y, cellCenter.z);
                     cellDoor.transform.Rotate(0f, 90f, 0f);
                 }
-                if (!gridCells[i, j].walls[2]) {
-                    GameObject cellDoor = Instantiate(generationData.DoorPrefab);
-                    cellDoor.transform.position = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - generationData.GridDimensions.y / 2);
+                if (!map.GridCells[i, j].walls[2]) {
+                    GameObject cellDoor = Instantiate(generationData.Door, parent);
+                    cellDoor.transform.localPosition = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - generationData.GridDimensions.y / 2);
+                }
+
+                if(hasDepthValueSprites) {
+                    GameObject cellDepthValue = Instantiate(depthValueSprite, parent);
+                    cellDepthValue.transform.localPosition = cellCenter;
+                    TextMesh textMesh = cellDepthValue.GetComponent<TextMesh>();
+                    if(textMesh != null)
+                        textMesh.text = map.DepthByCell[new Vector2Int(j, i)].ToString();
                 }
             }
         }
@@ -174,33 +203,6 @@ public class RandomWalkMapGenerator : MonoBehaviour, MapGenerator {
         }
 
         return rotation;
-    }
-
-    private void PrintGridCells(GridCell[,] gridCells) {
-        string mapStr = "";
-        for (int i = 0; i < gridCells.GetLength(0); i++) {
-            for (int j = 0; j < gridCells.GetLength(1); j++) {
-                if (gridCells[i, j] == null) {
-                    mapStr = mapStr + "-";
-                    continue;
-                }
-
-                CellOrientation orientation = gridCells[i, j].GetOrientation();
-                if (orientation == CellOrientation.DeadEnd)
-                    mapStr += "D";
-                else if (orientation == CellOrientation.Corridor)
-                    mapStr += "C";
-                else if (orientation == CellOrientation.Bend)
-                    mapStr += "B";
-                else if (orientation == CellOrientation.T_Intersection)
-                    mapStr += "T";
-                else if (orientation == CellOrientation.Intersection)
-                    mapStr += "I";
-            }
-            mapStr += "\n";
-        }
-
-        Debug.Log(mapStr);
     }
 
 }

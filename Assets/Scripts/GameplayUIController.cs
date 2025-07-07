@@ -19,6 +19,10 @@ public class GameplayUIController : MonoBehaviour
         EventBus.AbilityRemoved -= AbilityRemoved;
         EventBus.AbilityUpdated -= AbilityUpdated;
     }
+    private void Awake()
+    {
+        abilities.gameObject.ToggleActiveIfChildrenExist();
+    }
     void AbilityUpdated(Ability ability, int index)
     {
         var icon = icons[index];
@@ -30,11 +34,13 @@ public class GameplayUIController : MonoBehaviour
         icons[index] = icon;
         icon.GetComponentInChildren<TextMeshProUGUI>().text = (index+1).ToString();
         icon.sprite = ability.GetAbilityData().icon;
+        abilities.gameObject.ToggleActiveIfChildrenExist();
     }
     void AbilityRemoved(Ability ability, int index) 
     {
         var icon = icons[index];
         icons[index] = null;
         Destroy(icon);
+        abilities.gameObject.ToggleActiveIfChildrenExist();
     }
 }

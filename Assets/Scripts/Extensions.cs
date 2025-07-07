@@ -10,4 +10,8 @@ public static class Extensions
     {
         rb.AddForce(Random.insideUnitSphere * force + Vector3.up);
     }
+    public static void ToggleActiveIfChildrenExist(this GameObject self)
+    {
+        self.SetActive(self.transform.childCount > 0);
+    }
 }

@@ -21,10 +21,6 @@ public class MapCell : MonoBehaviour {
             if (transform.GetChild(i).tag.Equals("TrapSpawnPosition"))
                 trapSpawnPositions.Add(transform.GetChild(i));
         }
-
-        Debug.Log("Mob spawn positions: " + mobSpawnPositions.Count);
-        Debug.Log("Loot spawn positions: " + lootSpawnPositions.Count);
-        Debug.Log("Trap spawn positions: " + trapSpawnPositions.Count);
     }
 
     public List<Transform> MobSpawnPositions => mobSpawnPositions;

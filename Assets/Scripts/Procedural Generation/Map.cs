@@ -6,6 +6,7 @@ using UnityEngine;
 public class Map {
     private GridCell[,] gridCells;
     private Vector2Int startingCell;
+    private Vector2Int exitCell;
     private Dictionary<Vector2Int, int> depthByCell;
 
     public Map(Vector2Int gridDimensions) {
@@ -43,6 +44,8 @@ public class Map {
     public GridCell[,] GridCells { get { return gridCells; } set { gridCells = value; } }
 
     public Vector2Int StartingCell { get { return startingCell; } set { startingCell = value; } }
+
+    public Vector2Int ExitCell { get { return exitCell; } set { exitCell = value; } }
 
     public Dictionary<Vector2Int, int> DepthByCell { get { return depthByCell; } set { depthByCell = value; } }
 }

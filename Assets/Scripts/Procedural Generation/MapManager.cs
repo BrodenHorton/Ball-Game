@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MapManager : MonoBehaviour {
+    [SerializeField] bool hasRandomSeed;
     [SerializeField] int mapSeed;
 
     private Map map;
@@ -11,8 +13,12 @@ public class MapManager : MonoBehaviour {
     }
 
     private void Start() {
-        if (mapGenerator != null)
+        mapSeed = Guid.NewGuid().GetHashCode();
+
+        if (mapGenerator != null) {
+            if (hasRandomSeed)
             map = mapGenerator.GenerateMap(mapSeed, transform);
+        }
         else
             Debug.Log("No MapGenerator script found on Map object.");
     }

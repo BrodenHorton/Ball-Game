@@ -20,6 +20,7 @@ public class RandomWalkMapGenerator : MapGenerator {
             DrunkWalkBranchGeneration(map.GridCells);
         PlaceStartingCell(map);
         CreateDepthMap(map);
+        PlaceExitCell(map);
 
         BuildMapCells(map, parent);
 
@@ -94,6 +95,82 @@ public class RandomWalkMapGenerator : MapGenerator {
         }
     }
 
+    private void PlaceExitCell(Map map) {
+        Debug.Log("PlaceExitCell method ran");
+        int maxDepthValue = 0;
+        foreach(KeyValuePair<Vector2Int, int> entry in map.DepthByCell) {
+            if(entry.Value > maxDepthValue)
+                maxDepthValue = entry.Value;
+        }
+        int exitDepthThreshold = maxDepthValue / 2;
+        List<Vector2Int> exitRootCells = new List<Vector2Int>();
+        foreach (KeyValuePair<Vector2Int, int> entry in map.DepthByCell) {
+            if (entry.Value >= exitDepthThreshold)
+                exitRootCells.Add(entry.Key);
+        }
+
+        Debug.Log("Max depth value = " + maxDepthValue);
+        Debug.Log("exit depth threshold = " + exitDepthThreshold);
+        exitRootCells.Shuffle(rng);
+        foreach(Vector2Int exitRootCell in exitRootCells) {
+            Debug.Log("Entered exitRootCell foreach");
+            if (map.GridCells[exitRootCell.y, exitRootCell.x].walls[0] && exitRootCell.y - 1 >= 0) {
+                if (NumberOfAdjacentCells(map, new Vector2Int(exitRootCell.x, exitRootCell.y - 1)) == 1) {
+                    map.GridCells[exitRootCell.y, exitRootCell.x].walls[0] = false;
+                    map.GridCells[exitRootCell.y - 1, exitRootCell.x] = new GridCell();
+                    map.GridCells[exitRootCell.y - 1, exitRootCell.x].walls[2] = false;
+                    map.ExitCell = new Vector2Int(exitRootCell.x, exitRootCell.y - 1);
+                    map.DepthByCell.Add(map.ExitCell, map.DepthByCell[exitRootCell] + 1);
+                    break;
+                }
+            }
+            if (map.GridCells[exitRootCell.y, exitRootCell.x].walls[1] && exitRootCell.x + 1 < map.GridCells.GetLength(1)) {
+                if (NumberOfAdjacentCells(map, new Vector2Int(exitRootCell.x + 1, exitRootCell.y)) == 1) {
+                    map.GridCells[exitRootCell.y, exitRootCell.x].walls[1] = false;
+                    map.GridCells[exitRootCell.y, exitRootCell.x + 1] = new GridCell();
+                    map.GridCells[exitRootCell.y, exitRootCell.x + 1].walls[3] = false;
+                    map.ExitCell = new Vector2Int(exitRootCell.x + 1, exitRootCell.y);
+                    map.DepthByCell.Add(map.ExitCell, map.DepthByCell[exitRootCell] + 1);
+                    break;
+                }
+            }
+            if (map.GridCells[exitRootCell.y, exitRootCell.x].walls[2] && exitRootCell.y + 1 < map.GridCells.GetLength(0)) {
+                if (NumberOfAdjacentCells(map, new Vector2Int(exitRootCell.x, exitRootCell.y + 1)) == 1) {
+                    map.GridCells[exitRootCell.y, exitRootCell.x].walls[2] = false;
+                    map.GridCells[exitRootCell.y + 1, exitRootCell.x] = new GridCell();
+                    map.GridCells[exitRootCell.y + 1, exitRootCell.x].walls[0] = false;
+                    map.ExitCell = new Vector2Int(exitRootCell.x, exitRootCell.y + 1);
+                    map.DepthByCell.Add(map.ExitCell, map.DepthByCell[exitRootCell] + 1);
+                    break;
+                }
+            }
+            if (map.GridCells[exitRootCell.y, exitRootCell.x].walls[3] && exitRootCell.x - 1 >= 0) {
+                if (NumberOfAdjacentCells(map, new Vector2Int(exitRootCell.x - 1, exitRootCell.y)) == 1) {
+                    map.GridCells[exitRootCell.y, exitRootCell.x].walls[3] = false;
+                    map.GridCells[exitRootCell.y, exitRootCell.x - 1] = new GridCell();
+                    map.GridCells[exitRootCell.y, exitRootCell.x - 1].walls[1] = false;
+                    map.ExitCell = new Vector2Int(exitRootCell.x - 1, exitRootCell.y);
+                    map.DepthByCell.Add(map.ExitCell, map.DepthByCell[exitRootCell] + 1);
+                    break;
+                }
+            }
+        }
+    }
+
+    private int NumberOfAdjacentCells(Map map, Vector2Int cell) {
+        int count = 0;
+        if (cell.y - 1 >= 0 && map.GridCells[cell.y - 1, cell.x] != null)
+            count++;
+        if (cell.x + 1 < map.GridCells.GetLength(1) && map.GridCells[cell.y, cell.x + 1] != null)
+            count++;
+        if(cell.y + 1 < map.GridCells.GetLength(0) && map.GridCells[cell.y + 1, cell.x] != null)
+            count++;
+        if (cell.x - 1 >= 0 && map.GridCells[cell.y, cell.x - 1] != null)
+            count++;
+
+        return count;
+    }
+
     private void UpdateCellInDirectionOf(GridCell[,] gridCells, ref Vector2Int currentCell, Direction2D direction) {
         if (direction == Direction2D.North && currentCell.y - 1 >= 0) {
             gridCells[currentCell.y, currentCell.x].walls[0] = false;
@@ -137,6 +214,8 @@ public class RandomWalkMapGenerator : MapGenerator {
                 GameObject cell;
                 if (i == map.StartingCell.y && j == map.StartingCell.x)
                     cell = Instantiate(generationData.StartingCell, parent);
+                else if (i == map.ExitCell.y && j == map.ExitCell.x)
+                    cell = Instantiate(generationData.ExitCell, parent);
                 else
                     cell = Instantiate(generationData.GetCellsByOrientation(orientation)[0], parent);
                 Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + mapOffset.x, mapOffset.y, i * -generationData.GridCellSize + mapOffset.z);

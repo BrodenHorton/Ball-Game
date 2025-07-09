@@ -1,4 +1,5 @@
 using UnityEngine;
+[CreateAssetMenu(menuName = "My Assets/Abilities/MeteorData")]
 
 public class MeteorData : AbilityData
 {
@@ -10,4 +11,6 @@ public class MeteorData : AbilityData
     [Header("TODO: Maybe make the data below a scriptable object?")]
     public float meteorMaxDamage;
     public float meteorDamageRadius;
+    public float meteorSpeed;
+    public float meteorDownwardMaxAngle;
 }

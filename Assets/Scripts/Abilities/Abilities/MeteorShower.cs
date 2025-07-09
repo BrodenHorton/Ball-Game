@@ -46,7 +46,9 @@ public class MeteorShower : Ability
         }
         if (meteorSpawnRateTimer.IsFinished())
         {
-            Instantiate(meteorData.meteorPrefab, player.position + (Vector3.up * meteorData.heightOffsetOfMeteor) + new Vector3(Random.Range(0, meteorData.spawnRadius), 0,0), Quaternion.identity);
+            var meteor = Instantiate(meteorData.meteorPrefab, player.position + (Vector3.up * meteorData.heightOffsetOfMeteor) + new Vector3(Random.Range(0, meteorData.spawnRadius), 0,0), Quaternion.identity);
+            meteor.GetComponent<Rigidbody>().AddForce((Vector3.down + new Vector3(Random.Range(-meteorData.meteorDownwardMaxAngle, meteorData.meteorDownwardMaxAngle), 0, Random.Range(-meteorData.meteorDownwardMaxAngle, meteorData.meteorDownwardMaxAngle))).normalized * meteorData.meteorSpeed, ForceMode.Impulse);
+            meteorSpawnRateTimer.Reset();
         }
 
     }

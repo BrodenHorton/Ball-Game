@@ -96,7 +96,6 @@ public class RandomWalkMapGenerator : MapGenerator {
     }
 
     private void PlaceExitCell(Map map) {
-        Debug.Log("PlaceExitCell method ran");
         int maxDepthValue = 0;
         foreach(KeyValuePair<Vector2Int, int> entry in map.DepthByCell) {
             if(entry.Value > maxDepthValue)
@@ -109,97 +108,59 @@ public class RandomWalkMapGenerator : MapGenerator {
                 exitRootCells.Add(entry.Key);
         }
 
-        Debug.Log("Max depth value = " + maxDepthValue);
-        Debug.Log("exit depth threshold = " + exitDepthThreshold);
         exitRootCells.Shuffle(rng);
-        foreach(Vector2Int exitRootCell in exitRootCells) {
-            Debug.Log("Entered exitRootCell foreach");
-            if (map.GridCells[exitRootCell.y, exitRootCell.x].walls[0] && exitRootCell.y - 1 >= 0) {
-                if (NumberOfAdjacentCells(map, new Vector2Int(exitRootCell.x, exitRootCell.y - 1)) == 1) {
-                    map.GridCells[exitRootCell.y, exitRootCell.x].walls[0] = false;
-                    map.GridCells[exitRootCell.y - 1, exitRootCell.x] = new GridCell();
-                    map.GridCells[exitRootCell.y - 1, exitRootCell.x].walls[2] = false;
-                    map.ExitCell = new Vector2Int(exitRootCell.x, exitRootCell.y - 1);
-                    map.DepthByCell.Add(map.ExitCell, map.DepthByCell[exitRootCell] + 1);
-                    break;
-                }
+
+        bool isExitCellSet = false;
+        foreach (Vector2Int exitRootCell in exitRootCells) {
+            foreach (Direction2D direction in Enum.GetValues(typeof(Direction2D))) {
+                if (!map.GridCells[exitRootCell.y, exitRootCell.x].walls[(int)direction])
+                    continue;
+                Vector2Int exitCell = new Vector2Int(exitRootCell.x + direction.Vector().x, exitRootCell.y + direction.Vector().y);
+                if (!IsGridIndexInBounds(map.GridCells, exitCell))
+                    continue;
+                if (map.GridCells[exitCell.y, exitCell.x] != null)
+                    continue;
+                if (NumberOfAdjacentCells(map.GridCells, exitCell) != 1)
+                    continue;
+
+                map.GridCells[exitRootCell.y, exitRootCell.x].walls[(int)direction] = false;
+                map.GridCells[exitCell.y, exitCell.x] = new GridCell();
+                map.GridCells[exitCell.y, exitCell.x].walls[((int)direction + 2) % 4] = false;
+                map.ExitCell = exitCell;
+                map.DepthByCell.Add(exitCell, map.DepthByCell[exitRootCell] + 1);
+                isExitCellSet = true;
+                break;
             }
-            if (map.GridCells[exitRootCell.y, exitRootCell.x].walls[1] && exitRootCell.x + 1 < map.GridCells.GetLength(1)) {
-                if (NumberOfAdjacentCells(map, new Vector2Int(exitRootCell.x + 1, exitRootCell.y)) == 1) {
-                    map.GridCells[exitRootCell.y, exitRootCell.x].walls[1] = false;
-                    map.GridCells[exitRootCell.y, exitRootCell.x + 1] = new GridCell();
-                    map.GridCells[exitRootCell.y, exitRootCell.x + 1].walls[3] = false;
-                    map.ExitCell = new Vector2Int(exitRootCell.x + 1, exitRootCell.y);
-                    map.DepthByCell.Add(map.ExitCell, map.DepthByCell[exitRootCell] + 1);
-                    break;
-                }
-            }
-            if (map.GridCells[exitRootCell.y, exitRootCell.x].walls[2] && exitRootCell.y + 1 < map.GridCells.GetLength(0)) {
-                if (NumberOfAdjacentCells(map, new Vector2Int(exitRootCell.x, exitRootCell.y + 1)) == 1) {
-                    map.GridCells[exitRootCell.y, exitRootCell.x].walls[2] = false;
-                    map.GridCells[exitRootCell.y + 1, exitRootCell.x] = new GridCell();
-                    map.GridCells[exitRootCell.y + 1, exitRootCell.x].walls[0] = false;
-                    map.ExitCell = new Vector2Int(exitRootCell.x, exitRootCell.y + 1);
-                    map.DepthByCell.Add(map.ExitCell, map.DepthByCell[exitRootCell] + 1);
-                    break;
-                }
-            }
-            if (map.GridCells[exitRootCell.y, exitRootCell.x].walls[3] && exitRootCell.x - 1 >= 0) {
-                if (NumberOfAdjacentCells(map, new Vector2Int(exitRootCell.x - 1, exitRootCell.y)) == 1) {
-                    map.GridCells[exitRootCell.y, exitRootCell.x].walls[3] = false;
-                    map.GridCells[exitRootCell.y, exitRootCell.x - 1] = new GridCell();
-                    map.GridCells[exitRootCell.y, exitRootCell.x - 1].walls[1] = false;
-                    map.ExitCell = new Vector2Int(exitRootCell.x - 1, exitRootCell.y);
-                    map.DepthByCell.Add(map.ExitCell, map.DepthByCell[exitRootCell] + 1);
-                    break;
-                }
-            }
+
+            if (isExitCellSet)
+                break;
         }
     }
 
-    private int NumberOfAdjacentCells(Map map, Vector2Int cell) {
+    private int NumberOfAdjacentCells(GridCell[,] gridCells, Vector2Int cell) {
         int count = 0;
-        if (cell.y - 1 >= 0 && map.GridCells[cell.y - 1, cell.x] != null)
-            count++;
-        if (cell.x + 1 < map.GridCells.GetLength(1) && map.GridCells[cell.y, cell.x + 1] != null)
-            count++;
-        if(cell.y + 1 < map.GridCells.GetLength(0) && map.GridCells[cell.y + 1, cell.x] != null)
-            count++;
-        if (cell.x - 1 >= 0 && map.GridCells[cell.y, cell.x - 1] != null)
-            count++;
+        foreach(Direction2D direction in Enum.GetValues(typeof(Direction2D))) {
+            Vector2Int adjacentCell = new Vector2Int(cell.x + direction.Vector().x, cell.y + direction.Vector().y);
+            if (IsGridIndexInBounds(gridCells, adjacentCell) && gridCells[adjacentCell.y, adjacentCell.x] != null)
+                count++;
+        }
 
         return count;
     }
 
     private void UpdateCellInDirectionOf(GridCell[,] gridCells, ref Vector2Int currentCell, Direction2D direction) {
-        if (direction == Direction2D.North && currentCell.y - 1 >= 0) {
-            gridCells[currentCell.y, currentCell.x].walls[0] = false;
-            if (gridCells[currentCell.y - 1, currentCell.x] == null)
-                gridCells[currentCell.y - 1, currentCell.x] = new GridCell();
-            gridCells[currentCell.y - 1, currentCell.x].walls[2] = false;
-            currentCell.y--;
+        Vector2Int nextCell = new Vector2Int(currentCell.x + direction.Vector().x, currentCell.y + direction.Vector().y);
+        if (IsGridIndexInBounds(gridCells, nextCell)) {
+            gridCells[currentCell.y, currentCell.x].walls[(int)direction] = false;
+            if (gridCells[nextCell.y, nextCell.x] == null)
+                gridCells[nextCell.y, nextCell.x] = new GridCell();
+            gridCells[nextCell.y, nextCell.x].walls[((int)direction + 2) % 4] = false;
+            currentCell = nextCell;
         }
-        else if (direction == Direction2D.East && currentCell.x + 1 < gridCells.GetLength(1)) {
-            gridCells[currentCell.y, currentCell.x].walls[1] = false;
-            if (gridCells[currentCell.y, currentCell.x + 1] == null)
-                gridCells[currentCell.y, currentCell.x + 1] = new GridCell();
-            gridCells[currentCell.y, currentCell.x + 1].walls[3] = false;
-            currentCell.x++;
-        }
-        else if (direction == Direction2D.South && currentCell.y + 1 < gridCells.GetLength(0)) {
-            gridCells[currentCell.y, currentCell.x].walls[2] = false;
-            if (gridCells[currentCell.y + 1, currentCell.x] == null)
-                gridCells[currentCell.y + 1, currentCell.x] = new GridCell();
-            gridCells[currentCell.y + 1, currentCell.x].walls[0] = false;
-            currentCell.y++;
-        }
-        else if (direction == Direction2D.West && currentCell.x - 1 >= 0) {
-            gridCells[currentCell.y, currentCell.x].walls[3] = false;
-            if (gridCells[currentCell.y, currentCell.x - 1] == null)
-                gridCells[currentCell.y, currentCell.x - 1] = new GridCell();
-            gridCells[currentCell.y, currentCell.x - 1].walls[1] = false;
-            currentCell.x--;
-        }
+    }
+
+    private bool IsGridIndexInBounds(GridCell[,] gridCells, Vector2Int cell) {
+        return cell.x >= 0 && cell.x < gridCells.GetLength(1) && cell.y >= 0 && cell.y < gridCells.GetLength(0);
     }
 
     private void BuildMapCells(Map map, Transform parent) {

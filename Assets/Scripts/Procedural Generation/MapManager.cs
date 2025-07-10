@@ -13,12 +13,11 @@ public class MapManager : MonoBehaviour {
     }
 
     private void Start() {
-        mapSeed = Guid.NewGuid().GetHashCode();
+        if (hasRandomSeed)
+            mapSeed = Guid.NewGuid().GetHashCode();
 
-        if (mapGenerator != null) {
-            if (hasRandomSeed)
+        if (mapGenerator != null)
             map = mapGenerator.GenerateMap(mapSeed, transform);
-        }
         else
             Debug.Log("No MapGenerator script found on Map object.");
     }

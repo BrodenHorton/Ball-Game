@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b398955468e3264b8dcf0924a6f12e5, type: 3}
   m_Name: CaveMapGenerationData
   m_EditorClassIdentifier: 
-  gridDimensions: {x: 100, y: 100}
+  gridDimensions: {x: 101, y: 101}
   gridCellSize: 100
   hasBranchPaths: 1
   randomWalkIterations: 10
@@ -20,4 +20,5 @@ MonoBehaviour:
   drunkWalkIterations: 3
   drunkWalkLength: 18
   startingCell: {fileID: 3531862861068251308, guid: 27c9abb541f06f848a9283ac350611c8, type: 3}
+  exitCell: {fileID: 3531862861068251308, guid: 5c9f495656ac62444afe832f9fe666d3, type: 3}
   door: {fileID: 6695056754986560365, guid: e00d6a5b2a419244f9fca794712b0688, type: 3}

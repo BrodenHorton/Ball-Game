@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Soul : MonoBehaviour
 {
     [SerializeField] int value = 5;
     Timer pickupEnabledTimer;
     private void Awake()
     {
-        pickupEnabledTimer = new Timer(2);
+        pickupEnabledTimer = new Timer(1);
     }
     private void Update()
     {
@@ -16,7 +16,7 @@ public class Coin : MonoBehaviour
     {
         if (pickupEnabledTimer.IsFinished() && other.transform.GetParentOrSelf().CompareTag("Player"))
         {
-            GameManager.Instance.AddCoin(value);
+            GameManager.Instance.GainSoul(value);
             Destroy(gameObject);
         }
     }

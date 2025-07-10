@@ -2988,6 +2988,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1922317970412166436, guid: ac9914fd8d9b1704aa09235bce9e2d41, type: 3}
+      propertyPath: soul
+      value: 
+      objectReference: {fileID: 4591914826903787021, guid: 04e2e6469e7015949b01658e8cd36b14, type: 3}
     - target: {fileID: 3067535508372263666, guid: ac9914fd8d9b1704aa09235bce9e2d41, type: 3}
       propertyPath: m_Name
       value: Loot Generator

@@ -13,4 +13,5 @@ public class MeteorData : AbilityData
     public float meteorDamageRadius;
     public float meteorSpeed;
     public float meteorDownwardMaxAngle;
+    public LayerMask hittables;
 }

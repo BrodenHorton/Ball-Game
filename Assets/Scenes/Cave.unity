@@ -2063,10 +2063,6 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 155902887}
-    - target: {fileID: 6465368499253533044, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
-      propertyPath: 'startingAbilities.Array.data[2]'
-      value: 
-      objectReference: {fileID: 7740771476295740599, guid: 78e0090cc8b507648a72734a13beac6c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

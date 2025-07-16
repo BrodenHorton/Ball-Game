@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private LayerMask groundMask;
     private bool isGrounded;
-    public bool IsDashing => !dashTimer.IsFinished();
+    public bool IsDashing => !dashLengthTimer.IsFinished();
     private bool jumpPressed;
     private bool dashPressed;
     private Vector2 input;
@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour {
         rb.maxLinearVelocity = maxLinearVelocity;
     }
     private void FixedUpdate() {
+        Debug.Log("Dash Value: " + IsDashing);
         Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
         isGrounded = Physics.CheckSphere(transform.position + Vector3.down, groundDistance, groundMask);

@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     private GameObject playerInstance;
-    private int money;
+    private int souls;
     private void Awake()
     {
         if (Instance == null)
@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
     }
-    public void AddCoin(int value)
+    public void GainSoul(int value)
     {
-        money += value;
-        Debug.Log("Collected " + value + " total money is: $" + money);
+        souls += value;
+        Debug.Log("Collected " + value + " total souls is: " + souls);
     }
 
     public GameObject getPlayer()

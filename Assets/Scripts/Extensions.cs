@@ -27,4 +27,17 @@ public static class Extensions
             list[n] = value;
         }
     }
+    public static Vector3 GetRandomDirectionWithinCone(this Vector3 direction, float angleDegrees)
+    {
+        float angleRadians = angleDegrees * Mathf.Deg2Rad;
+        float z = Mathf.Cos(angleRadians * Random.value);
+        float sinT = Mathf.Sin(angleRadians * Random.value);
+        float phi = Random.Range(0, Mathf.PI * 2);
+        float x = sinT * Mathf.Cos(phi);
+        float y = sinT * Mathf.Sin(phi);
+
+        Vector3 localDirection = new Vector3(x, y, z); // z is "forward" in cone
+        Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, direction.normalized);
+        return rotation * localDirection;
+    }
 }

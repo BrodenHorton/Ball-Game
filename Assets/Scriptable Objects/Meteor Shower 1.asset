@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af44c4e1c5b5f594c87a9aed992bed34, type: 3}
   m_Name: Meteor Shower 1
   m_EditorClassIdentifier: 
-  activatedLength: 10
+  activatedLength: 15
   icon: {fileID: 21300000, guid: 9b7d53352a5a58f49accac79ed71621b, type: 3}
   meteorPrefab: {fileID: 2057588369622688447, guid: c15d30eb0e6caf54e9d7cfe5161089df, type: 3}
-  spawnRadius: 30
+  spawnRadius: 20
   spawnRate: 2
-  heightOffsetOfMeteor: 5
-  meteorMaxDamage: 0
-  meteorDamageRadius: 0
-  meteorSpeed: 10
-  meteorDownwardMaxAngle: 10
+  heightOffsetOfMeteor: 10
+  meteorMaxDamage: 30
+  meteorDamageRadius: 5
+  meteorSpeed: 1000
+  meteorDownwardMaxAngle: 90
+  hittables:
+    serializedVersion: 2
+    m_Bits: 512

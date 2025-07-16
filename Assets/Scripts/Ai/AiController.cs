@@ -29,6 +29,7 @@ public class AiController : MonoBehaviour, IDamageable
     public void TakeDamage(float amt, EffectType effectType = EffectType.NORMAL)
     {
         currentHealth -= amt;
+        Debug.Log("Taking Dmg: " + amt);
         if (IsDead)
         {
             EventBus.EnemyDeath.Invoke(gameObject);

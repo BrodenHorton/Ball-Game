@@ -369,5 +369,5 @@ MonoBehaviour:
   startingAbilities:
   - {fileID: 1934300812081555981, guid: 9d0d6f2f5843f45479f2cd3ac528243e, type: 3}
   - {fileID: 5473968364738172296, guid: 4f21dbaaba58d3349bf401bc6dd6c9c1, type: 3}
-  - {fileID: 6968097553317133838, guid: cc5d43b372e87b340ab4c78d2aa9b5cc, type: 3}
+  - {fileID: 7740771476295740599, guid: 78e0090cc8b507648a72734a13beac6c, type: 3}
   baseDashDamage: 50

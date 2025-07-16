@@ -8,10 +8,16 @@ public class Map {
     private Vector2Int startingCell;
     private Vector2Int exitCell;
     private Dictionary<Vector2Int, int> depthByCell;
+    private List<Transform> mobSpawnPositions;
+    private List<Transform> lootSpawnPositions;
+    private List<Transform> trapSpawnPositions;
 
     public Map(Vector2Int gridDimensions) {
         gridCells = new GridCell[gridDimensions.y, gridDimensions.x];
         depthByCell = new Dictionary<Vector2Int, int>();
+        mobSpawnPositions = new List<Transform>();
+        lootSpawnPositions = new List<Transform>();
+        trapSpawnPositions = new List<Transform>();
     }
 
     private void PrintGridCells() {
@@ -48,4 +54,10 @@ public class Map {
     public Vector2Int ExitCell { get { return exitCell; } set { exitCell = value; } }
 
     public Dictionary<Vector2Int, int> DepthByCell { get { return depthByCell; } set { depthByCell = value; } }
+
+    public List<Transform> MobSpawnPositions { get { return mobSpawnPositions; } set { mobSpawnPositions = value; } }
+
+    public List<Transform> LootSpawnPositions { get { return lootSpawnPositions; } set { lootSpawnPositions = value; } }
+
+    public List<Transform> TrapSpawnPositions { get { return trapSpawnPositions; } set { trapSpawnPositions = value; } }
 }

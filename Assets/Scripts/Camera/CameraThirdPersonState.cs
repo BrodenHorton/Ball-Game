@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraThirdPersonState : CameraState {
     private static readonly float DEFAULT_NATURAL_CAM_DISTANCE = 8.0f;
     private static readonly float DEFAULT_CAM_ROTATION_SPEED = 0.2f;
-    private static readonly int CAM_UPPER_PITCH_CLAMP = 60;
-    private static readonly int CAM_LOWER_PITCH_CLAMP = -40;
+    private static readonly float CAM_UPPER_PITCH_CLAMP = 120;
+    private static readonly float CAM_LOWER_PITCH_CLAMP = 30f;
     private static readonly float OBSTACLE_PADDING = 0.5f;
 
     private Transform camPivot;
@@ -17,11 +17,11 @@ public class CameraThirdPersonState : CameraState {
 
     private float mouseX;
     private float mouseY;
-    private Vector3 camPosition;
+    private bool hasMousePositionUpdated;
 
     public CameraThirdPersonState(Transform camPivot) {
         this.camPivot = camPivot;
-        camStartingVector = new Vector3(0, 1, -4);
+        camStartingVector = new Vector3(0f, 1f, -4f);
         naturalCamDistance = DEFAULT_NATURAL_CAM_DISTANCE;
         rotationSpeed = DEFAULT_CAM_ROTATION_SPEED;
         layerMask = LayerMask.GetMask("Ground");
@@ -31,14 +31,29 @@ public class CameraThirdPersonState : CameraState {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        //Setting initial camera position
-        camManager.setMouseX(camPivot.transform.eulerAngles.y);
-        camManager.setMouseY(0);
+        camManager.transform.position = camPivot.position + camStartingVector.normalized * naturalCamDistance;
+        camManager.transform.LookAt(camPivot);
     }
 
     public override void UpdateState(CameraStateManager camManager) {
-        mouseY = Mathf.Clamp(mouseY, CAM_LOWER_PITCH_CLAMP, CAM_UPPER_PITCH_CLAMP);
-        camPosition = camPivot.position + (Quaternion.Euler(mouseY, mouseX, 0f) * -Vector3.forward.normalized * naturalCamDistance);
+        Vector3 camPosition;
+        if (hasMousePositionUpdated) {
+            float xRotation = mouseY;
+            float xAngle = Vector3.Angle(Vector3.up, camManager.transform.position - camPivot.transform.position);
+            if (xAngle + mouseY > CAM_UPPER_PITCH_CLAMP)
+                xRotation = CAM_UPPER_PITCH_CLAMP - xAngle;
+            else if (xAngle + mouseY < CAM_LOWER_PITCH_CLAMP)
+                xRotation = -(xAngle - CAM_LOWER_PITCH_CLAMP);
+
+            camPosition = camPivot.position + Quaternion.Euler(0f, mouseX, 0f) * Quaternion.AngleAxis(xRotation, Vector3.Cross(camManager.transform.forward.normalized, Vector3.up)) * -camManager.transform.forward.normalized * naturalCamDistance;
+
+            mouseX = 0f;
+            mouseY = 0f;
+            hasMousePositionUpdated = false;
+        }
+        else
+            camPosition = camPivot.position + -camManager.transform.forward.normalized * naturalCamDistance;
+
         camManager.transform.position = camPosition;
         camManager.transform.LookAt(camPivot);
 
@@ -57,7 +72,8 @@ public class CameraThirdPersonState : CameraState {
     }
 
     public override void MouseMovementCallback(CameraStateManager camManager, Vector2 mouseInput) {
-        mouseX += mouseInput.x * rotationSpeed;
-        mouseY -= mouseInput.y * rotationSpeed;
+        mouseX = mouseInput.x * rotationSpeed;
+        mouseY = mouseInput.y * rotationSpeed;
+        hasMousePositionUpdated = true;
     }
 }

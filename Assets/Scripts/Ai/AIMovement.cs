@@ -8,10 +8,6 @@ public class AIMovement : MonoBehaviour
     {
         movementTarget.SetParent(null);
     }
-    private void Start()
-    {
-        target = GameManager.Instance.getPlayer();
-    }
     private void Update()
     {
         if (target != null)
@@ -23,4 +19,6 @@ public class AIMovement : MonoBehaviour
     {
         return movementTarget.position;
     }
+    public GameObject getTarget() {  return target; }
+    public void SetTarget(GameObject target) { this.target = target; }
 }

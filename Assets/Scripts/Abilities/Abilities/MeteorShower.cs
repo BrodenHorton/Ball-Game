@@ -17,7 +17,7 @@ public class MeteorShower : Ability
 
     public override void DashedIntoEventHandler(GameObject enemy)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void Deactivate()

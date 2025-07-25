@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5259115d99a96c04fb4120dabd4cdc97, type: 3}
-  m_Name: Goblin
+  m_Name: Goblin Archer
   m_EditorClassIdentifier: 
-  baseHealth: 10
+  baseHealth: 30
   baseArmor: 5
-  baseSpeed: 10
-  baseDamage: 10
-  enemyName: Goblin
-  baseAttackSpeed: 3
-  baseAttackRange: 3
+  baseSpeed: 5
+  baseDamage: 15
+  enemyName: Goblin Archer
+  baseAttackSpeed: 2
+  baseAttackRange: 15
   projectile: {fileID: 5726956319334804133, guid: 99521e9802c961a48b4778012dc1fc85, type: 3}

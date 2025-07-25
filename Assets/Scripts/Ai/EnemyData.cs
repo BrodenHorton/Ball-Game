@@ -9,4 +9,5 @@ public class EnemyData : ScriptableObject
     public string enemyName;
     public float baseAttackSpeed;
     public float baseAttackRange;
+    public Projectile projectile;
 }

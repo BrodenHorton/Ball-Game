@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureWorth: 5
-  coin: {fileID: 4591914826903787021, guid: 04e2e6469e7015949b01658e8cd36b14, type: 3}
+  soul: {fileID: 4591914826903787021, guid: 04e2e6469e7015949b01658e8cd36b14, type: 3}
   lootForce: 500

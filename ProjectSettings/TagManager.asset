@@ -8,6 +8,7 @@ TagManager:
   - MobSpawnPosition
   - LootSpawnPosition
   - TrapSpawnPosition
+  - Ground
   layers:
   - Default
   - TransparentFX

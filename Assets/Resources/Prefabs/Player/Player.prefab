@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 831502299734047229}
   - component: {fileID: 6446976441645814377}
   - component: {fileID: 6465368499253533044}
+  - component: {fileID: 1768051668098561056}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -354,6 +355,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 1
+  landingEffect: {fileID: 2157183984817581318, guid: b5fdfe9dda676c2499e55b141b2b0073, type: 3}
+  groundPoundEffect: {fileID: 202418697712762590, guid: b6d02a01cdf23f844a814a7e061a3b23, type: 3}
 --- !u!114 &6465368499253533044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,3 +374,16 @@ MonoBehaviour:
   - {fileID: 5473968364738172296, guid: 4f21dbaaba58d3349bf401bc6dd6c9c1, type: 3}
   - {fileID: 7740771476295740599, guid: 78e0090cc8b507648a72734a13beac6c, type: 3}
   baseDashDamage: 50
+--- !u!114 &1768051668098561056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228351072499507690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96334b3c47f3e5c409281e168763b2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50

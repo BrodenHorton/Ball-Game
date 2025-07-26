@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float maxLinearVelocity;
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] GameObject landingEffect, groundPoundEffect;
     private bool isGrounded;
     public bool IsDashing => !dashLengthTimer.IsFinished();
     private bool jumpPressed;
@@ -61,12 +62,14 @@ public class PlayerMovement : MonoBehaviour {
             Debug.Log("Player Dashing");
             rb.maxLinearVelocity = maxLinearVelocity + dashVelocity;
             rb.linearVelocity = cameraTransform.forward * dashVelocity;
+            EventBus.Dashing?.Invoke(true);
             dashTimer.Reset();
             dashLengthTimer.Reset();
         }
         if (dashLengthTimer.IsFinished())
         {
             rb.maxLinearVelocity = maxLinearVelocity;
+            EventBus.Dashing?.Invoke(false); //This gets called too often, TODO
         }
         else
         {
@@ -111,4 +114,20 @@ public class PlayerMovement : MonoBehaviour {
         dashTimer.SetFinished();
         dashLengthTimer.SetFinished();
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            // Get the first contact point
+            ContactPoint contact = collision.contacts[0];
+
+            GameObject objToSpawn = IsDashing ? groundPoundEffect : landingEffect;
+
+            // Align the effect with the surface normal
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            // Instantiate at the contact point, facing out from the surface
+            Instantiate(objToSpawn, contact.point, rotation);
+        }
+    }
+
 }

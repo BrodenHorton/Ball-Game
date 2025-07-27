@@ -29,7 +29,7 @@ public class PlayerAbilities : MonoBehaviour
                 Debug.Log("Dealing damage to " + damageable);
                 damageable.TakeDamage(baseDashDamage, EffectType.NORMAL);
                 EventBus.DashedInto?.Invoke(collider.gameObject);
-                movement.CancelDash();
+                movement.StopDashing();
             }
         }
     }

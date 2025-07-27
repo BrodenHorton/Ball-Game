@@ -20,15 +20,15 @@ public class PlayerMovement : MonoBehaviour {
     private bool dashPressed;
     private Vector2 input;
     private Timer jumpTimer;
-    private Timer dashTimer;
+    private Timer dashCooldownTimer;
     private Timer dashLengthTimer; 
 
     private void Awake()
     {
         jumpTimer = new Timer(jumpCooldown);
-        dashTimer = new Timer(dashCooldown);
+        dashCooldownTimer = new Timer(dashCooldown);
         dashLengthTimer = new Timer(dashLength);
-        dashTimer.SetFinished();
+        dashCooldownTimer.SetFinished();
         dashLengthTimer.SetFinished();
         jumpTimer.SetFinished();
         rb.maxLinearVelocity = maxLinearVelocity;
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         dashLengthTimer.Update();
         jumpTimer.Update();
-        dashTimer.Update();
+        dashCooldownTimer.Update();
     }
     private void FixedUpdate() {
         Debug.Log("Dash Value: " + IsDashing);
@@ -51,34 +51,19 @@ public class PlayerMovement : MonoBehaviour {
             SpawnImpactParticles(hits[0].normal, hits[0].point);
         }
         else if (hits.Length == 0)
-        {
             isGrounded = false;
-        }
 
         if (isGrounded)
-        {
             jumpTimer.SetFinished();
-        }
+
         if (jumpPressed && jumpTimer.IsFinished())
-        {
-            Debug.Log("Player Jumping");
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            jumpTimer.Reset();
-        }
-        else if (dashTimer.IsFinished() && dashPressed)
-        {
-            Debug.Log("Player Dashing");
-            rb.maxLinearVelocity = maxLinearVelocity + dashVelocity;
-            rb.linearVelocity = cameraTransform.forward * dashVelocity;
-            EventBus.Dashing?.Invoke(true);
-            dashTimer.Reset();
-            dashLengthTimer.Reset();
-        }
+            Jump();
+        else if (dashCooldownTimer.IsFinished() && dashPressed)
+            Dash();
+
         if (dashLengthTimer.IsFinished())
-        {
-            rb.maxLinearVelocity = maxLinearVelocity;
-            EventBus.Dashing?.Invoke(false); //This gets called too often, TODO
-        }
+            StopDashing();
+
         //This should be last to do
         if (dashLengthTimer.IsFinished() && input.magnitude > 0)
         {
@@ -87,6 +72,31 @@ public class PlayerMovement : MonoBehaviour {
             float airControlFactor = isGrounded ? 1f : 0.2f; // 0.2 is orginal value = weak air control and used to refuce floatyness. One way to solve this is to have a "move timer" in the air and disable this method when it expires
             rb.AddForce(airControlFactor * (force * moveDir.normalized) + Physics.gravity, ForceMode.Force);
         }
+    }
+
+    public void Jump()
+    {
+        Debug.Log("Player Jumping");
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        jumpTimer.Reset();
+    }
+
+    public void StopDashing()
+    {
+        rb.maxLinearVelocity = maxLinearVelocity;
+        EventBus.Dashing?.Invoke(false); //This gets called too often, TODO
+        dashCooldownTimer.SetFinished();
+        dashLengthTimer.SetFinished();
+    }
+
+    public void Dash()
+    {
+        Debug.Log("Player Dashing");
+        rb.maxLinearVelocity = maxLinearVelocity + dashVelocity;
+        rb.linearVelocity = cameraTransform.forward * dashVelocity;
+        EventBus.Dashing?.Invoke(true);
+        dashCooldownTimer.Reset();
+        dashLengthTimer.Reset();
     }
 
     public void AddForce(InputAction.CallbackContext context) {
@@ -115,7 +125,7 @@ public class PlayerMovement : MonoBehaviour {
     }
     public void CancelDash()
     {
-        dashTimer.SetFinished();
+        dashCooldownTimer.SetFinished();
         dashLengthTimer.SetFinished();
     }
 

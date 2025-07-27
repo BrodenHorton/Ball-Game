@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour {
         if (isGrounded)
         {
             jumpTimer.SetFinished();
+            rb.AddForce(Vector3.down * 100, ForceMode.Acceleration);
         }
         if (jumpPressed && jumpTimer.IsFinished())
         {

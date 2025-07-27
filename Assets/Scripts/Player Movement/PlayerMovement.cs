@@ -33,30 +33,37 @@ public class PlayerMovement : MonoBehaviour {
         jumpTimer.SetFinished();
         rb.maxLinearVelocity = maxLinearVelocity;
     }
+
+    private void Update()
+    {
+        dashLengthTimer.Update();
+        jumpTimer.Update();
+        dashTimer.Update();
+    }
     private void FixedUpdate() {
         Debug.Log("Dash Value: " + IsDashing);
         Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-        isGrounded = Physics.CheckSphere(transform.position + Vector3.down, groundDistance, groundMask);
-        //Debug.Log("Is Grounded:" + isGrounded);
+
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, groundDistance, groundMask);
+        if (!isGrounded && hits.Length > 0) {
+            isGrounded = true;
+            SpawnImpactParticles(hits[0].normal, hits[0].point);
+        }
+        else if (hits.Length == 0)
+        {
+            isGrounded = false;
+        }
+
         if (isGrounded)
         {
             jumpTimer.SetFinished();
-            rb.AddForce(Vector3.down * 100, ForceMode.Acceleration);
         }
         if (jumpPressed && jumpTimer.IsFinished())
         {
             Debug.Log("Player Jumping");
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             jumpTimer.Reset();
-        }
-        else
-        {
-            jumpTimer.Update();
-        }
-        if (!dashTimer.IsFinished())
-        {
-            dashTimer.Update();
         }
         else if (dashTimer.IsFinished() && dashPressed)
         {
@@ -71,10 +78,6 @@ public class PlayerMovement : MonoBehaviour {
         {
             rb.maxLinearVelocity = maxLinearVelocity;
             EventBus.Dashing?.Invoke(false); //This gets called too often, TODO
-        }
-        else
-        {
-            dashLengthTimer.Update();
         }
         //This should be last to do
         if (dashLengthTimer.IsFinished() && input.magnitude > 0)
@@ -115,20 +118,22 @@ public class PlayerMovement : MonoBehaviour {
         dashTimer.SetFinished();
         dashLengthTimer.SetFinished();
     }
+
+    void SpawnImpactParticles(Vector3 normal, Vector3 point)
+    {
+
+        GameObject objToSpawn = IsDashing ? groundPoundEffect : landingEffect;
+
+        // Align the effect with the surface normal
+        Quaternion rotation = Quaternion.FromToRotation(Vector3.up, normal);
+        // Instantiate at the contact point, facing out from the surface
+        Instantiate(objToSpawn, point, rotation);
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Ground"))
+        if (!isGrounded && !collision.collider.CompareTag("Enemy"))
         {
-            // Get the first contact point
-            ContactPoint contact = collision.contacts[0];
-
-            GameObject objToSpawn = IsDashing ? groundPoundEffect : landingEffect;
-
-            // Align the effect with the surface normal
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            // Instantiate at the contact point, facing out from the surface
-            Instantiate(objToSpawn, contact.point, rotation);
+            SpawnImpactParticles(collision.contacts[0].normal, collision.contacts[0].point);
         }
     }
-
 }

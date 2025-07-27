@@ -33,6 +33,13 @@ public class PlayerMovement : MonoBehaviour {
         jumpTimer.SetFinished();
         rb.maxLinearVelocity = maxLinearVelocity;
     }
+
+    private void Update()
+    {
+        dashLengthTimer.Update();
+        jumpTimer.Update();
+        dashTimer.Update();
+    }
     private void FixedUpdate() {
         Debug.Log("Dash Value: " + IsDashing);
         Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
@@ -48,25 +55,15 @@ public class PlayerMovement : MonoBehaviour {
             isGrounded = false;
         }
 
-        //Debug.Log("Is Grounded:" + isGrounded);
         if (isGrounded)
         {
             jumpTimer.SetFinished();
-            //rb.AddForce(Vector3.down * 100, ForceMode.Acceleration);
         }
         if (jumpPressed && jumpTimer.IsFinished())
         {
             Debug.Log("Player Jumping");
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             jumpTimer.Reset();
-        }
-        else
-        {
-            jumpTimer.Update();
-        }
-        if (!dashTimer.IsFinished())
-        {
-            dashTimer.Update();
         }
         else if (dashTimer.IsFinished() && dashPressed)
         {
@@ -81,10 +78,6 @@ public class PlayerMovement : MonoBehaviour {
         {
             rb.maxLinearVelocity = maxLinearVelocity;
             EventBus.Dashing?.Invoke(false); //This gets called too often, TODO
-        }
-        else
-        {
-            dashLengthTimer.Update();
         }
         //This should be last to do
         if (dashLengthTimer.IsFinished() && input.magnitude > 0)

@@ -5,16 +5,20 @@ public class AIMovement : MonoBehaviour
 {
     [SerializeField] protected Transform movementTarget;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected float aiUpdateTick = 2;
     private GameObject target;
-
+    Timer updateDestinationTimer;
     private void Awake()
     {
         movementTarget.SetParent(null);
+        updateDestinationTimer = new Timer(aiUpdateTick);
     }
     private void Update()
     {
-        if (target != null)
+        updateDestinationTimer.Update();
+        if (target != null && updateDestinationTimer.IsFinished())
         {
+            updateDestinationTimer.Reset();
             movementTarget.position = target.transform.position;
             agent.SetDestination(getTargetLocation());
         }

@@ -1371,6 +1371,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8486456994356450413, guid: e8a4a788fbf1b3945819c2250f5294c5, type: 3}
+      propertyPath: aiUpdateTick
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 8824440789147466862, guid: e8a4a788fbf1b3945819c2250f5294c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.33096695

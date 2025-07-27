@@ -351,7 +351,7 @@ MonoBehaviour:
   dashVelocity: 50
   dashLength: 0.5
   maxLinearVelocity: 20
-  groundDistance: 0.2
+  groundDistance: 0.6
   groundMask:
     serializedVersion: 2
     m_Bits: 1

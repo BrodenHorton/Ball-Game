@@ -51,7 +51,7 @@ public abstract class AIController : MonoBehaviour, IDamageable
         Debug.Log("Taking Dmg: " + amt);
         if (IsDead)
         {
-            EventBus.EnemyDeath.Invoke(gameObject);
+            EventBus.EnemyDeath?.Invoke(gameObject);
             Destroy(gameObject);
         }
     }

@@ -14,7 +14,7 @@ public class Soul : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (pickupEnabledTimer.IsFinished() && other.transform.GetParentOrSelf().CompareTag("Player"))
+        if (pickupEnabledTimer.IsFinished() && other.CompareTag("Player"))
         {
             GameManager.Instance.GainSoul(value);
             Destroy(gameObject);

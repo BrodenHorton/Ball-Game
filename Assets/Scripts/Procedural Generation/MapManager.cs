@@ -63,12 +63,14 @@ public class MapManager : MonoBehaviour {
 
     private void CombineFloorMeshes() {
         List<MeshFilter> meshFilters = new List<MeshFilter>();
-        foreach (Transform child in gameObject.GetComponentsInChildren<Transform>()) {
-            if (child.GetComponent<FloorMeshTag>() && child.GetComponent<MeshFilter>() != null)
-                meshFilters.Add(child.GetComponent<MeshFilter>());
+        GameObject[] grounds = GameObject.FindGameObjectsWithTag("Ground");
+        for (int i = 0; i < grounds.Length; i++) {
+            GameObject ground = grounds[i];
+            if (ground.GetComponent<MeshFilter>() != null)
+                meshFilters.Add(ground.GetComponent<MeshFilter>());
+            ground.AddComponent<BoxCollider>();
         }
-
-        meshCombiner.CombineMeshes(meshFilters);
+       // meshCombiner.CombineMeshes(meshFilters);
     }
 
     public Map Map => map;

@@ -11,7 +11,8 @@ public class RandomWalkMapGenerator : MapGenerator {
 
     public override Map GenerateMap(int seed, Transform parent) {
         rng = new System.Random(seed);
-        Map map = new Map(generationData.GridDimensions);
+        Vector3 mapOrigin = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2, 0f, generationData.GridDimensions.y * generationData.GridCellSize / 2);
+        Map map = new Map(generationData.GridDimensions, mapOrigin, generationData.GridCellSize);
         map.GridCells = new GridCell[generationData.GridDimensions.y, generationData.GridDimensions.x];
         Vector2Int originCell = new Vector2Int(generationData.GridDimensions.x / 2, generationData.GridDimensions.y / 2);
         
@@ -164,7 +165,6 @@ public class RandomWalkMapGenerator : MapGenerator {
     }
 
     private void BuildMapCells(Map map, Transform parent) {
-        Vector3 mapOffset = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2, 0f, generationData.GridDimensions.y * generationData.GridCellSize / 2);
         for (int i = 0; i < map.GridCells.GetLength(0); i++) {
             for(int j = 0; j < map.GridCells.GetLength(1); j++) {
                 if (map.GridCells[i, j] == null)
@@ -179,7 +179,7 @@ public class RandomWalkMapGenerator : MapGenerator {
                     cell = Instantiate(generationData.ExitCell, parent);
                 else
                     cell = Instantiate(generationData.GetCellsByOrientation(orientation)[0], parent);
-                Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + mapOffset.x, mapOffset.y, i * -generationData.GridCellSize + mapOffset.z);
+                Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + map.MapOrigin.x, map.MapOrigin.y, i * -generationData.GridCellSize + map.MapOrigin.z);
                 cell.transform.localPosition = cellCenter;
                 cell.transform.Rotate(cell.transform.up, rotation);
 

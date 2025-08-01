@@ -1147,8 +1147,8 @@ GameObject:
   - component: {fileID: 8809837404989798744}
   - component: {fileID: 4069302579028734295}
   - component: {fileID: 6781042424347946954}
-  - component: {fileID: 4475477601959744951}
   - component: {fileID: 4596929357276010601}
+  - component: {fileID: 3778264665398195912}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Ground
@@ -1224,27 +1224,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4475477601959744951
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5661444844005884600}
-  m_Material: {fileID: 13400000, guid: e4faca2936d9f2f488fff57d14a52768, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4596929357276010601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1277,6 +1256,18 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &3778264665398195912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5661444844005884600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b55279588c6d9c45ab2d0ff6f86be49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6886072088340395969
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ using UnityEngine;
 [Serializable]
 public class Map {
     private GridCell[,] gridCells;
+    private Vector3 mapOrigin;
+    private float cellSize;
     private Vector2Int startingCell;
     private Vector2Int exitCell;
     private Dictionary<Vector2Int, int> depthByCell;
@@ -12,12 +14,18 @@ public class Map {
     private List<Transform> lootSpawnPositions;
     private List<Transform> trapSpawnPositions;
 
-    public Map(Vector2Int gridDimensions) {
+    public Map(Vector2Int gridDimensions, Vector3 mapOrigin, float cellSize) {
         gridCells = new GridCell[gridDimensions.y, gridDimensions.x];
+        this.mapOrigin = mapOrigin;
+        this.cellSize = cellSize;
         depthByCell = new Dictionary<Vector2Int, int>();
         mobSpawnPositions = new List<Transform>();
         lootSpawnPositions = new List<Transform>();
         trapSpawnPositions = new List<Transform>();
+    }
+
+    public Vector3 GetMapStartingPosition() {
+        return new Vector3(mapOrigin.x + startingCell.x * cellSize, 0f, mapOrigin.z - startingCell.y * cellSize);
     }
 
     private void PrintGridCells() {
@@ -48,6 +56,10 @@ public class Map {
     }
 
     public GridCell[,] GridCells { get { return gridCells; } set { gridCells = value; } }
+
+    public Vector3 MapOrigin { get { return mapOrigin; } }
+
+    public float CellSize { get { return cellSize; } }
 
     public Vector2Int StartingCell { get { return startingCell; } set { startingCell = value; } }
 

@@ -65,8 +65,7 @@ public class PlayerMovement : MonoBehaviour {
             StopDashing();
 
         //This should be last to do
-        if (dashLengthTimer.IsFinished() && input.magnitude > 0)
-        {
+        if (dashLengthTimer.IsFinished() && input.magnitude > 0) {
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             moveDir.y = 0f;
             float airControlFactor = isGrounded ? 1f : 0.2f; // 0.2 is orginal value = weak air control and used to refuce floatyness. One way to solve this is to have a "move timer" in the air and disable this method when it expires

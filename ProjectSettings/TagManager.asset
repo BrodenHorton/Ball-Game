@@ -9,6 +9,7 @@ TagManager:
   - LootSpawnPosition
   - TrapSpawnPosition
   - Ground
+  - Trap
   layers:
   - Default
   - TransparentFX

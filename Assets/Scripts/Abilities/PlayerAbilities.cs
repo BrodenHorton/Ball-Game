@@ -42,11 +42,14 @@ public class PlayerAbilities : MonoBehaviour
             abilities[action].Activate();
         }
     }
-    public void AddAbility(Ability ability)
+    public bool AddAbility(Ability ability)
 	{
+        if (abilities.Count >= 3)
+            return false;
 		Ability ab = Instantiate(ability, transform);
 		abilities.Add(ab);
 		EventBus.AbilityAdded?.Invoke(ab, abilities.IndexOf(ab));
+        return true;
     }
     public void RemoveAbility(Ability ability)
     {

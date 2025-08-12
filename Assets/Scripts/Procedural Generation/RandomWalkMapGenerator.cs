@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomWalkMapGenerator : MapGenerator {
-    [SerializeField] private MapGenerationData generationData;
-    [SerializeField] private bool hasDepthValueSprites;
-    [SerializeField] private GameObject depthValueSprite;
+    [SerializeField] private RandomWalkMapGenerationData generationData;
 
     private System.Random rng;
 
-    public override Map GenerateMap(int seed, Transform parent) {
+    public override Map GenerateMap(int seed) {
         rng = new System.Random(seed);
         Vector3 mapOrigin = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2, 0f, generationData.GridDimensions.y * generationData.GridCellSize / 2);
         Map map = new Map(generationData.GridDimensions, mapOrigin, generationData.GridCellSize);
@@ -22,8 +20,6 @@ public class RandomWalkMapGenerator : MapGenerator {
         PlaceStartingCell(map);
         CreateDepthMap(map);
         PlaceExitCell(map);
-
-        BuildMapCells(map, parent);
 
         return map;
     }
@@ -164,7 +160,7 @@ public class RandomWalkMapGenerator : MapGenerator {
         return cell.x >= 0 && cell.x < gridCells.GetLength(1) && cell.y >= 0 && cell.y < gridCells.GetLength(0);
     }
 
-    private void BuildMapCells(Map map, Transform parent) {
+    public override void BuildMapCells(Map map, Transform parent) {
         for (int i = 0; i < map.GridCells.GetLength(0); i++) {
             for(int j = 0; j < map.GridCells.GetLength(1); j++) {
                 if (map.GridCells[i, j] == null)
@@ -183,14 +179,16 @@ public class RandomWalkMapGenerator : MapGenerator {
                 cell.transform.localPosition = cellCenter;
                 cell.transform.Rotate(cell.transform.up, rotation);
 
-                if (!map.GridCells[i, j].walls[1]) {
-                    GameObject cellDoor = Instantiate(generationData.Door, parent);
-                    cellDoor.transform.localPosition = new Vector3(cellCenter.x + generationData.GridDimensions.x / 2, cellCenter.y, cellCenter.z);
-                    cellDoor.transform.Rotate(0f, 90f, 0f);
-                }
-                if (!map.GridCells[i, j].walls[2]) {
-                    GameObject cellDoor = Instantiate(generationData.Door, parent);
-                    cellDoor.transform.localPosition = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - generationData.GridDimensions.y / 2);
+                if(generationData.Door != null) {
+                    if (!map.GridCells[i, j].walls[1]) {
+                        GameObject cellDoor = Instantiate(generationData.Door, parent);
+                        cellDoor.transform.localPosition = new Vector3(cellCenter.x + generationData.GridDimensions.x / 2, cellCenter.y, cellCenter.z);
+                        cellDoor.transform.Rotate(0f, 90f, 0f);
+                    }
+                    if (!map.GridCells[i, j].walls[2]) {
+                        GameObject cellDoor = Instantiate(generationData.Door, parent);
+                        cellDoor.transform.localPosition = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - generationData.GridDimensions.y / 2);
+                    }
                 }
 
                 if(hasDepthValueSprites) {

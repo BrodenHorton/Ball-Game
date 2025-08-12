@@ -804,9 +804,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0f4cb93fd855a44a2cf742aa677f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generationData: {fileID: 11400000, guid: b520cf26e424d534a834c2e32e3d45a7, type: 2}
   hasDepthValueSprites: 0
   depthValueSprite: {fileID: 5828725063873656485, guid: 54130f5c816553b49ba166ee4dc15123, type: 3}
+  generationData: {fileID: 11400000, guid: c3e9e61eb497c2b47a173732efe6dd76, type: 2}
 --- !u!114 &1733126085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,7 +906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 959148135499979585, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 32.59
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 959148135499979585, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: m_LocalPosition.z

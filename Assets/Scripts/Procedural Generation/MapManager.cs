@@ -27,8 +27,10 @@ public class MapManager : MonoBehaviour {
         if (hasRandomSeed)
             mapSeed = Guid.NewGuid().GetHashCode();
 
-        if (mapGenerator != null)
-            map = mapGenerator.GenerateMap(mapSeed, transform);
+        if (mapGenerator != null) {
+            map = mapGenerator.GenerateMap(mapSeed);
+            mapGenerator.BuildMapCells(map, transform);
+        }
         else
             Debug.Log("No MapGenerator script found on Map object.");
 

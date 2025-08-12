@@ -2,8 +2,12 @@
 using UnityEngine;
 
 public abstract class MapGenerator : MonoBehaviour {
+    [SerializeField] protected bool hasDepthValueSprites;
+    [SerializeField] protected GameObject depthValueSprite;
 
-    public abstract Map GenerateMap(int seed, Transform parent);
+    public abstract Map GenerateMap(int seed);
+
+    public abstract void BuildMapCells(Map map, Transform parent);
 
     protected void CreateDepthMap(Map map) {
         // x and y of the Vector3Int represent the cell coordinates and z represenets the cells depth value

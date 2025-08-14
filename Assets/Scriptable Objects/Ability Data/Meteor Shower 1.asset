@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activatedLength: 15
   icon: {fileID: 21300000, guid: 9b7d53352a5a58f49accac79ed71621b, type: 3}
+  meteorShowerPrefab: {fileID: 7740771476295740599, guid: 78e0090cc8b507648a72734a13beac6c, type: 3}
   meteorPrefab: {fileID: 2057588369622688447, guid: c15d30eb0e6caf54e9d7cfe5161089df, type: 3}
   spawnRadius: 20
   spawnRate: 2

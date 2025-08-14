@@ -46,7 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPassive: 0
   isActivated: 0
-  abilityData: {fileID: 11400000, guid: 5ffd5dc2f6f7602448f34acaae67cebd, type: 2}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 512
+  abilityData: {fileID: 0}

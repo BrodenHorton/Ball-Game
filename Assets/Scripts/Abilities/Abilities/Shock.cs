@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Shock : Ability
 {
-
+    [SerializeField] private ShockData abilityData;
     PlayerMovement playerMovement;
     bool hitWhileDashing;
     /*2. Shock
@@ -15,7 +15,7 @@ public class Shock : Ability
     {
         if (isActivated) return;
         isActivated = true;
-        activationTimer = new Timer(abilityData.activatedLength);
+        activationTimer = new Timer(abilityData.ActivatedLength);
         playerMovement = GameManager.Instance.getPlayer().GetComponent<PlayerMovement>();
         hitWhileDashing = false;
         Debug.Log("Activating Shock");
@@ -42,13 +42,13 @@ public class Shock : Ability
             Deactivate();
         if (!hitWhileDashing && playerMovement.IsDashing)
         {
-            var hits = Physics.OverlapSphere(playerMovement.transform.position, (abilityData as ShockData).shockAreaRadius, (abilityData as ShockData).enemyMask);
+            var hits = Physics.OverlapSphere(playerMovement.transform.position, abilityData.shockAreaRadius, abilityData.enemyMask);
             for (int i = 0; i < hits.Length; i++)
             {
                 var trans = hits[i].transform.GetParentOrSelf();
                 if (trans.CompareTag("Enemy") && trans.TryGetComponent(out IDamageable damageable))
                 {
-                    damageable.TakeDamage((abilityData as ShockData).shockDamage, EffectType.ELECTRIC);
+                    damageable.TakeDamage(abilityData.shockDamage, EffectType.ELECTRIC);
                     hitWhileDashing = true;
                     break;
                 }
@@ -59,8 +59,5 @@ public class Shock : Ability
         }
     }
 
-    public override void Upgrade()
-    {
-        throw new System.NotImplementedException();
-    }
+    public ShockData AbilityData { get { return abilityData; } set { abilityData = value; } }
 }

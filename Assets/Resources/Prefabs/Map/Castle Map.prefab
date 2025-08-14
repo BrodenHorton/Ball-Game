@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8546159113266117135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695665128476392976}
+  - component: {fileID: 556675208447624733}
+  - component: {fileID: 2603461001495410134}
+  - component: {fileID: 9146246701991753284}
+  - component: {fileID: 724575448370571482}
+  m_Layer: 0
+  m_Name: Castle Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &695665128476392976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546159113266117135}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &556675208447624733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546159113266117135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee23c5383e7e1ee4cbd06c6b94055a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasRandomSeed: 0
+  mapSeed: 677182338
+  navMesh: {fileID: 0}
+  playerRb: {fileID: 0}
+--- !u!114 &2603461001495410134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546159113266117135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93aeec95ce42d2419c1bbbc71fc5399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootQuantity: 100
+  lootPrefab: {fileID: 6488761239896815655, guid: 990408ecbb3940e4bb74ed365f088355, type: 3}
+--- !u!114 &9146246701991753284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546159113266117135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891fb3037699fbf4baad67b07cc2cc68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobPrefab: {fileID: 4414800506413512019, guid: e8a4a788fbf1b3945819c2250f5294c5, type: 3}
+  mobQuantity: 0
+--- !u!114 &724575448370571482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546159113266117135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc0f4cb93fd855a44a2cf742aa677f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasDepthValueSprites: 0
+  depthValueSprite: {fileID: 5828725063873656485, guid: 54130f5c816553b49ba166ee4dc15123, type: 3}
+  generationData: {fileID: 11400000, guid: c3e9e61eb497c2b47a173732efe6dd76, type: 2}

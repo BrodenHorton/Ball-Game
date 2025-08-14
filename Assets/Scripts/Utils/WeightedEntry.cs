@@ -1,6 +1,10 @@
-﻿public class WeightedEntry<T> {
-    private T value;
-    private float weight;
+﻿using System;
+using UnityEngine;
+
+[Serializable]
+public class WeightedEntry<T> {
+    [SerializeField] private T value;
+    [SerializeField] private float weight;
 
     public WeightedEntry(T value, float weight) {
         this.value = value;

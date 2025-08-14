@@ -1,6 +1,7 @@
 using UnityEngine;
 public class Density : Ability
 {
+    [SerializeField] private DensityData abilityData;
     GameObject player;
     Rigidbody rb;
     float originalMass;
@@ -15,7 +16,7 @@ public class Density : Ability
     public override void Activate()
     {
         if (isActivated) return;
-        activationTimer = new Timer(abilityData.activatedLength);
+        activationTimer = new Timer(abilityData.ActivatedLength);
         this.player = GameManager.Instance.getPlayer();
         isActivated = true;
         rb = player.GetComponent<Rigidbody>();
@@ -23,13 +24,9 @@ public class Density : Ability
         rb.mass *= 3;
         var abilitiesComponent = player.GetComponent<PlayerAbilities>();
         var damage = abilitiesComponent.GetDashDamage();
-        damageToApply = (abilityData as DensityData).damageMultiplier * damage;
+        damageToApply = abilityData.damageMultiplier * damage;
     }
 
-    public override void Upgrade()
-    {
-
-    }
     private void FixedUpdate()
     {
         if (!isActivated) return;
@@ -45,6 +42,7 @@ public class Density : Ability
         isActivated = false;
         Debug.Log("Deactivating Density");
         rb.mass = originalMass;
+        Destroy(gameObject);
     }
 
     public override void DashedIntoEventHandler(GameObject enemy)
@@ -55,4 +53,6 @@ public class Density : Ability
             damageable.TakeDamage(damageToApply, EffectType.NORMAL);
         }
     }
+
+    public DensityData AbilityData { get { return abilityData; } set { abilityData = value; } }
 }

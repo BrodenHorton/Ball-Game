@@ -23,20 +23,20 @@ public class GameplayUIController : MonoBehaviour
     {
         abilities.gameObject.ToggleActiveIfChildrenExist();
     }
-    void AbilityUpdated(Ability ability, int index)
+    void AbilityUpdated(AbilityData abilityData, int index)
     {
         var icon = icons[index];
-        icon.sprite = ability.GetAbilityData().icon;
+        icon.sprite = abilityData.Icon;
     }
-    void AbilityAdded(Ability ability, int index)
+    void AbilityAdded(AbilityData abilityData, int index)
     {
         var icon = Instantiate(iconPrefab, abilities);
         icons[index] = icon;
         icon.GetComponentInChildren<TextMeshProUGUI>().text = (index+1).ToString();
-        icon.sprite = ability.GetAbilityData().icon;
+        icon.sprite = abilityData.Icon;
         abilities.gameObject.ToggleActiveIfChildrenExist();
     }
-    void AbilityRemoved(Ability ability, int index) 
+    void AbilityRemoved(AbilityData abilityData, int index) 
     {
         var icon = icons[index];
         icons[index] = null;

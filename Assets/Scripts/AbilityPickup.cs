@@ -4,21 +4,21 @@ using UnityEngine.UI;
 
 public class AbilityPickup : MonoBehaviour
 {
-    [SerializeField] Ability ability;
+    [SerializeField] AbilityData abilityData;
     [SerializeField] TextMeshProUGUI abilityName;
     [SerializeField] Image icon;
 
     private void Awake()
     {
-        abilityName.text = ability.GetAbilityData().name;
-        icon.sprite = ability.GetAbilityData().icon;
+        abilityName.text = abilityData.name;
+        icon.sprite = abilityData.Icon;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && other.GetComponent<PlayerAbilities>().AddAbility(ability))
+        if (other.CompareTag("Player") && other.GetComponent<PlayerAbilities>().AddAbility(abilityData))
         {
-            print("Adding ability " + ability);
+            print("Adding ability " + abilityData);
             Destroy(gameObject);
         }
     }

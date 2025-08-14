@@ -80,7 +80,7 @@ public class RandomWalkMapGenerator : MapGenerator {
         }
     }
 
-    private void PlaceStartingCell(Map map) {
+    protected override void PlaceStartingCell(Map map) {
         for (int i = map.GridCells.GetLength(0) - 1; i >= 0; i--) {
             for (int j = 0; j < map.GridCells.GetLength(1); j++) {
                 if (map.GridCells[i, j] != null) {
@@ -93,7 +93,7 @@ public class RandomWalkMapGenerator : MapGenerator {
         }
     }
 
-    private void PlaceExitCell(Map map) {
+    protected override void PlaceExitCell(Map map) {
         int maxDepthValue = 0;
         foreach(KeyValuePair<Vector2Int, int> entry in map.DepthByCell) {
             if(entry.Value > maxDepthValue)
@@ -135,17 +135,6 @@ public class RandomWalkMapGenerator : MapGenerator {
         }
     }
 
-    private int NumberOfAdjacentCells(GridCell[,] gridCells, Vector2Int cell) {
-        int count = 0;
-        foreach(Direction2D direction in Enum.GetValues(typeof(Direction2D))) {
-            Vector2Int adjacentCell = new Vector2Int(cell.x + direction.Vector().x, cell.y + direction.Vector().y);
-            if (IsGridIndexInBounds(gridCells, adjacentCell) && gridCells[adjacentCell.y, adjacentCell.x] != null)
-                count++;
-        }
-
-        return count;
-    }
-
     private void UpdateCellInDirectionOf(GridCell[,] gridCells, ref Vector2Int currentCell, Direction2D direction) {
         Vector2Int nextCell = new Vector2Int(currentCell.x + direction.Vector().x, currentCell.y + direction.Vector().y);
         if (IsGridIndexInBounds(gridCells, nextCell)) {
@@ -157,10 +146,6 @@ public class RandomWalkMapGenerator : MapGenerator {
         }
     }
 
-    private bool IsGridIndexInBounds(GridCell[,] gridCells, Vector2Int cell) {
-        return cell.x >= 0 && cell.x < gridCells.GetLength(1) && cell.y >= 0 && cell.y < gridCells.GetLength(0);
-    }
-
     public override void BuildMapCells(Map map, Transform parent) {
         for (int i = 0; i < map.GridCells.GetLength(0); i++) {
             for(int j = 0; j < map.GridCells.GetLength(1); j++) {
@@ -168,7 +153,7 @@ public class RandomWalkMapGenerator : MapGenerator {
                     continue;
 
                 CellOrientation orientation = map.GridCells[i, j].GetOrientation();
-                float rotation = getGridCellRotation(map.GridCells[i, j]);
+                float rotation = getGridCellRotation(map.GridCells[i, j], rng);
                 GameObject cell;
                 if (i == map.StartingCell.y && j == map.StartingCell.x)
                     cell = Instantiate(generationData.GetStartingCell(), parent);
@@ -201,46 +186,5 @@ public class RandomWalkMapGenerator : MapGenerator {
                 }
             }
         }
-
-        Debug.Log("Map construction finsihed");
     }
-
-    private float getGridCellRotation(GridCell gridCell) {
-        CellOrientation orientation = gridCell.GetOrientation();
-        float rotation = 0;
-        if (orientation == CellOrientation.DeadEnd) {
-            for (int i = 0; i < gridCell.walls.Length; i++) {
-                if (!gridCell.walls[i]) {
-                    rotation = i * 90;
-                    break;
-                }
-            }
-        }
-        else if (orientation == CellOrientation.Corridor) {
-            rotation = gridCell.walls[0] ? 90 : 0;
-            rotation = rng.Next(0, 2) == 1 ? rotation + 180 : rotation;
-        }
-        else if (orientation == CellOrientation.Bend) {
-            if(gridCell.walls[1] && gridCell.walls[2])
-                rotation = 90;
-            else if (gridCell.walls[2] && gridCell.walls[3])
-                rotation = 180;
-            else if (gridCell.walls[3] && gridCell.walls[0])
-                rotation = 270;
-        }
-        else if (orientation == CellOrientation.Intersection) {
-            rotation = rng.Next(0, 4) * 90;
-        }
-        else if (orientation == CellOrientation.T_Intersection) {
-            for (int i = 0; i < gridCell.walls.Length; i++) {
-                if (gridCell.walls[i]) {
-                    rotation = i * 90;
-                    break;
-                }
-            }
-        }
-
-        return rotation;
-    }
-
 }

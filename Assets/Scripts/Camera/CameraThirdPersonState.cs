@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraThirdPersonState : CameraState {
-    private static readonly float DEFAULT_NATURAL_CAM_DISTANCE = 8.0f;
+    private static readonly float DEFAULT_NATURAL_CAM_DISTANCE = 10.0f;
     private static readonly float DEFAULT_CAM_ROTATION_SPEED = 0.2f;
     private static readonly float CAM_UPPER_PITCH_CLAMP = 120;
     private static readonly float CAM_LOWER_PITCH_CLAMP = 30f;

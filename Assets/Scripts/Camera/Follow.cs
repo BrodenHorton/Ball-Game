@@ -3,11 +3,11 @@ using UnityEngine;
 public class Follow : MonoBehaviour
 {
     [SerializeField] private Transform target;
+    [SerializeField] Vector3 offset;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(target != null)
-            transform.position = target.position;
+            transform.position = target.position + offset;
     }
 }

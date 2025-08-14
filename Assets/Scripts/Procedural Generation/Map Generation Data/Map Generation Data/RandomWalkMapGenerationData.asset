@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridDimensions: {x: 101, y: 101}
   gridCellSize: 100
-  cellData: {fileID: 11400000, guid: bd6508f72e2741e4b95557a4a293d4f6, type: 2}
+  cellData: {fileID: 11400000, guid: bf6385e32330ffe40bccebe20e9cb8c2, type: 2}
   hasBranchPaths: 1
-  randomWalkIterations: 10
+  randomWalkIterations: 18
   randomWalkLength: 15
   drunkWalkIterations: 4
-  drunkWalkLength: 15
+  drunkWalkLength: 18

@@ -4,21 +4,24 @@ using UnityEngine;
 using Random = System.Random;
 
 public class RoomFirstGenerator : MapGenerator {
+    private static readonly int MAP_GRID_CELL_MARGIN = 1;
+
     [SerializeField] private RoomFirstMapGenerationData generationData;
+    [SerializeField] private bool shouldGenerateRoomBoundingBoxes;
+    [SerializeField] private bool shouldGenerateCorridors;
 
     private Random rng;
 
     public override Map GenerateMap(int seed) {
-        Debug.Log("Room First generation entered");
         rng = new Random(seed);
         Vector3 mapOrigin = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2, 0f, generationData.GridDimensions.y * generationData.GridCellSize / 2);
         Map map = new Map(generationData.GridDimensions, mapOrigin, generationData.GridCellSize);
         map.GridCells = new GridCell[generationData.GridDimensions.y, generationData.GridDimensions.x];
 
-        RoomFirstGeneration(map.GridCells, new BoundsInt(Vector3Int.zero, new Vector3Int(generationData.GridDimensions.x, generationData.GridDimensions.y)));
+        RoomFirstGeneration(map.GridCells, new BoundsInt(new Vector3Int(MAP_GRID_CELL_MARGIN, MAP_GRID_CELL_MARGIN), new Vector3Int(generationData.GridDimensions.x - MAP_GRID_CELL_MARGIN * 2, generationData.GridDimensions.y - MAP_GRID_CELL_MARGIN * 2)));
         PlaceStartingCell(map);
-        //CreateDepthMap(map);
-        //PlaceExitCell(map);
+        CreateDepthMap(map);
+        PlaceExitCell(map);
 
         return map;
     }
@@ -59,29 +62,31 @@ public class RoomFirstGenerator : MapGenerator {
                 rooms.Add(room);
         }
 
-        Debug.Log("Room Count: " + rooms.Count);
         for (int i = rooms.Count - 1; i >= 0; i--) {
             Vector2Int roomCenter = new Vector2Int(rooms[i].size.x - generationData.RoomOffset * 2, rooms[i].size.y - generationData.RoomOffset * 2);
-            if(roomCenter.x <= 0 || rooms[i].y <= 0) {
+            if (roomCenter.x <= 0 || roomCenter.y <= 0) {
                 rooms.RemoveAt(i);
                 continue;
             }
-
-            RandomWalkGeneration(gridCells, new BoundsInt(
-                new Vector3Int(rooms[i].min.x + generationData.RoomOffset, rooms[i].min.y + generationData.RoomOffset),
-                new Vector3Int(rooms[i].size.x - generationData.RoomOffset * 2, rooms[i].size.y - generationData.RoomOffset * 2)));
         }
 
-        CorridorGeneration(gridCells, rooms);
-
-        // TODO: Add boolean for not using random walk algorithm and displaying bounding box rooms
-        /*foreach (BoundsInt room in rooms) {
-            for (int i = generationData.RoomOffset; i < room.size.y - generationData.RoomOffset; i++) {
-                for (int j = generationData.RoomOffset; j < room.size.x - generationData.RoomOffset; j++) {
-                    InsertGridCell(gridCells, new Vector2Int(room.min.x + j, room.min.y + i));
+        foreach (BoundsInt room in rooms) {
+            if (shouldGenerateRoomBoundingBoxes) {
+                for (int i = generationData.RoomOffset; i < room.size.y - generationData.RoomOffset; i++) {
+                    for (int j = generationData.RoomOffset; j < room.size.x - generationData.RoomOffset; j++) {
+                        InsertGridCell(gridCells, new Vector2Int(room.min.x + j, room.min.y + i));
+                    }
                 }
             }
-        }*/
+            else {
+                RandomWalkGeneration(gridCells, new BoundsInt(
+                new Vector3Int(room.min.x + generationData.RoomOffset, room.min.y + generationData.RoomOffset),
+                new Vector3Int(room.size.x - generationData.RoomOffset * 2, room.size.y - generationData.RoomOffset * 2)));
+            }
+        }
+
+        if (shouldGenerateCorridors)
+            CorridorGeneration(gridCells, rooms);
     }
 
     private List<BoundsInt> SplitHorizontally(BoundsInt room) {
@@ -104,9 +109,6 @@ public class RoomFirstGenerator : MapGenerator {
 
     private void RandomWalkGeneration(GridCell[,] gridCells, BoundsInt room) {
         Vector2Int roomCenter = new Vector2Int(room.min.x + room.size.x / 2, room.min.y + room.size.y / 2);
-        Debug.Log("Room min: " + room.min.x + ", " + room.min.y);
-        Debug.Log("Room size: " + room.size.x + ", " + room.size.y);
-        Debug.Log("Room Center: " + roomCenter.x + ", " + roomCenter.y);
         if ( gridCells[roomCenter.y, roomCenter.x] == null)
             InsertGridCell(gridCells, roomCenter);
 
@@ -198,11 +200,11 @@ public class RoomFirstGenerator : MapGenerator {
         }
     }
 
-    private void PlaceStartingCell(Map map) {
+    protected override void PlaceStartingCell(Map map) {
         for (int i = map.GridCells.GetLength(0) - 1; i >= 0; i--) {
             for (int j = 0; j < map.GridCells.GetLength(1); j++) {
-                if (map.GridCells[i, j] != null) {
-                    Vector2Int currentCell = new Vector2Int(j, i);
+                if (map.GridCells[i, j] != null && i + 1 < map.GridCells.GetLength(0)) {
+                    Vector2Int currentCell = new Vector2Int(j, i + 1);
                     InsertGridCell(map.GridCells, currentCell);
                     map.StartingCell = currentCell;
                     return;
@@ -211,7 +213,7 @@ public class RoomFirstGenerator : MapGenerator {
         }
     }
 
-    private void PlaceExitCell(Map map) {
+    protected override void PlaceExitCell(Map map) {
         int maxDepthValue = 0;
         foreach (KeyValuePair<Vector2Int, int> entry in map.DepthByCell) {
             if (entry.Value > maxDepthValue)
@@ -270,21 +272,6 @@ public class RoomFirstGenerator : MapGenerator {
         }
     }
 
-    private int NumberOfAdjacentCells(GridCell[,] gridCells, Vector2Int cell) {
-        int count = 0;
-        foreach (Direction2D direction in Enum.GetValues(typeof(Direction2D))) {
-            Vector2Int adjacentCell = new Vector2Int(cell.x + direction.Vector().x, cell.y + direction.Vector().y);
-            if (IsGridIndexInBounds(gridCells, adjacentCell) && gridCells[adjacentCell.y, adjacentCell.x] != null)
-                count++;
-        }
-
-        return count;
-    }
-
-    private bool IsGridIndexInBounds(GridCell[,] gridCells, Vector2Int cell) {
-        return cell.x >= 0 && cell.x < gridCells.GetLength(1) && cell.y >= 0 && cell.y < gridCells.GetLength(0);
-    }
-
     public override void BuildMapCells(Map map, Transform parent) {
         for (int i = 0; i < map.GridCells.GetLength(0); i++) {
             for (int j = 0; j < map.GridCells.GetLength(1); j++) {
@@ -292,7 +279,7 @@ public class RoomFirstGenerator : MapGenerator {
                     continue;
 
                 CellOrientation orientation = map.GridCells[i, j].GetOrientation();
-                float rotation = getGridCellRotation(map.GridCells[i, j]);
+                float rotation = getGridCellRotation(map.GridCells[i, j], rng);
                 GameObject cell;
                 if (i == map.StartingCell.y && j == map.StartingCell.x)
                     cell = Instantiate(generationData.GetStartingCell(), parent);
@@ -325,45 +312,5 @@ public class RoomFirstGenerator : MapGenerator {
                 }
             }
         }
-
-        Debug.Log("Map construction finsihed");
-    }
-
-    private float getGridCellRotation(GridCell gridCell) {
-        CellOrientation orientation = gridCell.GetOrientation();
-        float rotation = 0;
-        if (orientation == CellOrientation.DeadEnd) {
-            for (int i = 0; i < gridCell.walls.Length; i++) {
-                if (!gridCell.walls[i]) {
-                    rotation = i * 90;
-                    break;
-                }
-            }
-        }
-        else if (orientation == CellOrientation.Corridor) {
-            rotation = gridCell.walls[0] ? 90 : 0;
-            rotation = rng.Next(0, 2) == 1 ? rotation + 180 : rotation;
-        }
-        else if (orientation == CellOrientation.Bend) {
-            if (gridCell.walls[1] && gridCell.walls[2])
-                rotation = 90;
-            else if (gridCell.walls[2] && gridCell.walls[3])
-                rotation = 180;
-            else if (gridCell.walls[3] && gridCell.walls[0])
-                rotation = 270;
-        }
-        else if (orientation == CellOrientation.Intersection) {
-            rotation = rng.Next(0, 4) * 90;
-        }
-        else if (orientation == CellOrientation.T_Intersection) {
-            for (int i = 0; i < gridCell.walls.Length; i++) {
-                if (gridCell.walls[i]) {
-                    rotation = i * 90;
-                    break;
-                }
-            }
-        }
-
-        return rotation;
     }
 }

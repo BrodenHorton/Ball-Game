@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class MeteorShower : Ability
 {
+    [SerializeField] private MeteorData abilityData;
     Transform player;
     Timer meteorSpawnRateTimer;
-    MeteorData meteorData => abilityData as MeteorData;
+
     public override void Activate()
     {
         if (isActivated) return;
         isActivated = true;
-        activationTimer = new Timer(meteorData.activatedLength);
-        meteorSpawnRateTimer = new Timer(meteorData.spawnRate);
+        activationTimer = new Timer(abilityData.ActivatedLength);
+        meteorSpawnRateTimer = new Timer(abilityData.spawnRate);
         player = GameManager.Instance.getPlayer().transform;
         Debug.Log("Activating Meteor Shower");
     }
@@ -24,11 +25,6 @@ public class MeteorShower : Ability
     {
         isActivated = false;
         Debug.Log("Deactivating Meteor Shower");
-    }
-
-    public override void Upgrade()
-    {
-        throw new System.NotImplementedException();
     }
 
     // Update is called once per frame
@@ -46,12 +42,14 @@ public class MeteorShower : Ability
         }
         if (meteorSpawnRateTimer.IsFinished())
         {
-            var meteor = Instantiate(meteorData.meteorPrefab, player.position + (Vector3.up * meteorData.heightOffsetOfMeteor) + new Vector3(Random.Range(0, meteorData.spawnRadius), 0,0), Quaternion.identity);
-            meteor.GetComponent<Meteor>().Prepare(meteorData);
-            Vector3 direction = Vector3.down.GetRandomDirectionWithinCone(meteorData.meteorDownwardMaxAngle);
-            meteor.GetComponent<Rigidbody>().AddForce(direction * meteorData.meteorSpeed, ForceMode.Impulse);
+            var meteor = Instantiate(abilityData.meteorPrefab, player.position + (Vector3.up * abilityData.heightOffsetOfMeteor) + new Vector3(Random.Range(0, abilityData.spawnRadius), 0,0), Quaternion.identity);
+            meteor.GetComponent<Meteor>().Prepare(abilityData);
+            Vector3 direction = Vector3.down.GetRandomDirectionWithinCone(abilityData.meteorDownwardMaxAngle);
+            meteor.GetComponent<Rigidbody>().AddForce(direction * abilityData.meteorSpeed, ForceMode.Impulse);
             meteorSpawnRateTimer.Reset();
         }
 
     }
+
+    public MeteorData AbilityData { get { return abilityData; } set { abilityData = value; } }
 }

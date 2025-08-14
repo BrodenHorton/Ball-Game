@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca6c2a8aa2d77b344863c1874e913087, type: 3}
-  m_Name: RoomFirstMapGenerationData
+  m_Script: {fileID: 11500000, guid: 5d826e13a45d7284ebc6991324b7fea5, type: 3}
+  m_Name: ChestLootTable
   m_EditorClassIdentifier: 
-  gridDimensions: {x: 41, y: 41}
-  gridCellSize: 100
-  cellData: {fileID: 11400000, guid: bd6508f72e2741e4b95557a4a293d4f6, type: 2}
-  minRoomSize: 8
-  roomOffset: 2
+  weightedLoot: []

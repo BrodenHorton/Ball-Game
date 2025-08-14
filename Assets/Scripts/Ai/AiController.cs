@@ -30,7 +30,7 @@ public abstract class AIController : MonoBehaviour, IDamageable
     {
         if (isWithinAttackRange || isAttacking)
         {
-            Debug.Log("Attacking");
+            //Debug.Log("Attacking");
             Attack();
         }
         else if (!isAttacking)

@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerAbilities : MonoBehaviour
 {
     PlayerMovement movement;
-    [SerializeField] List<Ability> startingAbilities;
-    List<Ability> abilities = new List<Ability>();
+    [SerializeField] List<AbilityData> startingAbilities;
+    List<AbilityData> abilities = new List<AbilityData>();
     [SerializeField] float baseDashDamage;
 
     private void Awake()
@@ -39,23 +39,22 @@ public class PlayerAbilities : MonoBehaviour
     {
         if (action <= abilities.Count - 1)
         {
-            abilities[action].Activate();
+            Ability ability = abilities[action].CreateAbility();
+            Debug.Log("On Activate Ability");
+            ability.Activate();
         }
     }
-    public bool AddAbility(Ability ability)
+    public bool AddAbility(AbilityData abilityData)
 	{
         if (abilities.Count >= 3)
             return false;
-		Ability ab = Instantiate(ability, transform);
-		abilities.Add(ab);
-		EventBus.AbilityAdded?.Invoke(ab, abilities.IndexOf(ab));
+		abilities.Add(abilityData);
+		EventBus.AbilityAdded?.Invoke(abilityData, abilities.IndexOf(abilityData));
         return true;
     }
-    public void RemoveAbility(Ability ability)
+    public void RemoveAbility(AbilityData abilityData)
     {
-        ability.Deactivate();
-		EventBus.AbilityRemoved?.Invoke(ability, abilities.IndexOf(ability));
-		abilities.Remove(ability);
-        Destroy(ability.gameObject);
+		EventBus.AbilityRemoved?.Invoke(abilityData, abilities.IndexOf(abilityData));
+		abilities.Remove(abilityData);
     }
 }

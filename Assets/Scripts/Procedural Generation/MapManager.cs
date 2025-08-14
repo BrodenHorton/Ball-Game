@@ -27,7 +27,6 @@ public class MapManager : MonoBehaviour {
 
         if (mapGenerator != null) {
             map = mapGenerator.GenerateMap(mapSeed);
-            map.PrintGridCells();
             mapGenerator.BuildMapCells(map, transform);
         }
         else
@@ -41,7 +40,7 @@ public class MapManager : MonoBehaviour {
 
     private void FixedUpdate() {
         if(isFirstUpdate) {
-            //playerRb.MovePosition(map.GetMapStartingPosition());
+            playerRb.MovePosition(map.GetMapStartingPosition());
             isFirstUpdate = false;
         }
     }

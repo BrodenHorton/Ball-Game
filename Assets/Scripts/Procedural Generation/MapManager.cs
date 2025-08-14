@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -8,7 +7,6 @@ public class MapManager : MonoBehaviour {
     [SerializeField] int mapSeed;
     [SerializeField] private NavMeshSurface navMesh;
     [SerializeField] private Rigidbody playerRb;
-    [SerializeField] private CombineMesh meshCombiner;
 
     private Map map;
     private MapGenerator mapGenerator;
@@ -29,6 +27,7 @@ public class MapManager : MonoBehaviour {
 
         if (mapGenerator != null) {
             map = mapGenerator.GenerateMap(mapSeed);
+            map.PrintGridCells();
             mapGenerator.BuildMapCells(map, transform);
         }
         else
@@ -38,12 +37,11 @@ public class MapManager : MonoBehaviour {
         FindMobSpawnPositions();
         lootGenerator.GenerateLoot(map, mapSeed);
         mobGenerator.GenerateMobs(map, mapSeed);
-        CombineFloorMeshes();
     }
 
     private void FixedUpdate() {
         if(isFirstUpdate) {
-            playerRb.MovePosition(map.GetMapStartingPosition());
+            //playerRb.MovePosition(map.GetMapStartingPosition());
             isFirstUpdate = false;
         }
     }
@@ -61,18 +59,6 @@ public class MapManager : MonoBehaviour {
         Debug.Log("Mob Spawning Positions: " + map.MobSpawnPositions.Count);
         Debug.Log("Loot Spawning Positions: " + map.LootSpawnPositions.Count);
         Debug.Log("Trap Spawning Positions: " + map.TrapSpawnPositions.Count);
-    }
-
-    private void CombineFloorMeshes() {
-        List<MeshFilter> meshFilters = new List<MeshFilter>();
-        GameObject[] grounds = GameObject.FindGameObjectsWithTag("Ground");
-        for (int i = 0; i < grounds.Length; i++) {
-            GameObject ground = grounds[i];
-            if (ground.GetComponent<MeshFilter>() != null)
-                meshFilters.Add(ground.GetComponent<MeshFilter>());
-            ground.AddComponent<BoxCollider>();
-        }
-       // meshCombiner.CombineMeshes(meshFilters);
     }
 
     public Map Map => map;

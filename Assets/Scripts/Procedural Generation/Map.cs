@@ -28,7 +28,7 @@ public class Map {
         return new Vector3(mapOrigin.x + startingCell.x * cellSize, 0f, mapOrigin.z - startingCell.y * cellSize);
     }
 
-    private void PrintGridCells() {
+    public void PrintGridCells() {
         string mapStr = "";
         for (int i = 0; i < gridCells.GetLength(0); i++) {
             for (int j = 0; j < gridCells.GetLength(1); j++) {

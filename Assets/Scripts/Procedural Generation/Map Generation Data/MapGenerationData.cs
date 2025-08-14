@@ -5,22 +5,25 @@ using UnityEngine;
 public abstract class MapGenerationData : ScriptableObject {
     [SerializeField] private Vector2Int gridDimensions;
     [SerializeField] private int gridCellSize;
-    [SerializeField] private GameObject startingCell;
-    [SerializeField] private GameObject exitCell;
-    [SerializeField] private GameObject door;
     [SerializeField] private MapCellData cellData;
 
     public List<GameObject> GetCellsByOrientation(CellOrientation orientation) {
         return cellData.GetCellsByOrientation(orientation);
     }
 
-    public Vector2Int GridDimensions => gridDimensions;
+    public GameObject GetStartingCell() {
+        return cellData.StartingCell;
+    }
 
-    public int GridCellSize => gridCellSize;
+    public GameObject GetExitCell() {
+        return cellData.ExitCell;
+    }
 
-    public GameObject StartingCell => startingCell;
+    public GameObject GetDoor() {
+        return cellData.Door;
+    }
 
-    public GameObject ExitCell => exitCell;
+    public Vector2Int GridDimensions { get { return gridDimensions; } }
 
-    public GameObject Door => door;
+    public int GridCellSize { get { return gridCellSize; } }
 }

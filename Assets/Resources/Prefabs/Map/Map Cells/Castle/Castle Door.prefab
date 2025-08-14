@@ -226,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2516169385636230562}
   m_Layer: 0
-  m_Name: Cave Door
+  m_Name: Castle Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

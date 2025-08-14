@@ -376,6 +376,7 @@ GameObject:
   - component: {fileID: 39228714324180076}
   - component: {fileID: 7558913381425470471}
   - component: {fileID: 6054833341147900523}
+  - component: {fileID: 967096440049120956}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Ground
@@ -495,6 +496,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b55279588c6d9c45ab2d0ff6f86be49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &967096440049120956
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615624891119902000}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7912611691470463282
 GameObject:
   m_ObjectHideFlags: 0

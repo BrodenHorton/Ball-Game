@@ -9,6 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0a07132cd0e124aa444d2beb3c94ab, type: 3}
+  m_Script: {fileID: 11500000, guid: 2069fc349f0dfcf4a904a867c3b8cf45, type: 3}
   m_Name: CaveCellData
   m_EditorClassIdentifier: 
+  deadEndCells:
+  - {fileID: 83729013916706629, guid: ad9b0b642e6aaa448aa872acabeb330b, type: 3}
+  bendCells:
+  - {fileID: 83729013916706629, guid: d5ef63bd492382544a831daf45ce821e, type: 3}
+  corridorCells:
+  - {fileID: 83729013916706629, guid: effebf2bf5efa694db00c10000deca9d, type: 3}
+  tIntersectionCells:
+  - {fileID: 83729013916706629, guid: 827aea219e20aab4b8668b4db4e029c6, type: 3}
+  intersectionCells:
+  - {fileID: 83729013916706629, guid: ee4a0c9c349e7ba44b2594aaeea2538f, type: 3}
+  startingCell: {fileID: 3531862861068251308, guid: bcad0c25cf5206349abdd24f5c570616, type: 3}
+  exitCell: {fileID: 3531862861068251308, guid: af8607729c292c947b428a53ee02a0d3, type: 3}
+  door: {fileID: 0}

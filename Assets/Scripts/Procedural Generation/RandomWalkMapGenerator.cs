@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class RandomWalkMapGenerator : MapGenerator {
     [SerializeField] private RandomWalkMapGenerationData generationData;
 
-    private System.Random rng;
+    private Random rng;
 
     public override Map GenerateMap(int seed) {
-        rng = new System.Random(seed);
+        rng = new Random(seed);
         Vector3 mapOrigin = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2, 0f, generationData.GridDimensions.y * generationData.GridCellSize / 2);
         Map map = new Map(generationData.GridDimensions, mapOrigin, generationData.GridCellSize);
         map.GridCells = new GridCell[generationData.GridDimensions.y, generationData.GridDimensions.x];
@@ -170,23 +171,23 @@ public class RandomWalkMapGenerator : MapGenerator {
                 float rotation = getGridCellRotation(map.GridCells[i, j]);
                 GameObject cell;
                 if (i == map.StartingCell.y && j == map.StartingCell.x)
-                    cell = Instantiate(generationData.StartingCell, parent);
+                    cell = Instantiate(generationData.GetStartingCell(), parent);
                 else if (i == map.ExitCell.y && j == map.ExitCell.x)
-                    cell = Instantiate(generationData.ExitCell, parent);
+                    cell = Instantiate(generationData.GetExitCell(), parent);
                 else
                     cell = Instantiate(generationData.GetCellsByOrientation(orientation)[0], parent);
                 Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + map.MapOrigin.x, map.MapOrigin.y, i * -generationData.GridCellSize + map.MapOrigin.z);
                 cell.transform.localPosition = cellCenter;
                 cell.transform.Rotate(cell.transform.up, rotation);
 
-                if(generationData.Door != null) {
+                if(generationData.GetDoor() != null) {
                     if (!map.GridCells[i, j].walls[1]) {
-                        GameObject cellDoor = Instantiate(generationData.Door, parent);
+                        GameObject cellDoor = Instantiate(generationData.GetDoor(), parent);
                         cellDoor.transform.localPosition = new Vector3(cellCenter.x + generationData.GridDimensions.x / 2, cellCenter.y, cellCenter.z);
                         cellDoor.transform.Rotate(0f, 90f, 0f);
                     }
                     if (!map.GridCells[i, j].walls[2]) {
-                        GameObject cellDoor = Instantiate(generationData.Door, parent);
+                        GameObject cellDoor = Instantiate(generationData.GetDoor(), parent);
                         cellDoor.transform.localPosition = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - generationData.GridDimensions.y / 2);
                     }
                 }
@@ -205,7 +206,6 @@ public class RandomWalkMapGenerator : MapGenerator {
     }
 
     private float getGridCellRotation(GridCell gridCell) {
-        System.Random rand = new System.Random();
         CellOrientation orientation = gridCell.GetOrientation();
         float rotation = 0;
         if (orientation == CellOrientation.DeadEnd) {
@@ -218,7 +218,7 @@ public class RandomWalkMapGenerator : MapGenerator {
         }
         else if (orientation == CellOrientation.Corridor) {
             rotation = gridCell.walls[0] ? 90 : 0;
-            rotation = rand.Next(0, 2) == 1 ? rotation + 180 : rotation;
+            rotation = rng.Next(0, 2) == 1 ? rotation + 180 : rotation;
         }
         else if (orientation == CellOrientation.Bend) {
             if(gridCell.walls[1] && gridCell.walls[2])
@@ -229,7 +229,7 @@ public class RandomWalkMapGenerator : MapGenerator {
                 rotation = 270;
         }
         else if (orientation == CellOrientation.Intersection) {
-            rotation = rand.Next(0, 4) * 90;
+            rotation = rng.Next(0, 4) * 90;
         }
         else if (orientation == CellOrientation.T_Intersection) {
             for (int i = 0; i < gridCell.walls.Length; i++) {

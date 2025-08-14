@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour {
         dashCooldownTimer.Update();
     }
     private void FixedUpdate() {
-        Debug.Log("Dash Value: " + IsDashing);
+        //Debug.Log("Dash Value: " + IsDashing);
         Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
 

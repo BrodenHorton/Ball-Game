@@ -7,6 +7,7 @@ public class MapManager : MonoBehaviour {
     [SerializeField] int mapSeed;
     [SerializeField] private NavMeshSurface navMesh;
     [SerializeField] private Rigidbody playerRb;
+    [SerializeField] private GameObject mapExitPrefab;
 
     private Map map;
     private MapGenerator mapGenerator;
@@ -33,6 +34,10 @@ public class MapManager : MonoBehaviour {
             Debug.Log("No MapGenerator script found on Map object.");
 
         navMesh.BuildNavMesh();
+        // Temp
+        GameObject mapExit = Instantiate(mapExitPrefab, map.GetMapExitPosition(), Quaternion.identity);
+        mapExit.transform.position = new Vector3(mapExit.transform.position.x, mapExit.transform.position.y + 10, mapExit.transform.position.z);
+        
         FindMobSpawnPositions();
         lootGenerator.GenerateLoot(map, mapSeed);
         mobGenerator.GenerateMobs(map, mapSeed);

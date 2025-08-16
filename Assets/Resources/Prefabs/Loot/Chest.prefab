@@ -289,7 +289,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLayer: 6
   criticalImpactVelocity: 5
-  lootTable: {fileID: 0}
+  minLootAmt: 3
+  maxLootAmt: 3
+  lootTable: {fileID: 11400000, guid: f02df5b021d141f44bf4401b7ddb8607, type: 2}
+  minDropDistance: 2
+  maxDropDistance: 4
+  itemSpritePrefab: {fileID: 1991231455146429304, guid: cf5d8ce8269956b4e88252e25f69d5a1, type: 3}
 --- !u!1 &6954247024281781046
 GameObject:
   m_ObjectHideFlags: 0

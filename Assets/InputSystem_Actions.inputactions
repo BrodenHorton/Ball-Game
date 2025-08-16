@@ -36,9 +36,9 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -91,7 +91,7 @@
                     "type": "Button",
                     "id": "25fd4b46-9919-4f5b-a3b4-8e1217d402c0",
                     "expectedControlType": "",
-                    "processors": "",
+                    "processors": "Scale(factor=0)",
                     "interactions": "",
                     "initialStateCheck": false
                 },
@@ -100,7 +100,7 @@
                     "type": "Button",
                     "id": "03997881-4df1-4d4f-a654-09a1e2340724",
                     "expectedControlType": "",
-                    "processors": "",
+                    "processors": "Scale",
                     "interactions": "",
                     "initialStateCheck": false
                 },
@@ -109,7 +109,7 @@
                     "type": "Button",
                     "id": "92542b02-ddda-4a0f-9614-7c4f0d38ba49",
                     "expectedControlType": "",
-                    "processors": "",
+                    "processors": "Scale(factor=2)",
                     "interactions": "",
                     "initialStateCheck": false
                 }
@@ -459,7 +459,7 @@
                 {
                     "name": "",
                     "id": "1c04ea5f-b012-41d1-a6f7-02e963b52893",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/leftAlt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

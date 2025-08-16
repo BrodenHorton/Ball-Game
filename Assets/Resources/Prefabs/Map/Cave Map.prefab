@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee23c5383e7e1ee4cbd06c6b94055a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasRandomSeed: 0
-  mapSeed: 677182338
+  hasRandomSeed: 1
+  mapSeed: 0
   navMesh: {fileID: 0}
   playerRb: {fileID: 0}
 --- !u!114 &2975718480285954122

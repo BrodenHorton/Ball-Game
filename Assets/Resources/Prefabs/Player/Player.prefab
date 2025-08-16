@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6446976441645814377}
   - component: {fileID: 6465368499253533044}
   - component: {fileID: 1768051668098561056}
+  - component: {fileID: 2364022899411759093}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -163,7 +164,19 @@ MonoBehaviour:
     m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2364022899411759093}
+        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_MethodName: PlayerInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   - m_PersistentCalls:
@@ -255,7 +268,7 @@ MonoBehaviour:
       - m_Target: {fileID: 6465368499253533044}
         m_TargetAssemblyTypeName: PlayerAbilities, Assembly-CSharp
         m_MethodName: OnActionUsed
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -271,7 +284,7 @@ MonoBehaviour:
       - m_Target: {fileID: 6465368499253533044}
         m_TargetAssemblyTypeName: PlayerAbilities, Assembly-CSharp
         m_MethodName: OnActionUsed
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -287,7 +300,7 @@ MonoBehaviour:
       - m_Target: {fileID: 6465368499253533044}
         m_TargetAssemblyTypeName: PlayerAbilities, Assembly-CSharp
         m_MethodName: OnActionUsed
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -347,7 +360,7 @@ MonoBehaviour:
   force: 500
   jumpCooldown: 3
   dashCooldown: 3
-  jumpForce: 800
+  jumpForce: 200
   dashVelocity: 50
   dashLength: 0.5
   maxLinearVelocity: 20
@@ -370,9 +383,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingAbilities:
-  - {fileID: 1934300812081555981, guid: 9d0d6f2f5843f45479f2cd3ac528243e, type: 3}
-  - {fileID: 5473968364738172296, guid: 4f21dbaaba58d3349bf401bc6dd6c9c1, type: 3}
-  - {fileID: 7740771476295740599, guid: 78e0090cc8b507648a72734a13beac6c, type: 3}
+  - {fileID: 11400000, guid: aff008ddc6ff011419bc0b0c7d4a6d24, type: 2}
+  - {fileID: 11400000, guid: 130f6d6310e386549aeaae377a5d7e56, type: 2}
+  - {fileID: 11400000, guid: 5ffd5dc2f6f7602448f34acaae67cebd, type: 2}
   baseDashDamage: 50
 --- !u!114 &1768051668098561056
 MonoBehaviour:
@@ -387,3 +400,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+--- !u!114 &2364022899411759093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228351072499507690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171f461542b5f4a4d945d63554e71263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

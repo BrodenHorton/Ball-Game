@@ -75,7 +75,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Jump()
     {
-        Debug.Log("Player Jumping");
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         jumpTimer.Reset();
     }
@@ -90,7 +89,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Dash()
     {
-        Debug.Log("Player Dashing");
         rb.maxLinearVelocity = maxLinearVelocity + dashVelocity;
         rb.linearVelocity = cameraTransform.forward * dashVelocity;
         EventBus.Dashing?.Invoke(true);

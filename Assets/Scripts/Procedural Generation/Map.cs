@@ -28,6 +28,10 @@ public class Map {
         return new Vector3(mapOrigin.x + startingCell.x * cellSize, 0f, mapOrigin.z - startingCell.y * cellSize);
     }
 
+    public Vector3 GetMapExitPosition() {
+        return new Vector3(mapOrigin.x + exitCell.x * cellSize, 0f, mapOrigin.z - exitCell.y * cellSize);
+    }
+
     public GridCell[,] GridCells { get { return gridCells; } set { gridCells = value; } }
 
     public Vector3 MapOrigin { get { return mapOrigin; } }

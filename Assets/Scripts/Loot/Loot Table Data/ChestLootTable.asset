@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d826e13a45d7284ebc6991324b7fea5, type: 3}
   m_Name: ChestLootTable
   m_EditorClassIdentifier: 
-  weightedLoot: []
+  weightedLoot:
+  - value: {fileID: 8264966284799447574, guid: 3aa05072078d8964eb1b0685c5227d98, type: 3}
+    weight: 5
+  - value: {fileID: 8264966284799447574, guid: 3aa05072078d8964eb1b0685c5227d98, type: 3}
+    weight: 5
+  - value: {fileID: 4237426962376389053, guid: 99521e9802c961a48b4778012dc1fc85, type: 3}
+    weight: 10
+  - value: {fileID: 4591914826903787021, guid: 04e2e6469e7015949b01658e8cd36b14, type: 3}
+    weight: 20

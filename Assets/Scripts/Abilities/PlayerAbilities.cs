@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAbilities : MonoBehaviour
 {
@@ -35,8 +36,12 @@ public class PlayerAbilities : MonoBehaviour
     }
     public float GetDashDamage() => baseDashDamage;
 
-    public void OnActionUsed(int action)
+    public void OnActionUsed(InputAction.CallbackContext context)
     {
+        if (!context.performed)
+            return;
+
+        int action = (int)context.ReadValue<float>();
         if (action <= abilities.Count - 1)
         {
             Ability ability = abilities[action].CreateAbility();

@@ -25,13 +25,13 @@ public class Density : Ability
         var abilitiesComponent = player.GetComponent<PlayerAbilities>();
         var damage = abilitiesComponent.GetDashDamage();
         damageToApply = abilityData.damageMultiplier * damage;
+        Debug.Log("Activated Density");
     }
 
     private void FixedUpdate()
     {
         if (!isActivated) return;
 
-        Debug.Log("Density Active");
         rb.AddForce(Physics.gravity * 2);
         activationTimer.Update();
         if (activationTimer.IsFinished())

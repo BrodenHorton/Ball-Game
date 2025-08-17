@@ -16,7 +16,7 @@ public class Density : Ability
     public override void Activate()
     {
         if (isActivated) return;
-        activationTimer = new Timer(abilityData.ActivatedLength);
+        activationTimer = new Timer(abilityData.ActivatedLength, Deactivate);
         this.player = GameManager.Instance.getPlayer();
         isActivated = true;
         rb = player.GetComponent<Rigidbody>();
@@ -34,8 +34,6 @@ public class Density : Ability
 
         rb.AddForce(Physics.gravity * 2);
         activationTimer.Update();
-        if (activationTimer.IsFinished())
-            Deactivate();
     }
     public override void Deactivate()
     {

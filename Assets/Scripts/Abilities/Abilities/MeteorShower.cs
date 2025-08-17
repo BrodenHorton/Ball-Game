@@ -10,8 +10,8 @@ public class MeteorShower : Ability
     {
         if (isActivated) return;
         isActivated = true;
-        activationTimer = new Timer(abilityData.ActivatedLength);
-        meteorSpawnRateTimer = new Timer(abilityData.spawnRate);
+        activationTimer = new Timer(abilityData.ActivatedLength, Deactivate);
+        meteorSpawnRateTimer = new Timer(abilityData.spawnRate, SpawnMeteor);
         player = GameManager.Instance.getPlayer().transform;
         Debug.Log("Activating Meteor Shower");
     }
@@ -35,20 +35,14 @@ public class MeteorShower : Ability
         Debug.Log("Meteor Shower Active");
         meteorSpawnRateTimer.Update();
         activationTimer.Update();
-        if (activationTimer.IsFinished())
-        {
-            Deactivate();
-            return;
-        }
-        if (meteorSpawnRateTimer.IsFinished())
-        {
-            var meteor = Instantiate(abilityData.meteorPrefab, player.position + (Vector3.up * abilityData.heightOffsetOfMeteor) + new Vector3(Random.Range(0, abilityData.spawnRadius), 0,0), Quaternion.identity);
-            meteor.GetComponent<Meteor>().Prepare(abilityData);
-            Vector3 direction = Vector3.down.GetRandomDirectionWithinCone(abilityData.meteorDownwardMaxAngle);
-            meteor.GetComponent<Rigidbody>().AddForce(direction * abilityData.meteorSpeed, ForceMode.Impulse);
-            meteorSpawnRateTimer.Reset();
-        }
-
+    }
+    void SpawnMeteor()
+    {
+        var meteor = Instantiate(abilityData.meteorPrefab, player.position + (Vector3.up * abilityData.heightOffsetOfMeteor) + new Vector3(Random.Range(0, abilityData.spawnRadius), 0, 0), Quaternion.identity);
+        meteor.GetComponent<Meteor>().Prepare(abilityData);
+        Vector3 direction = Vector3.down.GetRandomDirectionWithinCone(abilityData.meteorDownwardMaxAngle);
+        meteor.GetComponent<Rigidbody>().AddForce(direction * abilityData.meteorSpeed, ForceMode.Impulse);
+        meteorSpawnRateTimer.Reset();
     }
 
     public MeteorData AbilityData { get { return abilityData; } set { abilityData = value; } }

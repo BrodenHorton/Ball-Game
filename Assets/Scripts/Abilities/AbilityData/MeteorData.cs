@@ -16,7 +16,7 @@ public class MeteorData : AbilityData {
     public LayerMask hittables;
 
     public override Ability CreateAbility() {
-        MeteorShower meteorShower = Instantiate(meteorShowerPrefab.gameObject).GetComponent<MeteorShower>();
+        MeteorShower meteorShower = Instantiate(meteorShowerPrefab);
         meteorShower.AbilityData = this;
         return meteorShower;
     }

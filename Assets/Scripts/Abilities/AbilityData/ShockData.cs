@@ -7,7 +7,7 @@ public class ShockData : AbilityData {
     public LayerMask enemyMask;
 
     public override Ability CreateAbility() {
-        Shock shock = Instantiate(shockPrefab.gameObject).GetComponent<Shock>();
+        Shock shock = Instantiate(shockPrefab);
         shock.AbilityData = this;
         return shock;
     }

@@ -6,7 +6,7 @@ public class DensityData : AbilityData {
     [Range(0, 1)] public float damageMultiplier;
 
     public override Ability CreateAbility() {
-        Density density = Instantiate(densityPrefab.gameObject).GetComponent<Density>();
+        Density density = Instantiate(densityPrefab);
         density.AbilityData = this;
         return density;
     }

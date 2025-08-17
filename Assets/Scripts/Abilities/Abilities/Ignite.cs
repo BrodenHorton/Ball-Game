@@ -13,7 +13,7 @@ public class Ignite : Ability
     {
         if (isActivated) return;
         isActivated = true;
-        activationTimer = new Timer(abilityData.ActivatedLength);
+        activationTimer = new Timer(abilityData.ActivatedLength, Deactivate);
         Debug.Log("Activating Ignite");
     }
 
@@ -29,8 +29,6 @@ public class Ignite : Ability
 
         Debug.Log("Ignite Active");
         activationTimer.Update();
-        if (activationTimer.IsFinished())
-            Deactivate();
     }
 
     public override void DashedIntoEventHandler(GameObject enemy)

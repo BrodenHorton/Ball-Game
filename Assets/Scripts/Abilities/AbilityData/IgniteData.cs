@@ -7,7 +7,7 @@ public class IgniteData : AbilityData {
     public float fireDamage = 5;
 
     public override Ability CreateAbility() {
-        Ignite ignite = Instantiate(ignitePrefab.gameObject).GetComponent<Ignite>();
+        Ignite ignite = Instantiate(ignitePrefab);
         ignite.AbilityData = this;
         return ignite;
     }

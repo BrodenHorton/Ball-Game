@@ -52,5 +52,14 @@ public class Density : Ability
         }
     }
 
-    public DensityData AbilityData { get { return abilityData; } set { abilityData = value; } }
+    public override bool Upgrade()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override AbilityData GetAbilityData()
+    {
+        return abilityData;
+    }
+    public void SetAbilityData(DensityData abilityData) => this.abilityData = abilityData;
 }

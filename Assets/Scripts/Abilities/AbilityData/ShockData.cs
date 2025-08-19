@@ -8,7 +8,7 @@ public class ShockData : AbilityData {
 
     public override Ability CreateAbility() {
         Shock shock = Instantiate(shockPrefab);
-        shock.AbilityData = this;
+        shock.SetAbilityData(this);
         return shock;
     }
 

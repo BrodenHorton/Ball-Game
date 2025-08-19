@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class Meteor : MonoBehaviour
 {
+
     [Header("These arent editable in inspector")]
     [SerializeField] float radius;
     [SerializeField] float damage;
     [SerializeField] LayerMask mask;
-    public void Prepare(MeteorData data)
+    [SerializeField] EffectZone effectZone;
+
+    EffectData effectData;
+    
+    int level;
+    public void Prepare(MeteorData data, int level)
     {
         damage = data.meteorMaxDamage;
         radius = data.meteorDamageRadius;
         mask = data.hittables;
+        effectData = data.meteorEffectData;
+        this.level = level;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -26,7 +34,14 @@ public class Meteor : MonoBehaviour
                 damageable.TakeDamage(dam);
             }
         }
-        Destroy(gameObject);
+        Debug.Log("Current Meteor Level is " + level);
+        if (level >= 2)
+        {
+            Debug.Log("Spawning Effect Zone on Meteor Impact");
+            EffectZone zone = Instantiate(effectZone, transform.position, Quaternion.LookRotation(Vector3.up));
+            zone.Setup(effectData);
+        }
+            Destroy(gameObject);
     }
     private void OnDrawGizmosSelected()
     {

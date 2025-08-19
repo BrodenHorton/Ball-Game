@@ -8,7 +8,7 @@ public class IgniteData : AbilityData {
 
     public override Ability CreateAbility() {
         Ignite ignite = Instantiate(ignitePrefab);
-        ignite.AbilityData = this;
+        ignite.SetAbilityData(this);
         return ignite;
     }
 

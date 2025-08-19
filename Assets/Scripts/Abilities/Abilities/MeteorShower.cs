@@ -39,11 +39,22 @@ public class MeteorShower : Ability
     void SpawnMeteor()
     {
         var meteor = Instantiate(abilityData.meteorPrefab, player.position + (Vector3.up * abilityData.heightOffsetOfMeteor) + new Vector3(Random.Range(0, abilityData.spawnRadius), 0, 0), Quaternion.identity);
-        meteor.GetComponent<Meteor>().Prepare(abilityData);
+        meteor.GetComponent<Meteor>().Prepare(abilityData, level);
         Vector3 direction = Vector3.down.GetRandomDirectionWithinCone(abilityData.meteorDownwardMaxAngle);
         meteor.GetComponent<Rigidbody>().AddForce(direction * abilityData.meteorSpeed, ForceMode.Impulse);
         meteorSpawnRateTimer.Reset();
     }
 
-    public MeteorData AbilityData { get { return abilityData; } set { abilityData = value; } }
+    public override bool Upgrade()
+    {
+        level++;
+        return true;
+    }
+
+    public override AbilityData GetAbilityData()
+    {
+        return abilityData;
+    }
+    public void SetAbilityData(MeteorData abilityData) => this.abilityData = abilityData;
+
 }

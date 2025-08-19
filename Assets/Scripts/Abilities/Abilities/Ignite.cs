@@ -41,5 +41,15 @@ public class Ignite : Ability
         }
     }
 
-    public IgniteData AbilityData { get { return abilityData; } set { abilityData = value; } }
+    public override bool Upgrade()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override AbilityData GetAbilityData()
+    {
+        return abilityData;
+    }
+    public void SetAbilityData(IgniteData abilityData) => this.abilityData = abilityData;
+
 }

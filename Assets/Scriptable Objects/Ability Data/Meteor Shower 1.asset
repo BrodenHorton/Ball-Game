@@ -26,3 +26,10 @@ MonoBehaviour:
   hittables:
     serializedVersion: 2
     m_Bits: 512
+  meteorEffectData:
+    effectType: 0
+    damage: 5
+    duration: 5
+    lifeTime: 5
+    damageTick: 1
+    radius: 5

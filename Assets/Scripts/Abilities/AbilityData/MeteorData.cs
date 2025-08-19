@@ -14,10 +14,11 @@ public class MeteorData : AbilityData {
     public float meteorSpeed;
     public float meteorDownwardMaxAngle;
     public LayerMask hittables;
+    public EffectData meteorEffectData;
 
     public override Ability CreateAbility() {
         MeteorShower meteorShower = Instantiate(meteorShowerPrefab);
-        meteorShower.AbilityData = this;
+        meteorShower.SetAbilityData(this);
         return meteorShower;
     }
 

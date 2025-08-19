@@ -6,7 +6,7 @@ public class PlayerAbilities : MonoBehaviour
 {
     PlayerMovement movement;
     [SerializeField] List<AbilityData> startingAbilities;
-    List<AbilityData> abilities = new List<AbilityData>();
+    List<Ability> abilities = new List<Ability>();
     [SerializeField] float baseDashDamage;
 
     private void Awake()
@@ -44,22 +44,29 @@ public class PlayerAbilities : MonoBehaviour
         int action = (int)context.ReadValue<float>();
         if (action <= abilities.Count - 1)
         {
-            Ability ability = abilities[action].CreateAbility();
             Debug.Log("On Activate Ability");
-            ability.Activate();
+            abilities[action].Activate();
         }
     }
     public bool AddAbility(AbilityData abilityData)
 	{
         if (abilities.Count >= 3)
             return false;
-		abilities.Add(abilityData);
-		EventBus.AbilityAdded?.Invoke(abilityData, abilities.IndexOf(abilityData));
+        Ability ability = abilityData.CreateAbility();
+        abilities.Add(ability);
+		EventBus.AbilityAdded?.Invoke(abilityData, abilities.IndexOf(ability));
         return true;
     }
-    public void RemoveAbility(AbilityData abilityData)
+    public void RemoveAbility(Ability ability)
     {
-		EventBus.AbilityRemoved?.Invoke(abilityData, abilities.IndexOf(abilityData));
-		abilities.Remove(abilityData);
+		EventBus.AbilityRemoved?.Invoke(ability.GetAbilityData(), abilities.IndexOf(ability));
+		abilities.Remove(ability);
     }
+
+    public bool UpgradeAbility(Ability ability)
+    {
+        EventBus.AbilityUpgraded?.Invoke(ability.GetAbilityData(), abilities.IndexOf(ability));
+        return ability.Upgrade();
+    }
+    public List<Ability> GetAbilities() { return abilities; }
 }

@@ -7,7 +7,7 @@ public class DensityData : AbilityData {
 
     public override Ability CreateAbility() {
         Density density = Instantiate(densityPrefab);
-        density.AbilityData = this;
+        density.SetAbilityData(this);
         return density;
     }
 

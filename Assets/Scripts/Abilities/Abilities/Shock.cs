@@ -59,5 +59,15 @@ public class Shock : Ability
         }
     }
 
-    public ShockData AbilityData { get { return abilityData; } set { abilityData = value; } }
+    public override bool Upgrade()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override AbilityData GetAbilityData()
+    {
+        return abilityData;
+    }
+    public void SetAbilityData(ShockData abilityData) => this.abilityData = abilityData;
+
 }

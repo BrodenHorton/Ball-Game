@@ -10,15 +10,14 @@ public class Meteor : MonoBehaviour
     [SerializeField] EffectZone effectZone;
 
     EffectData effectData;
-    
-    int level;
-    public void Prepare(MeteorData data, int level)
+    bool spawnFireZone;
+    public void Prepare(MeteorData data)
     {
         damage = data.meteorMaxDamage;
         radius = data.meteorDamageRadius;
         mask = data.hittables;
         effectData = data.meteorEffectData;
-        this.level = level;
+        this.spawnFireZone = data.spawnFireZone;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -34,8 +33,7 @@ public class Meteor : MonoBehaviour
                 damageable.TakeDamage(dam);
             }
         }
-        Debug.Log("Current Meteor Level is " + level);
-        if (level >= 2)
+        if (spawnFireZone)
         {
             Debug.Log("Spawning Effect Zone on Meteor Impact");
             EffectZone zone = Instantiate(effectZone, transform.position, Quaternion.LookRotation(Vector3.up));

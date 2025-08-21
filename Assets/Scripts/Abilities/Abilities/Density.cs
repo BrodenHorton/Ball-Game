@@ -1,7 +1,7 @@
 using UnityEngine;
 public class Density : Ability
 {
-    [SerializeField] private DensityData abilityData;
+    DensityData abilityData => data as DensityData;
     GameObject player;
     Rigidbody rb;
     float originalMass;
@@ -51,15 +51,4 @@ public class Density : Ability
             damageable.TakeDamage(damageToApply, EffectType.NORMAL);
         }
     }
-
-    public override bool Upgrade()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override AbilityData GetAbilityData()
-    {
-        return abilityData;
-    }
-    public void SetAbilityData(DensityData abilityData) => this.abilityData = abilityData;
 }

@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af44c4e1c5b5f594c87a9aed992bed34, type: 3}
-  m_Name: Meteor Shower 1
+  m_Name: Meteor Shower 2
   m_EditorClassIdentifier: 
-  activatedLength: 15
+  activatedLength: 17
   icon: {fileID: 21300000, guid: 9b7d53352a5a58f49accac79ed71621b, type: 3}
-  meteorShowerPrefab: {fileID: 7740771476295740599, guid: 78e0090cc8b507648a72734a13beac6c, type: 3}
+  nextUpgrade: {fileID: 0}
+  abilityPrefab: {fileID: 7740771476295740599, guid: 78e0090cc8b507648a72734a13beac6c, type: 3}
   meteorPrefab: {fileID: 2057588369622688447, guid: c15d30eb0e6caf54e9d7cfe5161089df, type: 3}
-  spawnRadius: 20
-  spawnRate: 2
+  spawnRadius: 22
+  spawnRate: 1.5
   heightOffsetOfMeteor: 10
-  meteorMaxDamage: 30
-  meteorDamageRadius: 5
+  meteorMaxDamage: 35
+  meteorDamageRadius: 7
   meteorSpeed: 1000
   meteorDownwardMaxAngle: 90
   hittables:
@@ -33,3 +34,4 @@ MonoBehaviour:
     lifeTime: 5
     damageTick: 1
     radius: 5
+  spawnFireZone: 1

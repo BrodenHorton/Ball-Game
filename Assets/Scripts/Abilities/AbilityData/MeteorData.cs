@@ -2,7 +2,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "My Assets/Abilities/MeteorData")]
 
 public class MeteorData : AbilityData {
-    [SerializeField] private MeteorShower meteorShowerPrefab;
     public GameObject meteorPrefab;
     public float spawnRadius;
     public float spawnRate;
@@ -15,14 +14,5 @@ public class MeteorData : AbilityData {
     public float meteorDownwardMaxAngle;
     public LayerMask hittables;
     public EffectData meteorEffectData;
-
-    public override Ability CreateAbility() {
-        MeteorShower meteorShower = Instantiate(meteorShowerPrefab);
-        meteorShower.SetAbilityData(this);
-        return meteorShower;
-    }
-
-    public override void Upgrade() {
-
-    }
+    public bool spawnFireZone;
 }

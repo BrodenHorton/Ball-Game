@@ -1,8 +1,7 @@
 using UnityEngine;
 public class Ignite : Ability
 {
-    [SerializeField] private IgniteData abilityData;
-
+    IgniteData abilityData => data as IgniteData;
     /*
      * 1. Ignite
     1. Upon activation, the Ball erupts with fire. Any Dashed into enemy catches on fire for 10 seconds and takes damage for the duration
@@ -35,21 +34,9 @@ public class Ignite : Ability
     {
         if(isActivated && enemy.TryGetComponent(out StatusEffectRunner runner) && enemy.TryGetComponent(out IDamageable damageable))
         {
-            var data = abilityData;
-            runner.ApplyEffect(new DamageEffect(data.fireDamage, data.fireEffectStatusDuration, data.fireEffectDamageTickRate, damageable, EffectType.FIRE));
+            runner.ApplyEffect(new DamageEffect(abilityData.fireDamage, abilityData.fireEffectStatusDuration, abilityData.fireEffectDamageTickRate, damageable, EffectType.FIRE));
             Debug.Log("Applying Fire Effect");
         }
     }
-
-    public override bool Upgrade()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override AbilityData GetAbilityData()
-    {
-        return abilityData;
-    }
-    public void SetAbilityData(IgniteData abilityData) => this.abilityData = abilityData;
 
 }

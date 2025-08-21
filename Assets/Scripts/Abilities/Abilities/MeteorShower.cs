@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MeteorShower : Ability
 {
-    [SerializeField] private MeteorData abilityData;
+    MeteorData abilityData => data as MeteorData;
     Transform player;
     Timer meteorSpawnRateTimer;
 
@@ -39,22 +39,10 @@ public class MeteorShower : Ability
     void SpawnMeteor()
     {
         var meteor = Instantiate(abilityData.meteorPrefab, player.position + (Vector3.up * abilityData.heightOffsetOfMeteor) + new Vector3(Random.Range(0, abilityData.spawnRadius), 0, 0), Quaternion.identity);
-        meteor.GetComponent<Meteor>().Prepare(abilityData, level);
+        meteor.GetComponent<Meteor>().Prepare(abilityData);
         Vector3 direction = Vector3.down.GetRandomDirectionWithinCone(abilityData.meteorDownwardMaxAngle);
         meteor.GetComponent<Rigidbody>().AddForce(direction * abilityData.meteorSpeed, ForceMode.Impulse);
         meteorSpawnRateTimer.Reset();
     }
-
-    public override bool Upgrade()
-    {
-        level++;
-        return true;
-    }
-
-    public override AbilityData GetAbilityData()
-    {
-        return abilityData;
-    }
-    public void SetAbilityData(MeteorData abilityData) => this.abilityData = abilityData;
 
 }

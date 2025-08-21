@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 
 public class Shock : Ability
 {
-    [SerializeField] private ShockData abilityData;
+    ShockData abilityData => data as ShockData;
+
     PlayerMovement playerMovement;
     bool hitWhileDashing;
     /*2. Shock
@@ -15,7 +15,7 @@ public class Shock : Ability
     {
         if (isActivated) return;
         isActivated = true;
-        activationTimer = new Timer(abilityData.ActivatedLength);
+        activationTimer = new Timer(data.ActivatedLength);
         playerMovement = GameManager.Instance.getPlayer().GetComponent<PlayerMovement>();
         hitWhileDashing = false;
         Debug.Log("Activating Shock");
@@ -58,16 +58,5 @@ public class Shock : Ability
             hitWhileDashing = false;
         }
     }
-
-    public override bool Upgrade()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override AbilityData GetAbilityData()
-    {
-        return abilityData;
-    }
-    public void SetAbilityData(ShockData abilityData) => this.abilityData = abilityData;
 
 }

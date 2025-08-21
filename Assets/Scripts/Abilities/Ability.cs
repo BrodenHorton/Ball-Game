@@ -4,15 +4,26 @@ using UnityEngine;
 public abstract class Ability : MonoBehaviour {
     public bool isPassive;
     public bool isActivated;
-    public int level = 1;
     protected Timer activationTimer;
+    [SerializeField] protected AbilityData data;
 
-    public abstract AbilityData GetAbilityData();
+
+    public AbilityData GetAbilityData() => data;
+    public void SetAbilityData(AbilityData abilityData) => this.data = abilityData;
     public abstract void Activate();
     public abstract void Deactivate();
     public abstract void DashedIntoEventHandler(GameObject enemy);
 
-    public abstract bool Upgrade();
+    public bool Upgrade()
+    {
+        AbilityData possibleUpgradeData = data.Upgrade();
+        if (possibleUpgradeData != null)
+        {
+            data = possibleUpgradeData;
+            return true;
+        }
+        return false;
+    }
 
     private void OnEnable()
     {

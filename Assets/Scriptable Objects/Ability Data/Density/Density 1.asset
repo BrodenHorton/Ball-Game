@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activatedLength: 30
   icon: {fileID: 21300000, guid: c19e14e484c9cb045aa3285230789d16, type: 3}
-  densityPrefab: {fileID: 1934300812081555981, guid: 9d0d6f2f5843f45479f2cd3ac528243e, type: 3}
+  nextUpgrade: {fileID: 0}
+  abilityPrefab: {fileID: 1934300812081555981, guid: 9d0d6f2f5843f45479f2cd3ac528243e, type: 3}
   damageMultiplier: 0.25

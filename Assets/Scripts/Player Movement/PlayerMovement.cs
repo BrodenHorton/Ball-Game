@@ -11,33 +11,35 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float dashVelocity;
     [SerializeField] float dashLength;
     [SerializeField] float maxLinearVelocity;
-    [SerializeField] private float groundDistance = 0.2f;
+    [SerializeField] private float groundDistance = 0.5f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] GameObject landingEffect, groundPoundEffect;
     private bool isGrounded;
     public bool IsDashing => !dashLengthTimer.IsFinished();
     private bool jumpPressed;
     private bool dashPressed;
+    private bool wasGrounded;
     private Vector2 input;
-    private Timer jumpTimer;
+    private Timer jumpCooldownTimer;
     private Timer dashCooldownTimer;
     private Timer dashLengthTimer; 
 
     private void Awake()
     {
-        jumpTimer = new Timer(jumpCooldown);
+        jumpCooldownTimer = new Timer(jumpCooldown);
         dashCooldownTimer = new Timer(dashCooldown);
-        dashLengthTimer = new Timer(dashLength);
+        dashLengthTimer = new Timer(dashLength, OnDashingFinished);
+        
         dashCooldownTimer.SetFinished();
         dashLengthTimer.SetFinished();
-        jumpTimer.SetFinished();
+        jumpCooldownTimer.SetFinished();
         rb.maxLinearVelocity = maxLinearVelocity;
     }
 
     private void Update()
     {
         dashLengthTimer.Update();
-        jumpTimer.Update();
+        jumpCooldownTimer.Update();
         dashCooldownTimer.Update();
     }
     private void FixedUpdate() {
@@ -53,16 +55,10 @@ public class PlayerMovement : MonoBehaviour {
         else if (hits.Length == 0)
             isGrounded = false;
 
-        if (isGrounded)
-            jumpTimer.SetFinished();
-
-        if (jumpPressed && jumpTimer.IsFinished())
+        if (jumpPressed && wasGrounded && jumpCooldownTimer.IsFinished())
             Jump();
-        else if (dashCooldownTimer.IsFinished() && dashPressed)
+        if (wasGrounded && dashCooldownTimer.IsFinished() && dashPressed)
             Dash();
-
-        if (dashLengthTimer.IsFinished())
-            StopDashing();
 
         //This should be last to do
         if (dashLengthTimer.IsFinished() && input.magnitude > 0) {
@@ -71,24 +67,34 @@ public class PlayerMovement : MonoBehaviour {
             float airControlFactor = isGrounded ? 1f : 0.2f; // 0.2 is orginal value = weak air control and used to refuce floatyness. One way to solve this is to have a "move timer" in the air and disable this method when it expires
             rb.AddForce(airControlFactor * (force * moveDir.normalized) + Physics.gravity, ForceMode.Force);
         }
+
+        if (isGrounded)
+            wasGrounded = true;
+    }
+
+    private void OnDashingFinished()
+    {
+        StopDashing();
     }
 
     public void Jump()
     {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        jumpTimer.Reset();
+        jumpCooldownTimer.Reset();
+        wasGrounded = true;
     }
 
     public void StopDashing()
     {
         rb.maxLinearVelocity = maxLinearVelocity;
         EventBus.Dashing?.Invoke(false); //This gets called too often, TODO
-        dashCooldownTimer.SetFinished();
+        dashCooldownTimer.Reset();
         dashLengthTimer.SetFinished();
     }
 
     public void Dash()
     {
+        wasGrounded = false;
         rb.maxLinearVelocity = maxLinearVelocity + dashVelocity;
         rb.linearVelocity = cameraTransform.forward * dashVelocity;
         EventBus.Dashing?.Invoke(true);
@@ -142,5 +148,10 @@ public class PlayerMovement : MonoBehaviour {
         {
             SpawnImpactParticles(collision.contacts[0].normal, collision.contacts[0].point);
         }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, Vector3.down * groundDistance);
     }
 }

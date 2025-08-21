@@ -1,7 +1,7 @@
 using UnityEngine;
 public class Density : Ability
 {
-    [SerializeField] private DensityData abilityData;
+    DensityData abilityData => data as DensityData;
     GameObject player;
     Rigidbody rb;
     float originalMass;
@@ -16,7 +16,7 @@ public class Density : Ability
     public override void Activate()
     {
         if (isActivated) return;
-        activationTimer = new Timer(abilityData.ActivatedLength);
+        activationTimer = new Timer(abilityData.ActivatedLength, Deactivate);
         this.player = GameManager.Instance.getPlayer();
         isActivated = true;
         rb = player.GetComponent<Rigidbody>();
@@ -34,8 +34,6 @@ public class Density : Ability
 
         rb.AddForce(Physics.gravity * 2);
         activationTimer.Update();
-        if (activationTimer.IsFinished())
-            Deactivate();
     }
     public override void Deactivate()
     {
@@ -53,6 +51,4 @@ public class Density : Ability
             damageable.TakeDamage(damageToApply, EffectType.NORMAL);
         }
     }
-
-    public DensityData AbilityData { get { return abilityData; } set { abilityData = value; } }
 }

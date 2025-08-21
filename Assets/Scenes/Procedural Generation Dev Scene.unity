@@ -1011,6 +1011,14 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6446976441645814377, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
+      propertyPath: jumpCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446976441645814377, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
+      propertyPath: groundDistance
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446976441645814377, guid: 9cdbcbffe17763244831494e41546b43, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 2039887858}

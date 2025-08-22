@@ -39,4 +39,7 @@ public class Ignite : Ability
         }
     }
 
+    public void SetAbilityData(IgniteData abilityData) {
+        data = abilityData;
+    }
 }

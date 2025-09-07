@@ -69,8 +69,11 @@ public class PlayerAbilities : MonoBehaviour
         if (success)
         {
             EventBus.AbilityUpgraded?.Invoke(ability.GetAbilityData(), abilities.IndexOf(ability));
+            EventBus.OnClosedAbilityUpgradeMenu?.Invoke();
+            Debug.Log("Succeeded Upgrading Ability " + ability);
             return true;
         }
+        Debug.Log("Failed Upgrading Ability " + ability);
         return false;
     }
     public List<Ability> GetAbilities() { return abilities; }

@@ -15,13 +15,8 @@ public class Chest : MonoBehaviour, Destructible {
     // Temp until there is a class that holds seeds
     private Random rng = new Random();
 
-    private void OnCollisionEnter(Collision collision) {
-        if (ShouldBreak(collision.collider))
-            Break();
-    }
-
     public void Break() {
-        List<GameObject> loot = WeightedValues.GetWeightedValues(lootTable.WeightedLoot, rng.Next(minLootAmt, maxLootAmt + 1));
+        List<GameObject> loot = lootTable.WeightedLoot.GetWeightedValues(rng.Next(minLootAmt, maxLootAmt + 1));
         foreach (GameObject item in loot) {
             Vector2 dropDirection = new Vector2((float)rng.NextDouble() * 2f - 1, (float)rng.NextDouble() * 2f - 1).normalized;
             float dropDistance = (float)rng.NextDouble() * (maxDropDistance - minDropDistance) + minDropDistance;
@@ -40,5 +35,10 @@ public class Chest : MonoBehaviour, Destructible {
             return false;
 
         return collider.gameObject.layer == playerLayer && rb.linearVelocity.magnitude >= criticalImpactVelocity;
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        if (ShouldBreak(collision.collider))
+            Break();
     }
 }

@@ -13,15 +13,40 @@ MonoBehaviour:
   m_Name: CastleCellData
   m_EditorClassIdentifier: 
   deadEndCells:
-  - {fileID: 3531862861068251308, guid: 29b8be0465f6cec4cb74745cb18d3a5f, type: 3}
+    weightedEntries:
+    - value: {fileID: 3531862861068251308, guid: 29b8be0465f6cec4cb74745cb18d3a5f, type: 3}
+      weight: 1
   bendCells:
-  - {fileID: 8434371829393246976, guid: 2a4bfd0c5080ee649b4f7b3fde0a702a, type: 3}
+    weightedEntries:
+    - value: {fileID: 8434371829393246976, guid: 2a4bfd0c5080ee649b4f7b3fde0a702a, type: 3}
+      weight: 1
   corridorCells:
-  - {fileID: 5509926808027386444, guid: 723381e4e37356549b6b294fbf641748, type: 3}
+    weightedEntries:
+    - value: {fileID: 5509926808027386444, guid: 723381e4e37356549b6b294fbf641748, type: 3}
+      weight: 1
   tIntersectionCells:
-  - {fileID: 180887209066865839, guid: b92d08fcb7eeec14ba81f3acd78ebb4a, type: 3}
+    weightedEntries:
+    - value: {fileID: 180887209066865839, guid: b92d08fcb7eeec14ba81f3acd78ebb4a, type: 3}
+      weight: 1
   intersectionCells:
-  - {fileID: 83729013916706629, guid: c136379b39915dd4798b19cf94505d1b, type: 3}
+    weightedEntries:
+    - value: {fileID: 83729013916706629, guid: c136379b39915dd4798b19cf94505d1b, type: 3}
+      weight: 1
+  poiDeadEndCells:
+    weightedEntries: []
+  poiBendCells:
+    weightedEntries: []
+  poiCorridorCells:
+    weightedEntries: []
+  poiTIntersectionCells:
+    weightedEntries: []
+  poiIntersectionCells:
+    weightedEntries: []
+  uniquePoiDeadEndCells: []
+  uniquePoiBendCells: []
+  uniquePoiCorridorCells: []
+  uniquePoiTIntersectionCells: []
+  uniquePoiIntersectionCells: []
   startingCell: {fileID: 3531862861068251308, guid: 27c9abb541f06f848a9283ac350611c8, type: 3}
   exitCell: {fileID: 3531862861068251308, guid: 5c9f495656ac62444afe832f9fe666d3, type: 3}
   door: {fileID: 6695056754986560365, guid: 11a0ccdc30332544fb4a8c650273f0fa, type: 3}

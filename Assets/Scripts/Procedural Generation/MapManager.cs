@@ -28,7 +28,7 @@ public class MapManager : MonoBehaviour {
 
         if (mapGenerator != null) {
             map = mapGenerator.GenerateMap(mapSeed);
-            mapGenerator.BuildMapCells(map, transform);
+            mapGenerator.BuildMapCells(map, transform, mapSeed);
         }
         else
             Debug.Log("No MapGenerator script found on Map object.");

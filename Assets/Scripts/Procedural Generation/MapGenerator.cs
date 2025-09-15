@@ -13,7 +13,7 @@ public abstract class MapGenerator : MonoBehaviour {
 
     protected abstract void PlaceExitCell(Map map);
 
-    public abstract void BuildMapCells(Map map, Transform parent);
+    public abstract void BuildMapCells(Map map, Transform parent, int seed);
 
     protected int NumberOfAdjacentCells(GridCell[,] gridCells, Vector2Int cell) {
         int count = 0;

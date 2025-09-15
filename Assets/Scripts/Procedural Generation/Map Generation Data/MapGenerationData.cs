@@ -7,8 +7,16 @@ public abstract class MapGenerationData : ScriptableObject {
     [SerializeField] private int gridCellSize;
     [SerializeField] private MapCellData cellData;
 
-    public List<GameObject> GetCellsByOrientation(CellOrientation orientation) {
+    public WeightedList<GameObject> GetCellsByOrientation(CellOrientation orientation) {
         return cellData.GetCellsByOrientation(orientation);
+    }
+
+    public WeightedList<GameObject> GetPoiCellsByOrientation(CellOrientation orientation) {
+        return cellData.GetPoiCellsByOrientation(orientation);
+    }
+
+    public List<GameObject> GetUniquePoiCellsByOrientation(CellOrientation orientation) {
+        return cellData.GetUniquePoiCellsByOrientation(orientation);
     }
 
     public GameObject GetStartingCell() {

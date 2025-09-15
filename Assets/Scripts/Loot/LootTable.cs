@@ -4,11 +4,11 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "LootTable", menuName = "Scriptable Objects/Loot Table")]
 public class LootTable : ScriptableObject {
-    [SerializeField] private List<WeightedEntry<GameObject>> weightedLoot;
+    [SerializeField] private WeightedList<GameObject> weightedLoot;
 
     public LootTable() {
-        weightedLoot = new List<WeightedEntry<GameObject>>();
+        weightedLoot = new WeightedList<GameObject>();
     }
 
-    public List<WeightedEntry<GameObject>> WeightedLoot => weightedLoot;
+    public WeightedList<GameObject> WeightedLoot => weightedLoot;
 }

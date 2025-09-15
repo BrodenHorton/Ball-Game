@@ -53,28 +53,28 @@ public class RandomWalkMapGenerator : MapGenerator {
         for(int i = 0; i < generationData.DrunkWalkIterations; i++) {
             startingCell = activeGridCells[rng.Next(0, activeGridCells.Count)];
             vectorDir = new Vector2((float)rng.NextDouble() * 2 - 1, (float)rng.NextDouble() * 2 - 1);
-            List<WeightedEntry<Direction2D>> weightedDirections = new List<WeightedEntry<Direction2D>>();
+            WeightedList<Direction2D> weightedDirections = new WeightedList<Direction2D>();
             if(vectorDir.y > 0) {
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.North, Math.Abs(vectorDir.y) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.7f));
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.South, 0.15f));
+                weightedDirections.WeightedEntries.Add(new WeightedEntry<Direction2D>(Direction2D.North, (int)(Math.Abs(vectorDir.y) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 14)));
+                weightedDirections.WeightedEntries.Add(new WeightedEntry<Direction2D>(Direction2D.South, 3));
             }
             else {
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.South, Math.Abs(vectorDir.y) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.7f));
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.North, 0.15f));
+                weightedDirections.WeightedEntries.Add(new WeightedEntry<Direction2D>(Direction2D.South, (int)(Math.Abs(vectorDir.y) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 14)));
+                weightedDirections.WeightedEntries.Add(new WeightedEntry<Direction2D>(Direction2D.North, 3));
             }
 
             if(vectorDir.x > 0) {
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.East, Math.Abs(vectorDir.x) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.7f));
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.West, 0.15f));
+                weightedDirections.WeightedEntries.Add(new WeightedEntry<Direction2D>(Direction2D.East, (int)(Math.Abs(vectorDir.x) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 14)));
+                weightedDirections.WeightedEntries.Add(new WeightedEntry<Direction2D>(Direction2D.West, 3));
             }
             else {
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.West, Math.Abs(vectorDir.x) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 0.7f));
-                weightedDirections.Add(new WeightedEntry<Direction2D>(Direction2D.East, 0.15f));
+                weightedDirections.WeightedEntries.Add(new WeightedEntry<Direction2D>(Direction2D.West, (int)(Math.Abs(vectorDir.x) / (Math.Abs(vectorDir.x) + Math.Abs(vectorDir.y)) * 14)));
+                weightedDirections.WeightedEntries.Add(new WeightedEntry<Direction2D>(Direction2D.East, 3));
             }
 
             Vector2Int currentCell = startingCell;
             for(int j = 0; j < generationData.MaxDrunkWalkLength; j++) {
-                Direction2D direction = WeightedValues.GetWeightedValue(weightedDirections, rng);
+                Direction2D direction = weightedDirections.GetWeightedValue();
                 UpdateCellInDirectionOf(gridCells, ref currentCell, direction);
             }
         }
@@ -146,7 +146,7 @@ public class RandomWalkMapGenerator : MapGenerator {
         }
     }
 
-    public override void BuildMapCells(Map map, Transform parent) {
+    public override void BuildMapCells(Map map, Transform parent, int seed) {
         for (int i = 0; i < map.GridCells.GetLength(0); i++) {
             for(int j = 0; j < map.GridCells.GetLength(1); j++) {
                 if (map.GridCells[i, j] == null)
@@ -159,8 +159,10 @@ public class RandomWalkMapGenerator : MapGenerator {
                     cell = Instantiate(generationData.GetStartingCell(), parent);
                 else if (i == map.ExitCell.y && j == map.ExitCell.x)
                     cell = Instantiate(generationData.GetExitCell(), parent);
-                else
-                    cell = Instantiate(generationData.GetCellsByOrientation(orientation)[0], parent);
+                else {
+                    GameObject cellPrefab = generationData.GetCellsByOrientation(orientation).GetWeightedValue();
+                    cell = Instantiate(cellPrefab, parent);
+                }
                 Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + map.MapOrigin.x, map.MapOrigin.y, i * -generationData.GridCellSize + map.MapOrigin.z);
                 cell.transform.localPosition = cellCenter;
                 cell.transform.Rotate(cell.transform.up, rotation);

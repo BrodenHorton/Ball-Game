@@ -272,7 +272,7 @@ public class RoomFirstGenerator : MapGenerator {
         }
     }
 
-    public override void BuildMapCells(Map map, Transform parent) {
+    public override void BuildMapCells(Map map, Transform parent, int seed) {
         for (int i = 0; i < map.GridCells.GetLength(0); i++) {
             for (int j = 0; j < map.GridCells.GetLength(1); j++) {
                 if (map.GridCells[i, j] == null)
@@ -285,8 +285,10 @@ public class RoomFirstGenerator : MapGenerator {
                     cell = Instantiate(generationData.GetStartingCell(), parent);
                 else if (i == map.ExitCell.y && j == map.ExitCell.x)
                     cell = Instantiate(generationData.GetExitCell(), parent);
-                else
-                    cell = Instantiate(generationData.GetCellsByOrientation(orientation)[0], parent);
+                else {
+                    GameObject cellPrefab = generationData.GetCellsByOrientation(orientation).GetWeightedValue();
+                    cell = Instantiate(cellPrefab, parent);
+                }
                 Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + map.MapOrigin.x, map.MapOrigin.y, i * -generationData.GridCellSize + map.MapOrigin.z);
                 cell.transform.localPosition = cellCenter;
                 cell.transform.Rotate(cell.transform.up, rotation);

@@ -479,6 +479,7 @@ Transform:
   - {fileID: 646239311}
   - {fileID: 155238443}
   - {fileID: 1733126083}
+  - {fileID: 1684040228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1312850447
@@ -847,6 +848,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed8e11299805c604e9b53cafaeafc24b, type: 3}
+--- !u!4 &1684040228 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+  m_PrefabInstance: {fileID: 1862631111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1733126083 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8395135282732076078, guid: 2edd6cc15d960e14b87d37e8a7e5cd78, type: 3}
@@ -902,6 +908,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 187885596861037686, guid: ac9914fd8d9b1704aa09235bce9e2d41, type: 3}
   m_PrefabInstance: {fileID: 1154080084}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1862631111
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1260898366}
+    m_Modifications:
+    - target: {fileID: 556675208447624733, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: navMesh
+      value: 
+      objectReference: {fileID: 155238444}
+    - target: {fileID: 556675208447624733, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: playerRb
+      value: 
+      objectReference: {fileID: 1988867970}
+    - target: {fileID: 556675208447624733, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: mapExitPrefab
+      value: 
+      objectReference: {fileID: 9116866929811421753, guid: c7708368d455bb548aac7b32076b39bf, type: 3}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -44.22092
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -675.8495
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 695665128476392976, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8546159113266117135, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: m_Name
+      value: Castle Map
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
 --- !u!114 &1925158539 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9101917013889258181, guid: be3c28959d348f74cb1c4770759f0ee8, type: 3}
@@ -1019,7 +1094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4062593450485045977, guid: 2edd6cc15d960e14b87d37e8a7e5cd78, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4688591949004441824, guid: 2edd6cc15d960e14b87d37e8a7e5cd78, type: 3}
       propertyPath: navMesh

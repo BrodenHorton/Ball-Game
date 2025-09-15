@@ -40,4 +40,15 @@ public static class Extensions
         Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, direction.normalized);
         return rotation * localDirection;
     }
+    public static void DestroyAllChildren(this GameObject parent)
+    {
+        foreach(Transform child in parent.GetComponentsInChildren<Transform>())
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+    public static void DestroyAllChildren(this Transform parent)
+    {
+        DestroyAllChildren(parent.gameObject);
+    }
 }

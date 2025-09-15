@@ -311,6 +311,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 92542b02-ddda-4a0f-9614-7c4f0d38ba49
     m_ActionName: 'Player/3rd Ability[/Keyboard/3]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 37fe943e-50fa-421e-8f6a-e1d30119067e
+    m_ActionName: 'Player/Debug[/Keyboard/backquote]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -385,7 +389,7 @@ MonoBehaviour:
   startingAbilities:
   - {fileID: 11400000, guid: aff008ddc6ff011419bc0b0c7d4a6d24, type: 2}
   - {fileID: 11400000, guid: 130f6d6310e386549aeaae377a5d7e56, type: 2}
-  - {fileID: 11400000, guid: 5ffd5dc2f6f7602448f34acaae67cebd, type: 2}
+  - {fileID: 11400000, guid: 77eb36189dc7db449a033811ddb2048a, type: 2}
   baseDashDamage: 50
 --- !u!114 &1768051668098561056
 MonoBehaviour:

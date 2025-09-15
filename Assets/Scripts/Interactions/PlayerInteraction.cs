@@ -30,19 +30,13 @@ public class PlayerInteraction : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.GetComponent<Interactable>() == null)
-            return;
-
-        Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        Add(interactable);
+        if(other.TryGetComponent(out Interactable interactable))
+            Add(interactable);
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.gameObject.GetComponent<Interactable>() == null)
-            return;
-
-        Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        Remove(interactable);
+        if (other.TryGetComponent(out Interactable interactable))
+            Remove(interactable);
     }
 
     public List<Interactable> Interactions => interactions;

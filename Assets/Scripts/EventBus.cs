@@ -11,4 +11,6 @@ public static class EventBus {
     public static Action<GameObject> EnemyDeath;
     public static Action<PlayerInteraction> OnInteractableEntered;
     public static Action<PlayerInteraction> OnInteractableExited;
+    public static Action OnOpenedAbilityUpgradeMenu;
+    public static Action OnClosedAbilityUpgradeMenu;
 }

@@ -15,5 +15,7 @@ MonoBehaviour:
   gridDimensions: {x: 41, y: 41}
   gridCellSize: 100
   cellData: {fileID: 11400000, guid: bd6508f72e2741e4b95557a4a293d4f6, type: 2}
+  minPoiCount: 12
+  maxPoiCount: 18
   minRoomSize: 8
   roomOffset: 2

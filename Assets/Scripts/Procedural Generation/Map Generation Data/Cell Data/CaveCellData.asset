@@ -33,15 +33,25 @@ MonoBehaviour:
     - value: {fileID: 83729013916706629, guid: ee4a0c9c349e7ba44b2594aaeea2538f, type: 3}
       weight: 1
   poiDeadEndCells:
-    weightedEntries: []
+    weightedEntries:
+    - value: {fileID: 83729013916706629, guid: 9c0d41109cd7b0a46adeaa5b9a905523, type: 3}
+      weight: 1
   poiBendCells:
-    weightedEntries: []
+    weightedEntries:
+    - value: {fileID: 83729013916706629, guid: b81dc0e704c8ebc4090e5876893bea33, type: 3}
+      weight: 1
   poiCorridorCells:
-    weightedEntries: []
+    weightedEntries:
+    - value: {fileID: 83729013916706629, guid: 9954b8623595c564e8edd54003613e0e, type: 3}
+      weight: 1
   poiTIntersectionCells:
-    weightedEntries: []
+    weightedEntries:
+    - value: {fileID: 83729013916706629, guid: 4b3e2563776cb924883f5640e330d835, type: 3}
+      weight: 1
   poiIntersectionCells:
-    weightedEntries: []
+    weightedEntries:
+    - value: {fileID: 83729013916706629, guid: bdf2bd32bb2ce1149b863aacf8259f4e, type: 3}
+      weight: 1
   uniquePoiDeadEndCells: []
   uniquePoiBendCells: []
   uniquePoiCorridorCells: []

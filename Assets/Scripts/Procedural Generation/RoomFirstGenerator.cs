@@ -273,6 +273,23 @@ public class RoomFirstGenerator : MapGenerator {
     }
 
     public override void BuildMapCells(Map map, Transform parent, int seed) {
+        int poiCount = rng.Next(generationData.MinPoiCount, generationData.MaxPoiCount + 1);
+        List<Vector2Int> poiIndices = new List<Vector2Int>();
+        List<Vector2Int> existingCellIndices = map.GetExistingCellIndices();
+        existingCellIndices.Shuffle(rng);
+        int count = 0;
+        while(count < poiCount && existingCellIndices.Count > 0) {
+            if (existingCellIndices[0] == map.StartingCell || existingCellIndices[0] == map.ExitCell) {
+                existingCellIndices.RemoveAt(0);
+                continue;
+            }
+
+            poiIndices.Add(existingCellIndices[0]);
+            existingCellIndices.RemoveAt(0);
+            count++;
+        }
+
+        int tempPoiCount = 0;
         for (int i = 0; i < map.GridCells.GetLength(0); i++) {
             for (int j = 0; j < map.GridCells.GetLength(1); j++) {
                 if (map.GridCells[i, j] == null)
@@ -286,8 +303,14 @@ public class RoomFirstGenerator : MapGenerator {
                 else if (i == map.ExitCell.y && j == map.ExitCell.x)
                     cell = Instantiate(generationData.GetExitCell(), parent);
                 else {
-                    GameObject cellPrefab = generationData.GetCellsByOrientation(orientation).GetWeightedValue();
+                    Vector2Int cellIndex = new Vector2Int(j, i);
+                    bool isPoi = poiIndices.Contains(cellIndex);
+                    GameObject cellPrefab = isPoi ? 
+                        generationData.GetPoiCellsByOrientation(orientation).GetWeightedValue()
+                        : generationData.GetCellsByOrientation(orientation).GetWeightedValue();
                     cell = Instantiate(cellPrefab, parent);
+                    if (isPoi)
+                        tempPoiCount++;
                 }
                 Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + map.MapOrigin.x, map.MapOrigin.y, i * -generationData.GridCellSize + map.MapOrigin.z);
                 cell.transform.localPosition = cellCenter;
@@ -314,5 +337,7 @@ public class RoomFirstGenerator : MapGenerator {
                 }
             }
         }
+
+        Debug.Log("POI count on map: " + tempPoiCount);
     }
 }

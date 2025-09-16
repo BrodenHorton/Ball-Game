@@ -32,6 +32,18 @@ public class Map {
         return new Vector3(mapOrigin.x + exitCell.x * cellSize, 0f, mapOrigin.z - exitCell.y * cellSize);
     }
 
+    public List<Vector2Int> GetExistingCellIndices() {
+        List<Vector2Int> cellIndices = new List<Vector2Int>();
+        for (int i = 0; i < gridCells.GetLength(0); i++) {
+            for (int j = 0; j < gridCells.GetLength(1); j++) {
+                if (gridCells[i, j] != null)
+                    cellIndices.Add(new Vector2Int(j, i));        
+            }
+        }
+
+        return cellIndices;
+    }
+
     public GridCell[,] GridCells { get { return gridCells; } set { gridCells = value; } }
 
     public Vector3 MapOrigin { get { return mapOrigin; } }

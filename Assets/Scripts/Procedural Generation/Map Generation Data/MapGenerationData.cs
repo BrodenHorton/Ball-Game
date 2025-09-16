@@ -6,6 +6,8 @@ public abstract class MapGenerationData : ScriptableObject {
     [SerializeField] private Vector2Int gridDimensions;
     [SerializeField] private int gridCellSize;
     [SerializeField] private MapCellData cellData;
+    [SerializeField] private int minPoiCount;
+    [SerializeField] private int maxPoiCount;
 
     public WeightedList<GameObject> GetCellsByOrientation(CellOrientation orientation) {
         return cellData.GetCellsByOrientation(orientation);
@@ -34,4 +36,10 @@ public abstract class MapGenerationData : ScriptableObject {
     public Vector2Int GridDimensions { get { return gridDimensions; } }
 
     public int GridCellSize { get { return gridCellSize; } }
+
+    public MapCellData CellData { get { return cellData; } }
+
+    public int MinPoiCount { get { return minPoiCount; } }
+
+    public int MaxPoiCount { get {return maxPoiCount; } }
 }

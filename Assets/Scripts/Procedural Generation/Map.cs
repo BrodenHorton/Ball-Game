@@ -44,6 +44,18 @@ public class Map {
         return cellIndices;
     }
 
+    public List<Vector2Int> GetCellIndicesOf(CellOrientation orientation) {
+        List<Vector2Int> cellIndices = new List<Vector2Int>();
+        for (int i = 0; i < gridCells.GetLength(0); i++) {
+            for (int j = 0; j < gridCells.GetLength(1); j++) {
+                if (gridCells[i, j] != null && gridCells[i, j].GetOrientation() == orientation)
+                    cellIndices.Add(new Vector2Int(j, i));
+            }
+        }
+
+        return cellIndices;
+    }
+
     public GridCell[,] GridCells { get { return gridCells; } set { gridCells = value; } }
 
     public Vector3 MapOrigin { get { return mapOrigin; } }

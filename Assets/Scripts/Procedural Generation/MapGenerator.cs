@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
 
 public abstract class MapGenerator : MonoBehaviour {
-    [SerializeField] protected bool hasDepthValueSprites;
-    [SerializeField] protected GameObject depthValueSprite;
 
-    public abstract Map GenerateMap(int seed);
+    public abstract Map GenerateMap(MapCellData cellData, int seed);
 
     protected abstract void PlaceStartingCell(Map map);
 
     protected abstract void PlaceExitCell(Map map);
-
-    public abstract void BuildMapCells(Map map, Transform parent, int seed);
 
     protected int NumberOfAdjacentCells(GridCell[,] gridCells, Vector2Int cell) {
         int count = 0;
@@ -28,44 +23,6 @@ public abstract class MapGenerator : MonoBehaviour {
 
     protected bool IsGridIndexInBounds(GridCell[,] gridCells, Vector2Int cell) {
         return cell.x >= 0 && cell.x < gridCells.GetLength(1) && cell.y >= 0 && cell.y < gridCells.GetLength(0);
-    }
-
-    protected float getGridCellRotation(GridCell gridCell, Random rng) {
-        CellOrientation orientation = gridCell.GetOrientation();
-        float rotation = 0;
-        if (orientation == CellOrientation.DeadEnd) {
-            for (int i = 0; i < gridCell.walls.Length; i++) {
-                if (!gridCell.walls[i]) {
-                    rotation = i * 90;
-                    break;
-                }
-            }
-        }
-        else if (orientation == CellOrientation.Corridor) {
-            rotation = gridCell.walls[0] ? 90 : 0;
-            rotation = rng.Next(0, 2) == 1 ? rotation + 180 : rotation;
-        }
-        else if (orientation == CellOrientation.Bend) {
-            if (gridCell.walls[1] && gridCell.walls[2])
-                rotation = 90;
-            else if (gridCell.walls[2] && gridCell.walls[3])
-                rotation = 180;
-            else if (gridCell.walls[3] && gridCell.walls[0])
-                rotation = 270;
-        }
-        else if (orientation == CellOrientation.Intersection) {
-            rotation = rng.Next(0, 4) * 90;
-        }
-        else if (orientation == CellOrientation.T_Intersection) {
-            for (int i = 0; i < gridCell.walls.Length; i++) {
-                if (gridCell.walls[i]) {
-                    rotation = i * 90;
-                    break;
-                }
-            }
-        }
-
-        return rotation;
     }
 
     protected void CreateDepthMap(Map map) {

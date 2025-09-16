@@ -921,6 +921,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 155238444}
     - target: {fileID: 556675208447624733, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
+      propertyPath: cellData
+      value: 
+      objectReference: {fileID: 11400000, guid: bf6385e32330ffe40bccebe20e9cb8c2, type: 2}
+    - target: {fileID: 556675208447624733, guid: 7d00cef4109f8a54f921915905f0c5d2, type: 3}
       propertyPath: playerRb
       value: 
       objectReference: {fileID: 1988867970}
@@ -1104,6 +1108,10 @@ PrefabInstance:
       propertyPath: navMesh
       value: 
       objectReference: {fileID: 155238444}
+    - target: {fileID: 4688591949004441824, guid: 2edd6cc15d960e14b87d37e8a7e5cd78, type: 3}
+      propertyPath: cellData
+      value: 
+      objectReference: {fileID: 11400000, guid: bd6508f72e2741e4b95557a4a293d4f6, type: 2}
     - target: {fileID: 4688591949004441824, guid: 2edd6cc15d960e14b87d37e8a7e5cd78, type: 3}
       propertyPath: playerRb
       value: 

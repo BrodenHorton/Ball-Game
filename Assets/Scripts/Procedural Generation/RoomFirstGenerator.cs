@@ -12,13 +12,13 @@ public class RoomFirstGenerator : MapGenerator {
 
     private Random rng;
 
-    public override Map GenerateMap(int seed) {
+    public override Map GenerateMap(MapCellData cellData, int seed) {
         rng = new Random(seed);
-        Vector3 mapOrigin = new Vector3(-generationData.GridDimensions.x * generationData.GridCellSize / 2, 0f, generationData.GridDimensions.y * generationData.GridCellSize / 2);
-        Map map = new Map(generationData.GridDimensions, mapOrigin, generationData.GridCellSize);
-        map.GridCells = new GridCell[generationData.GridDimensions.y, generationData.GridDimensions.x];
+        Vector3 mapOrigin = new Vector3(-cellData.GridDimensions.x * cellData.GridCellSize / 2, 0f, cellData.GridDimensions.y * cellData.GridCellSize / 2);
+        Map map = new Map(cellData.GridDimensions, mapOrigin, cellData.GridCellSize);
+        map.GridCells = new GridCell[cellData.GridDimensions.y, cellData.GridDimensions.x];
 
-        RoomFirstGeneration(map.GridCells, new BoundsInt(new Vector3Int(MAP_GRID_CELL_MARGIN, MAP_GRID_CELL_MARGIN), new Vector3Int(generationData.GridDimensions.x - MAP_GRID_CELL_MARGIN * 2, generationData.GridDimensions.y - MAP_GRID_CELL_MARGIN * 2)));
+        RoomFirstGeneration(map.GridCells, new BoundsInt(new Vector3Int(MAP_GRID_CELL_MARGIN, MAP_GRID_CELL_MARGIN), new Vector3Int(cellData.GridDimensions.x - MAP_GRID_CELL_MARGIN * 2, cellData.GridDimensions.y - MAP_GRID_CELL_MARGIN * 2)));
         PlaceStartingCell(map);
         CreateDepthMap(map);
         PlaceExitCell(map);
@@ -270,74 +270,5 @@ public class RoomFirstGenerator : MapGenerator {
             gridCells[cell.y, cell.x].walls[((int)direction)] = false;
             gridCells[adjacentCell.y, adjacentCell.x].walls[((int)direction + 2) % 4] = false;
         }
-    }
-
-    public override void BuildMapCells(Map map, Transform parent, int seed) {
-        int poiCount = rng.Next(generationData.MinPoiCount, generationData.MaxPoiCount + 1);
-        List<Vector2Int> poiIndices = new List<Vector2Int>();
-        List<Vector2Int> existingCellIndices = map.GetExistingCellIndices();
-        existingCellIndices.Shuffle(rng);
-        int count = 0;
-        while(count < poiCount && existingCellIndices.Count > 0) {
-            if (existingCellIndices[0] == map.StartingCell || existingCellIndices[0] == map.ExitCell) {
-                existingCellIndices.RemoveAt(0);
-                continue;
-            }
-
-            poiIndices.Add(existingCellIndices[0]);
-            existingCellIndices.RemoveAt(0);
-            count++;
-        }
-
-        int tempPoiCount = 0;
-        for (int i = 0; i < map.GridCells.GetLength(0); i++) {
-            for (int j = 0; j < map.GridCells.GetLength(1); j++) {
-                if (map.GridCells[i, j] == null)
-                    continue;
-
-                CellOrientation orientation = map.GridCells[i, j].GetOrientation();
-                float rotation = getGridCellRotation(map.GridCells[i, j], rng);
-                GameObject cell;
-                if (i == map.StartingCell.y && j == map.StartingCell.x)
-                    cell = Instantiate(generationData.GetStartingCell(), parent);
-                else if (i == map.ExitCell.y && j == map.ExitCell.x)
-                    cell = Instantiate(generationData.GetExitCell(), parent);
-                else {
-                    Vector2Int cellIndex = new Vector2Int(j, i);
-                    bool isPoi = poiIndices.Contains(cellIndex);
-                    GameObject cellPrefab = isPoi ? 
-                        generationData.GetPoiCellsByOrientation(orientation).GetWeightedValue()
-                        : generationData.GetCellsByOrientation(orientation).GetWeightedValue();
-                    cell = Instantiate(cellPrefab, parent);
-                    if (isPoi)
-                        tempPoiCount++;
-                }
-                Vector3 cellCenter = new Vector3(j * generationData.GridCellSize + map.MapOrigin.x, map.MapOrigin.y, i * -generationData.GridCellSize + map.MapOrigin.z);
-                cell.transform.localPosition = cellCenter;
-                cell.transform.Rotate(cell.transform.up, rotation);
-
-                if (generationData.GetDoor() != null) {
-                    if (!map.GridCells[i, j].walls[1]) {
-                        GameObject cellDoor = Instantiate(generationData.GetDoor(), parent);
-                        cellDoor.transform.localPosition = new Vector3(cellCenter.x + generationData.GridDimensions.x / 2, cellCenter.y, cellCenter.z);
-                        cellDoor.transform.Rotate(0f, 90f, 0f);
-                    }
-                    if (!map.GridCells[i, j].walls[2]) {
-                        GameObject cellDoor = Instantiate(generationData.GetDoor(), parent);
-                        cellDoor.transform.localPosition = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - generationData.GridDimensions.y / 2);
-                    }
-                }
-
-                if (hasDepthValueSprites) {
-                    GameObject cellDepthValue = Instantiate(depthValueSprite, parent);
-                    cellDepthValue.transform.localPosition = cellCenter;
-                    TextMesh textMesh = cellDepthValue.GetComponent<TextMesh>();
-                    if (textMesh != null)
-                        textMesh.text = map.DepthByCell[new Vector2Int(j, i)].ToString();
-                }
-            }
-        }
-
-        Debug.Log("POI count on map: " + tempPoiCount);
     }
 }

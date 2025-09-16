@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2975718480285954122}
   - component: {fileID: 5843384863259828440}
   - component: {fileID: 2504872266832657468}
+  - component: {fileID: 3724155920121653289}
   m_Layer: 0
   m_Name: Cave Map
   m_TagString: Untagged
@@ -47,10 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee23c5383e7e1ee4cbd06c6b94055a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellData: {fileID: 0}
   hasRandomSeed: 1
   mapSeed: 0
   navMesh: {fileID: 0}
   playerRb: {fileID: 0}
+  mapExitPrefab: {fileID: 0}
 --- !u!114 &2975718480285954122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,8 +94,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3820aaf261b9ed4469f22c4d42017310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasDepthValueSprites: 0
-  depthValueSprite: {fileID: 5828725063873656485, guid: 54130f5c816553b49ba166ee4dc15123, type: 3}
   generationData: {fileID: 11400000, guid: 770e3d5df8a38fb4ba5ef27c63db9b55, type: 2}
   shouldGenerateRoomBoundingBoxes: 0
   shouldGenerateCorridors: 1
+--- !u!114 &3724155920121653289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062593450485045977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f553ffa343167884f84bae9e47640b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minPoiCount: 12
+  maxPoiCount: 18
+  hasDepthValueSprites: 0
+  depthValueSprite: {fileID: 5828725063873656485, guid: 54130f5c816553b49ba166ee4dc15123, type: 3}

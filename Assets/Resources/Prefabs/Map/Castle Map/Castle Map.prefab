@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2603461001495410134}
   - component: {fileID: 9146246701991753284}
   - component: {fileID: 724575448370571482}
+  - component: {fileID: 6194096804558613971}
   m_Layer: 0
   m_Name: Castle Map
   m_TagString: Untagged
@@ -47,10 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee23c5383e7e1ee4cbd06c6b94055a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellData: {fileID: 0}
   hasRandomSeed: 0
   mapSeed: 677182338
   navMesh: {fileID: 0}
   playerRb: {fileID: 0}
+  mapExitPrefab: {fileID: 0}
 --- !u!114 &2603461001495410134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +94,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0f4cb93fd855a44a2cf742aa677f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generationData: {fileID: 11400000, guid: c3e9e61eb497c2b47a173732efe6dd76, type: 2}
+--- !u!114 &6194096804558613971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546159113266117135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f553ffa343167884f84bae9e47640b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minPoiCount: 10
+  maxPoiCount: 15
   hasDepthValueSprites: 0
   depthValueSprite: {fileID: 5828725063873656485, guid: 54130f5c816553b49ba166ee4dc15123, type: 3}
-  generationData: {fileID: 11400000, guid: c3e9e61eb497c2b47a173732efe6dd76, type: 2}

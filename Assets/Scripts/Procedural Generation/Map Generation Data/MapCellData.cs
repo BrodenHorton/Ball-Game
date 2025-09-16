@@ -4,6 +4,8 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "MapCellData", menuName = "Scriptable Objects/Map Cell Data")]
 public class MapCellData : ScriptableObject {
+    [SerializeField] private Vector2Int gridDimensions;
+    [SerializeField] private int gridCellSize;
     [Header("Cells")]
     [SerializeField] private WeightedList<GameObject> deadEndCells;
     [SerializeField] private WeightedList<GameObject> bendCells;
@@ -65,6 +67,10 @@ public class MapCellData : ScriptableObject {
     public List<GameObject> GetUniquePoiCellsByOrientation(CellOrientation orientation) {
         return uniquePoiCellsByOrientation[orientation];
     }
+
+    public Vector2Int GridDimensions => gridDimensions;
+
+    public int GridCellSize => gridCellSize;
 
     public GameObject StartingCell => startingCell;
 

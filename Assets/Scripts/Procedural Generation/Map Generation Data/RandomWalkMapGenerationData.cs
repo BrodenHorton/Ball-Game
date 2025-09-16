@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "RandomWalkMapGenerationData", menuName = "Scriptable Objects/Map Generation/Random Walk")]
-public class RandomWalkMapGenerationData : MapGenerationData {
+public class RandomWalkMapGenerationData : ScriptableObject {
     [SerializeField] private bool hasBranchPaths;
     [SerializeField] private int randomWalkIterations;
     [SerializeField] private int randomWalkLength;

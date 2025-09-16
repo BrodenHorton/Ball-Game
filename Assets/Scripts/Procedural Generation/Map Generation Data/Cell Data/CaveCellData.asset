@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2069fc349f0dfcf4a904a867c3b8cf45, type: 3}
   m_Name: CaveCellData
   m_EditorClassIdentifier: 
+  gridDimensions: {x: 30, y: 30}
+  gridCellSize: 100
   deadEndCells:
     weightedEntries:
     - value: {fileID: 83729013916706629, guid: ad9b0b642e6aaa448aa872acabeb330b, type: 3}
@@ -52,11 +54,16 @@ MonoBehaviour:
     weightedEntries:
     - value: {fileID: 83729013916706629, guid: bdf2bd32bb2ce1149b863aacf8259f4e, type: 3}
       weight: 1
-  uniquePoiDeadEndCells: []
-  uniquePoiBendCells: []
-  uniquePoiCorridorCells: []
-  uniquePoiTIntersectionCells: []
-  uniquePoiIntersectionCells: []
+  uniquePoiDeadEndCells:
+  - {fileID: 83729013916706629, guid: 9a7dc5d0847cca344ba29308349b75bd, type: 3}
+  uniquePoiBendCells:
+  - {fileID: 83729013916706629, guid: e7dcbfebe55a2d844b89b6496e63e6cc, type: 3}
+  uniquePoiCorridorCells:
+  - {fileID: 83729013916706629, guid: 8bd19003a7c811847816c444885ae2a2, type: 3}
+  uniquePoiTIntersectionCells:
+  - {fileID: 83729013916706629, guid: 41aa66757595c0a47be0a551490f7a6f, type: 3}
+  uniquePoiIntersectionCells:
+  - {fileID: 83729013916706629, guid: 84545f21feb1b9b45adff3270cf91cba, type: 3}
   startingCell: {fileID: 3531862861068251308, guid: bcad0c25cf5206349abdd24f5c570616, type: 3}
   exitCell: {fileID: 3531862861068251308, guid: af8607729c292c947b428a53ee02a0d3, type: 3}
   door: {fileID: 0}

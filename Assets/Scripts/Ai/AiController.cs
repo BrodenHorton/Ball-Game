@@ -48,7 +48,7 @@ public abstract class AIController : MonoBehaviour, IDamageable
     public virtual void TakeDamage(float amt, EffectType effectType = EffectType.NORMAL)
     {
         currentHealth -= amt;
-        Debug.Log("Taking Dmg: " + amt);
+        //Debug.Log("Taking Dmg: " + amt);
         if (IsDead)
         {
             EventBus.EnemyDeath?.Invoke(gameObject);
@@ -62,13 +62,13 @@ public abstract class AIController : MonoBehaviour, IDamageable
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entered Trigger: " + other);
+        //Debug.Log("Entered Trigger: " + other);
         target = other.gameObject;
         movement.SetTarget(target);
     }
     protected virtual void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exited Trigger: " + other);
+        //Debug.Log("Exited Trigger: " + other);
         if (other.gameObject == target)
             target = null;
         movement.SetTarget(target);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2069fc349f0dfcf4a904a867c3b8cf45, type: 3}
   m_Name: CaveCellData
   m_EditorClassIdentifier: 
-  gridDimensions: {x: 30, y: 30}
+  gridDimensions: {x: 50, y: 50}
   gridCellSize: 100
   deadEndCells:
     weightedEntries:

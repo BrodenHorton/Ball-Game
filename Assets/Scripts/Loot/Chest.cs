@@ -18,12 +18,13 @@ public class Chest : MonoBehaviour, Destructible {
     public void Break() {
         List<GameObject> loot = lootTable.WeightedLoot.GetWeightedValues(rng.Next(minLootAmt, maxLootAmt + 1));
         foreach (GameObject item in loot) {
+            Vector3 startingPosition = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
             Vector2 dropDirection = new Vector2((float)rng.NextDouble() * 2f - 1, (float)rng.NextDouble() * 2f - 1).normalized;
             float dropDistance = (float)rng.NextDouble() * (maxDropDistance - minDropDistance) + minDropDistance;
             Vector2 dropVector = dropDirection * dropDistance;
             Vector3 dropLocation = new Vector3(transform.position.x + dropVector.x, transform.position.y, transform.position.z + dropVector.y);
             ItemSprite itemSprite = Instantiate(itemSpritePrefab, transform.position, Quaternion.identity).GetComponent<ItemSprite>();
-            itemSprite.Activate(transform.position, dropLocation, item);
+            itemSprite.Activate(startingPosition, dropLocation, item);
         }
 
         Destroy(gameObject);

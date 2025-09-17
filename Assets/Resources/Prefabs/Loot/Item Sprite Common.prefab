@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1726655530230088707}
   - component: {fileID: 8017625335768526351}
   - component: {fileID: 2735066190162957460}
+  - component: {fileID: 1532288655601011008}
   - component: {fileID: 3517182284092775783}
   m_Layer: 0
   m_Name: Item Sprite Common
@@ -103,12 +104,39 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1532288655601011008
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991231455146429304}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &3517182284092775783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,5 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTravelTime: 0.75
-  minAmplitude: 3
-  maxAmplitude: 7
+  minAmplitudeMultiplier: 3
+  maxAmplitudeMultiplier: 5
+  collidableLayers:
+  - Ground

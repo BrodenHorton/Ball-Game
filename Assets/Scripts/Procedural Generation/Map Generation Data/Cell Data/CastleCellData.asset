@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2069fc349f0dfcf4a904a867c3b8cf45, type: 3}
   m_Name: CastleCellData
   m_EditorClassIdentifier: 
-  gridDimensions: {x: 101, y: 101}
+  gridDimensions: {x: 51, y: 51}
   gridCellSize: 100
   deadEndCells:
     weightedEntries:
@@ -54,11 +54,16 @@ MonoBehaviour:
     weightedEntries:
     - value: {fileID: 83729013916706629, guid: 8192c2f18a69ce14b83386866f7db9ac, type: 3}
       weight: 1
-  uniquePoiDeadEndCells: []
-  uniquePoiBendCells: []
-  uniquePoiCorridorCells: []
-  uniquePoiTIntersectionCells: []
-  uniquePoiIntersectionCells: []
+  uniquePoiDeadEndCells:
+  - {fileID: 3531862861068251308, guid: a54c7aa514f72f644957f9c1199cd6eb, type: 3}
+  uniquePoiBendCells:
+  - {fileID: 8434371829393246976, guid: ddf89e371183b424e87baa04a0a59c7a, type: 3}
+  uniquePoiCorridorCells:
+  - {fileID: 5509926808027386444, guid: 67acc33590f067c4a80bdce68e303861, type: 3}
+  uniquePoiTIntersectionCells:
+  - {fileID: 180887209066865839, guid: 013a54abfd06e4a4688714d2c2de0ed4, type: 3}
+  uniquePoiIntersectionCells:
+  - {fileID: 83729013916706629, guid: 612f61fd994db134d9565248a50a2548, type: 3}
   startingCell: {fileID: 3531862861068251308, guid: 27c9abb541f06f848a9283ac350611c8, type: 3}
   exitCell: {fileID: 3531862861068251308, guid: 5c9f495656ac62444afe832f9fe666d3, type: 3}
   door: {fileID: 6695056754986560365, guid: 11a0ccdc30332544fb4a8c650273f0fa, type: 3}

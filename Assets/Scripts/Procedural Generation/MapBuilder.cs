@@ -21,6 +21,7 @@ public class MapBuilder : MonoBehaviour {
         List<Vector2Int> poiIndices = GeneratePoiIndices(map, poiExcludedIndices, rng);
 
         int tempPoiCount = 0;
+        int tempUniquePoiCount = 0;
         for (int i = 0; i < map.GridCells.GetLength(0); i++) {
             for (int j = 0; j < map.GridCells.GetLength(1); j++) {
                 if (map.GridCells[i, j] == null)
@@ -35,13 +36,20 @@ public class MapBuilder : MonoBehaviour {
                     cell = Instantiate(cellData.ExitCell, parent);
                 else {
                     Vector2Int cellIndex = new Vector2Int(j, i);
-                    bool isPoi = poiIndices.Contains(cellIndex);
-                    GameObject cellPrefab = isPoi ?
-                        cellData.GetPoiCellsByOrientation(orientation).GetWeightedValue()
-                        : cellData.GetCellsByOrientation(orientation).GetWeightedValue();
-                    cell = Instantiate(cellPrefab, parent);
-                    if (isPoi)
+                    GameObject cellPrefab;
+                    if (uniquePoiCellsByIndex.ContainsKey(cellIndex)) {
+                        cellPrefab = uniquePoiCellsByIndex[cellIndex];
+                        tempUniquePoiCount++;
+                    }
+                    else if(poiIndices.Contains(cellIndex)) {
+                        cellPrefab = cellData.GetPoiCellsByOrientation(orientation).GetWeightedValue();
                         tempPoiCount++;
+                    }
+                    else {
+                        cellPrefab = cellData.GetCellsByOrientation(orientation).GetWeightedValue();
+                    }
+
+                    cell = Instantiate(cellPrefab, parent);
                 }
                 Vector3 cellCenter = new Vector3(j * cellData.GridCellSize + map.MapOrigin.x, map.MapOrigin.y, i * -cellData.GridCellSize + map.MapOrigin.z);
                 cell.transform.localPosition = cellCenter;
@@ -50,12 +58,12 @@ public class MapBuilder : MonoBehaviour {
                 if (cellData.Door != null) {
                     if (!map.GridCells[i, j].walls[1]) {
                         GameObject cellDoor = Instantiate(cellData.Door, parent);
-                        cellDoor.transform.localPosition = new Vector3(cellCenter.x + cellData.GridDimensions.x / 2, cellCenter.y, cellCenter.z);
+                        cellDoor.transform.localPosition = new Vector3(cellCenter.x + cellData.GridCellSize / 2, cellCenter.y, cellCenter.z);
                         cellDoor.transform.Rotate(0f, 90f, 0f);
                     }
                     if (!map.GridCells[i, j].walls[2]) {
                         GameObject cellDoor = Instantiate(cellData.Door, parent);
-                        cellDoor.transform.localPosition = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - cellData.GridDimensions.y / 2);
+                        cellDoor.transform.localPosition = new Vector3(cellCenter.x, cellCenter.y, cellCenter.z - cellData.GridCellSize / 2);
                     }
                 }
 
@@ -70,9 +78,9 @@ public class MapBuilder : MonoBehaviour {
         }
 
         Debug.Log("POIs generated: " + tempPoiCount);
+        Debug.Log("Unique POIs generated: " + tempUniquePoiCount);
     }
 
-    // TODO: Fix Unique Pois not being added to list and returned.
     private Dictionary<Vector2Int, GameObject> GenerateUniquePoisByIndex(Map map, MapCellData cellData, List<Vector2Int> excludedCellIndices, Random rng) {
         Dictionary<Vector2Int, GameObject> uniquePoiCellsByIndex = new Dictionary<Vector2Int, GameObject>();
         foreach (CellOrientation orientation in Enum.GetValues(typeof(CellOrientation))) {
@@ -82,22 +90,19 @@ public class MapBuilder : MonoBehaviour {
 
             List<Vector2Int> existingCellIndices = map.GetCellIndicesOf(orientation);
             existingCellIndices.Shuffle(rng);
-            while (existingCellIndices.Count > 0 && uniquePoiCells.Count > 0) {
-                if (excludedCellIndices.Contains(existingCellIndices[0])) {
-                    existingCellIndices.RemoveAt(0);
+            int uniquePoiIndex = 0;
+            for (int i = 0; i < existingCellIndices.Count && uniquePoiIndex < uniquePoiCells.Count; i++) {
+                if (excludedCellIndices.Contains(existingCellIndices[i]))
                     continue;
-                }
 
-                uniquePoiCellsByIndex.Add(existingCellIndices[0], uniquePoiCells[0]);
-                existingCellIndices.RemoveAt(0);
-                uniquePoiCells.RemoveAt(0);
+                uniquePoiCellsByIndex.Add(existingCellIndices[i], uniquePoiCells[uniquePoiIndex]);
+                uniquePoiIndex++;
             }
 
             if (uniquePoiCells.Count > 0)
                 Debug.LogWarning("Not all Unique Cells could be placed. Missing " + orientation.ToString() + " Unique cell count: " + uniquePoiCells.Count);
         }
 
-        Debug.Log("Number of unique cells being added to the map: " + uniquePoiCellsByIndex.Count);
         return uniquePoiCellsByIndex;
     }
 
@@ -107,14 +112,11 @@ public class MapBuilder : MonoBehaviour {
         List<Vector2Int> existingCellIndices = map.GetExistingCellIndices();
         existingCellIndices.Shuffle(rng);
         int count = 0;
-        while (count < poiCount && existingCellIndices.Count > 0) {
-            if (excludedCellIndices.Contains(existingCellIndices[0])) {
-                existingCellIndices.RemoveAt(0);
+        for(int i = 0; i < existingCellIndices.Count && count < poiCount; i++) {
+            if (excludedCellIndices.Contains(existingCellIndices[i]))
                 continue;
-            }
 
-            poiIndices.Add(existingCellIndices[0]);
-            existingCellIndices.RemoveAt(0);
+            poiIndices.Add(existingCellIndices[i]);
             count++;
         }
 

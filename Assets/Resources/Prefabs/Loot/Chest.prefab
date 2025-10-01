@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390d6d52213c8ab4592e0efd9a5dd940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLayer: 6
+  playerTag: Player
   criticalImpactVelocity: 5
   minLootAmt: 3
   maxLootAmt: 3

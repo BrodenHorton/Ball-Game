@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Random = System.Random;
 
 public class Chest : MonoBehaviour, Destructible {
-    [SerializeField] private int playerLayer;
+    [SerializeField] private string playerTag;
     [SerializeField] private float criticalImpactVelocity;
     [SerializeField] private int minLootAmt;
     [SerializeField] private int maxLootAmt;
@@ -35,7 +36,7 @@ public class Chest : MonoBehaviour, Destructible {
         if (rb == null)
             return false;
 
-        return collider.gameObject.layer == playerLayer && rb.linearVelocity.magnitude >= criticalImpactVelocity;
+        return collider.CompareTag(playerTag) && rb.linearVelocity.magnitude >= criticalImpactVelocity;
     }
 
     private void OnCollisionEnter(Collision collision) {

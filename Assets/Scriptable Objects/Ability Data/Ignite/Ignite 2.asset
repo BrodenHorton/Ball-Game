@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d1cbe9b503d07a49878b0cf1e5a5240, type: 3}
-  m_Name: Ignite 1
+  m_Name: Ignite 2
   m_EditorClassIdentifier: 
-  activatedLength: 30
+  activatedLength: 35
   icon: {fileID: 21300000, guid: ee8453d6e1b77614cace7c50d15d8c3c, type: 3}
-  nextUpgrade: {fileID: 11400000, guid: 9226da193f5311c4699cd2c5330a9d0b, type: 2}
+  nextUpgrade: {fileID: 0}
   abilityPrefab: {fileID: 5473968364738172296, guid: 4f21dbaaba58d3349bf401bc6dd6c9c1, type: 3}
   fireEffectStatusDuration: 30
-  fireEffectDamageTickRate: 5
-  fireDamage: 5
-  explodeOnImpact: 0
+  fireEffectDamageTickRate: 3
+  fireDamage: 10
+  explodeOnImpact: 1
+  explosionObject: {fileID: 460906064637352825, guid: a757a846a0133944fab461040fab8f93, type: 3}
+  explosionHittables:
+    serializedVersion: 2
+    m_Bits: 512
+  explosionDamage: 30
+  explosionRadius: 10

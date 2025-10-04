@@ -45,8 +45,8 @@ public class DensityEntity : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public void DashedIntoEventHandler(GameObject enemy) {
-        if (isActivated && enemy.TryGetComponent(out IDamageable damageable)) {
+    public void DashedIntoEventHandler(Collision enemy) {
+        if (isActivated && enemy.transform.GetParentOrSelf().TryGetComponent(out IDamageable damageable)) {
             Debug.Log("Dealing " + damageToApply + " to " + enemy);
             damageable.TakeDamage(damageToApply, EffectType.NORMAL);
         }

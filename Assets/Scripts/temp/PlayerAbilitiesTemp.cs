@@ -29,7 +29,7 @@ public class PlayerAbilitiesTemp : MonoBehaviour {
             if (collider.TryGetComponent(out IDamageable damageable)) {
                 Debug.Log("Dealing damage to " + damageable);
                 damageable.TakeDamage(baseDashDamage, EffectType.NORMAL);
-                EventBus.DashedInto?.Invoke(collider.gameObject);
+                EventBus.DashedInto?.Invoke(collision);
                 movement.StopDashing();
             }
         }

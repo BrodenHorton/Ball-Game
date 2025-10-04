@@ -16,7 +16,7 @@ public class MeteorShower : Ability
         Debug.Log("Activating Meteor Shower");
     }
 
-    public override void DashedIntoEventHandler(GameObject enemy)
+    public override void DashedIntoEventHandler(Collision enemy)
     {
         
     }

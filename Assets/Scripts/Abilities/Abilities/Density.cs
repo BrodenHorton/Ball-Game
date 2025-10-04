@@ -43,9 +43,9 @@ public class Density : Ability
         Destroy(gameObject);
     }
 
-    public override void DashedIntoEventHandler(GameObject enemy)
+    public override void DashedIntoEventHandler(Collision enemy)
     {
-        if(isActivated && enemy.TryGetComponent(out IDamageable damageable))
+        if(isActivated && enemy.transform.GetParentOrSelf().TryGetComponent(out IDamageable damageable))
         {
             Debug.Log("Dealing " + damageToApply + " to " + enemy);
             damageable.TakeDamage(damageToApply, EffectType.NORMAL);

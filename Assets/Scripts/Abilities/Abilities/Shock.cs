@@ -21,7 +21,7 @@ public class Shock : Ability
         Debug.Log("Activating Shock");
     }
 
-    public override void DashedIntoEventHandler(GameObject enemy)
+    public override void DashedIntoEventHandler(Collision enemy)
     {
 
     }

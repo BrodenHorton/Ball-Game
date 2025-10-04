@@ -12,7 +12,7 @@ public abstract class Ability : MonoBehaviour {
     public void SetAbilityData(AbilityData abilityData) => this.data = abilityData;
     public abstract void Activate();
     public abstract void Deactivate();
-    public abstract void DashedIntoEventHandler(GameObject enemy);
+    public abstract void DashedIntoEventHandler(Collision enemy);
 
     public bool Upgrade()
     {

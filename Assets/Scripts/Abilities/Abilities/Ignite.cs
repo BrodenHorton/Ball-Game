@@ -30,12 +30,20 @@ public class Ignite : Ability
         activationTimer.Update();
     }
 
-    public override void DashedIntoEventHandler(GameObject enemy)
+    public override void DashedIntoEventHandler(Collision enemy)
     {
-        if(isActivated && enemy.TryGetComponent(out StatusEffectRunner runner) && enemy.TryGetComponent(out IDamageable damageable))
+        if(isActivated && enemy.transform.GetParentOrSelf().TryGetComponent(out StatusEffectRunner runner) && enemy.transform.GetParentOrSelf().TryGetComponent(out IDamageable damageable))
         {
             runner.ApplyEffect(new DamageEffect(abilityData.fireDamage, abilityData.fireEffectStatusDuration, abilityData.fireEffectDamageTickRate, damageable, EffectType.FIRE));
             Debug.Log("Applying Fire Effect");
+            if (abilityData.explodeOnImpact)
+            {
+                Explosion explosion = Instantiate(abilityData.explosionObject, enemy.GetContact(0).point, Quaternion.identity);
+                explosion.transform.up = enemy.GetContact(0).normal;
+                explosion.SetHittables(abilityData.explosionHittables);
+                explosion.SetDamage(abilityData.explosionDamage);
+                explosion.SetRadius(abilityData.explosionRadius);
+            }
         }
     }
 
